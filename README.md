@@ -1,4 +1,4 @@
-# `xtpxlib-TBD`: Xatapult XML Library - TBD
+# `xtpxlib-xdoc`: Xatapult XML Library - DocBook based documentation generation support
 
 Version, release and dependency information: See `/version.xml` 
 
@@ -11,7 +11,7 @@ Erik Siegel - erik@xatapult.nl - +31 6 53260792
 **`xtpxlib`** is a library containing software for processing XML, using languages like 
 XSLT, XProc etc. It consists of several separate components, named `xtpxlib-*`. Everything can be found on GitHub ([https://github.com/eriksiegel](https://github.com/eriksiegel)).
 
-**`xtpxlib-TBD`** ([https://github.com/eriksiegel/xtpxlib-TBD](https://github.com/eriksiegel/xtpxlib-TBD)) is TBD.
+**`xtpxlib-xdoc`** ([https://github.com/eriksiegel/xtpxlib-TBD](https://github.com/eriksiegel/xtpxlib-TBD)) is TBD.
 
 ----
 
@@ -19,6 +19,28 @@ XSLT, XProc etc. It consists of several separate components, named `xtpxlib-*`. 
 
 * Clone the GitHub repository to some appropriate location on disk. That's basicly it for installation.
 * If you use more than one `xtpxlib` component, all repositories must be cloned in the same base directory.
+
+----
+
+## Notes on installing the DocBook schemas
+
+TBD: in docbook folder, remove tools and documentation. From downloaded zip in [https://docbook.org/xml/5.1/](https://docbook.org/xml/5.1/)
+
+Use currently V5.1
+
+----
+
+## FROM OLD TBD
+
+## XProc libraries
+
+Subdirectory: `xplmod`
+
+| Library | Description |
+|----|----|
+| `db5-pdf.mod/db5-pdf.mod.xpl` | Turns a limited subset of Docbook 5 into PDF using XSL-FO/FOP. The Docbook 5 dialect used van be found in `test/db5-dialect-description/db5-dialect-description.xml`. If you want to turn this into a PDF, use the module test script `xplmod/db5-pdf.mod/test/test-db5-pdf.xpl`. |
+| `descriptions-db5.mod/descriptions-db5.mod.xpl` | Turns descriptions of XML constructs, that you can mingle with your Docbook 5 contents, into full descriptions. Examples in `test/element-description/` | 
+| `convert-db5.mod/convert-db5.mod.xpl` | Checks for several conversion elements in the source to apply an XSL or XProc directly. See also the documentation of the module.| 
 
 ----
 
