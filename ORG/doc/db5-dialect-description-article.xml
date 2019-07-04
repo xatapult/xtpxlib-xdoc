@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0">
+<?xml-model href="../docbook/schemas/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xtlxdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -29,6 +28,10 @@
       the full standard (which is huge!) but only those elements/attributes that were deemed necessary. This document will explain what is in and
       what's not.</para>
 
+
+    <xtlxdoc:extra>
+      
+    </xtlxdoc:extra>
   </sect1>
 
   <!-- ================================================================== -->

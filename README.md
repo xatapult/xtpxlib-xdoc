@@ -15,6 +15,43 @@ XSLT, XProc etc. It consists of several separate components, named `xtpxlib-*`. 
 
 ----
 
+## TODOs
+
+* Change namespace into xtpxdoc
+* Schema adapt so constructs in this namespace validate (against own schema, that would be nice!)
+* Revisit the XML structure stuff. Too complex (refers to global stuff nobody uses), different format?
+  * Generate from schemas/check against schemas? 
+* Rewrite documentation and eat own dogshit: Add constructs for XML structures, pipeline calls, schema calls, etc.
+* Add something standard for parameters
+* Contents based on parameters? if/choose constructs?
+* Consolidate all convert stuff into a single pipeline (and rename docbook-db5, name is not intuitive)
+* For FOP: Table column width when column is fixed width based on code entries. @role based?
+* Output to others: HTML, Markdown 
+
+**Requirements**
+
+* Multilingual?
+* Parameter drive
+
+
+
+**PROCESS**
+
+* Must be able to pass filters for the parameter expansion
+  * And must be able to set defaults for the filters!
+* Include all files 
+* Validate
+* Process and expand parameters
+    * Must be able to escape these
+* Process the various stuff:
+  * XML descriptions ==> is a general XProc pipeline
+  * So... distinguish between core stuff (do XProc/XSLT)  and built-in expansions (XProc for XML descriptions)? 
+  * XProcs
+  * XSLTs     
+* What do we do with refs to chaqpters etc. Text must be multilingual!
+
+----
+
 ## Using `xtpxlib`
 
 * Clone the GitHub repository to some appropriate location on disk. That's basicly it for installation.

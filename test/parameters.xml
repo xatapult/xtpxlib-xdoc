@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<parameters xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../xtpxlib-common/xsd/parameters.xsd"> 
+
+  <parameter name="test">
+    <value system="prd">test production</value>
+    <value system="dev">test development</value>
+  </parameter>
+  
+  <parameter name="x">
+    <value>xxx</value>
+  </parameter>
+  
+  <parameter name="include-file">
+    <value>external-chapter.xml</value>
+  </parameter>
+
+</parameters>
