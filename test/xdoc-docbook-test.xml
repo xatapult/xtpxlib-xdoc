@@ -45,7 +45,7 @@
   <chapter>
     <title>Parameters</title>
 
-    <!--<xdoc:dump-parameters type="table"/>-->
+    <xdoc:dump-parameters type="table"/>
   </chapter>
   
   <!-- ================================================================== -->

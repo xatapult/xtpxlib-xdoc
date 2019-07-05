@@ -14,36 +14,36 @@
   <xsl:include href="../../xtpxlib-common/xslmod/general.mod.xsl"/>
   <xsl:include href="../../xtpxlib-common/xslmod/parameters.mod.xsl"/>
   <xsl:include href="../../xtpxlib-common/xslmod/href.mod.xsl"/>
-  
+
   <!-- ================================================================== -->
-  
+
   <xsl:variable name="local:root-element" as="element()" select="/*"/>
-  
+
   <!-- ================================================================== -->
-  
+
   <xsl:function name="xdoc:parameters-get-with-filterstring" as="map(xs:string, xs:string*)">
     <!-- Gets the parameters and applies a filterstring setting. Also sets some special values. -->
     <xsl:param name="href-parameters" as="xs:string">
       <!--~ Reference to the parameter file. -->
     </xsl:param>
     <xsl:param name="filterstring" as="xs:string">
-      <!--~ String with filter parameters in name|value|name|value|... format. -->
+      <!--~ String with filter parameters in name=value|name=value|... format. -->
     </xsl:param>
 
     <!-- Process the filterstring into an appropriate map: -->
     <xsl:variable name="filterstring-parts" as="xs:string*" select="tokenize($filterstring, '\|')"/>
     <xsl:variable name="filtermap" as="map(xs:string, xs:string*)">
       <xsl:map>
-        <xsl:for-each select="1 to count($filterstring-parts)">
-          <xsl:variable name="pos" as="xs:integer" select="."/>
-          <xsl:variable name="is-name" as="xs:boolean" select="(($pos mod 2) eq 1)"/>
-          <xsl:if test="$is-name">
-            <xsl:map-entry key="normalize-space($filterstring-parts[$pos])" select="normalize-space($filterstring-parts[$pos + 1])"/>
+        <xsl:for-each select="$filterstring-parts">
+          <xsl:variable name="filter-name" as="xs:string" select="normalize-space(substring-before(., '='))"/>
+          <xsl:variable name="filter-value" as="xs:string" select="string(substring-after(., '='))"/>
+          <xsl:if test="$filter-name ne ''">
+            <xsl:map-entry key="$filter-name" select="$filter-value"/>
           </xsl:if>
         </xsl:for-each>
       </xsl:map>
     </xsl:variable>
-    
+
     <!-- Create some special parameters: -->
     <xsl:variable name="special-values-map" as="map(xs:string, xs:string*)">
       <xsl:map>
@@ -59,5 +59,5 @@
     <xsl:sequence select="map:merge(($special-values-map, xtlc:parameters-get($href-parameters, $filtermap)))"/>
 
   </xsl:function>
-  
+
 </xsl:stylesheet>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:local="#local.pfs_dr3_h3b"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:cx="http://xmlcalabash.com/ns/extensions" version="1.0" xpath-version="2.0"
-  exclude-inline-prefixes="#all">
+  exclude-inline-prefixes="#all" type="xdoc:xdoc-to-docbook">
 
   <p:documentation>
     Pipeline that transforms a DocBook source containing xdoc extensions into true DocBook format.
@@ -19,7 +19,7 @@
   </p:option>
 
   <p:option name="parameter-filters" required="false" select="()">
-    <p:documentation>Filter settings for processing the parameters. Format: "name|value|name|value|..."</p:documentation>
+    <p:documentation>Filter settings for processing the parameters. Format: "name=value|name=value|..."</p:documentation>
   </p:option>
 
   <p:output port="result" primary="true" sequence="false">
@@ -40,7 +40,7 @@
   <p:viewport match="xdoc:dump-parameters">
     <p:xslt>
       <p:input port="stylesheet">
-        <p:document href="xsl/dump-parameters.xsl"/>
+        <p:document href="xsl-xdoc-to-docbook/dump-parameters.xsl"/>
       </p:input>
       <p:with-param name="href-parameters" select="$href-parameters"/>
       <p:with-param name="parameter-filters" select="$parameter-filters"/>
@@ -51,7 +51,7 @@
   <!-- TBD REMARK: Xinclude already seems to happen way before we do this... Question is out! -->
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl/substitute-parameters-xinclude-href.xsl"/>
+      <p:document href="xsl-xdoc-to-docbook/substitute-parameters-xinclude-href.xsl"/>
     </p:input>
     <p:with-param name="href-parameters" select="$href-parameters"/>
     <p:with-param name="parameter-filters" select="$parameter-filters"/>
@@ -63,7 +63,7 @@
   <!-- Substitute all parameter references: -->
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl/substitute-parameters.xsl"/>
+      <p:document href="xsl-xdoc-to-docbook/substitute-parameters.xsl"/>
     </p:input>
     <p:with-param name="href-parameters" select="$href-parameters"/>
     <p:with-param name="parameter-filters" select="$parameter-filters"/>
@@ -78,7 +78,7 @@
     <!-- Make the href attribute absolute and process the $xdoc indicator: -->
     <p:xslt>
       <p:input port="stylesheet">
-        <p:document href="xsl/process-transform-href.xsl"/>
+        <p:document href="xsl-xdoc-to-docbook/process-transform-href.xsl"/>
       </p:input>
       <p:with-param name="null" select="()"/>
     </p:xslt>
