@@ -22,5 +22,21 @@
       </xs:complexContent>
     </xs:complexType>
   </xs:element>
+  <xs:element name="transform">
+    <xs:annotation>
+      <xs:documentation>Start a transformation</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:any maxOccurs="unbounded" minOccurs="0" namespace="##any" processContents="skip"/>
+      </xs:sequence>
+      <xs:attribute name="href" type="xs:string" use="required">
+        <xs:annotation>
+          <xs:documentation>Reference to the transformation. If it starts with $xdoc it must be located in /xtpxlib-xdoc/transforms</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:anyAttribute namespace="##any" processContents="skip"/>
+    </xs:complexType>
+  </xs:element>
   <xs:complexType name="ct-empty"/>
 </xs:schema>

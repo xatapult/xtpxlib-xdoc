@@ -48,7 +48,12 @@ XSLT, XProc etc. It consists of several separate components, named `xtpxlib-*`. 
   * So... distinguish between core stuff (do XProc/XSLT)  and built-in expansions (XProc for XML descriptions)? 
   * XProcs
   * XSLTs     
-* What do we do with refs to chaqpters etc. Text must be multilingual!
+* What do we do with refs to chapters etc. Text must be multilingual!
+
+
+xdoc:transform
+* Explain $xdoc ==> in  `xtpxlib-xdoc/transforms`
+* Explain no params ==> Use attributes on root `<xdoc:transform>` element
 
 ----
 

@@ -45,7 +45,7 @@
   <chapter>
     <title>Parameters</title>
 
-    <xdoc:dump-parameters type="table"/>
+    <!--<xdoc:dump-parameters type="table"/>-->
   </chapter>
   
   <!-- ================================================================== -->
@@ -58,6 +58,9 @@
     <title>{$test}</title>
     
     <para>bla bla bla</para>
+    <xdoc:transform href="transforms/test.xpl"/>
+    <xdoc:transform href="transforms/test.xsl"/>
+    
   </chapter>
 
   

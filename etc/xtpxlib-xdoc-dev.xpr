@@ -14,7 +14,7 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xslmod/xdoclib.mod.xsl</String>
+                                    <String>../xpl/xsl/process-transform-href.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -29,7 +29,22 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../test/xdoc-docbook-test.xml</String>
+                                    <String>../xpl/xsl/process--transform-href.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>TEST-xdoc-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xdoc-to-docbook.xpl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -59,7 +74,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/xsl/substitute-parameters.xsl</String>
+                                    <String>../test/xdoc-docbook-test.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -74,7 +89,22 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/xdoc-to-docbook.xpl</String>
+                                    <String>../xslmod/xdoclib.mod.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>TEST-xdoc-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xsl/substitute-parameters.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
