@@ -10,7 +10,7 @@
       
       It will only convert a partial DocBook tagset. See TBD.
       
-      This is the code you would usually want to run before running this step to get all the xml:base stuff right:
+      This is the code you would usually want to run before running this step, to get all the xml:base stuff right:
       
       <p:xinclude>
         <p:with-option name="fixup-xml-base" select="true()"/> 
@@ -33,7 +33,7 @@
   </p:option>
 
   <p:option name="preliminary-version" required="false" select="false()">
-    <p:documentation>If true, adds a prelimiary version marker and output any db:reamrk elements. 
+    <p:documentation>If true, adds a prelimiary version marker and output any db:remark elements. 
         If this is set to false, db:remark elements will be suppressed.</p:documentation>
   </p:option>
 

@@ -23,7 +23,7 @@
   </p:option>
 
   <p:output port="result" primary="true" sequence="false">
-    <p:documentation>The resulting true DocBook</p:documentation>
+    <p:documentation>The resulting DocBook</p:documentation>
   </p:output>
   <p:serialization port="result" method="xml" encoding="UTF-8" indent="true" omit-xml-declaration="false"/>
 
@@ -48,7 +48,6 @@
   </p:viewport>
 
   <!-- Now process the XIncludes. But before that, check for parameter references in the xi:include/@href attributes first. -->
-  <!-- TBD REMARK: Xinclude already seems to happen way before we do this... Question is out! -->
   <p:xslt>
     <p:input port="stylesheet">
       <p:document href="xsl-xdoc-to-docbook/substitute-parameters-xinclude-href.xsl"/>
@@ -71,7 +70,7 @@
 
   <!-- Do the transforms: -->
   <!-- Remark: if any of these transformation wants to return multiple elements, these should be wrapped in a <xdoc:GROUP> element. This
-    element will be unwrapped before finishing.
+       element will be unwrapped before finishing.
   -->
   <p:viewport match="xdoc:transform" name="transform-viewport">
 

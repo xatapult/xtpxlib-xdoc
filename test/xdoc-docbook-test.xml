@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"  version="5.0">
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -43,25 +43,41 @@
   <!-- ================================================================== -->
 
   <chapter>
-    <title>Parameters</title>
+    <title>Stuff</title>
 
-    <xdoc:dump-parameters type="table"/>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>Parameters</title>
+      <xdoc:dump-parameters type="table"/>
+    </sect1>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>{$test}</title>
+      <para>Comes from an XProc transformation:</para>
+      <xdoc:transform href="transforms/test.xpl"/>
+      <para role="break-before">Comes from an XSLT transformation:</para>
+      <xdoc:transform href="transforms/test.xsl"/>
+    </sect1>
+    
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <sect1>
+      <title>XML Descriptions</title>
+      
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="data/declare-step-description.xml"/>
+      </xdoc:transform>
+      
+    </sect1>
+    
   </chapter>
-  
+
   <!-- ================================================================== -->
 
-  <xi:include href="external-chapter.xml"/>
-  
-  <!-- ================================================================== -->
+  <xi:include href="{$include-file}"/>
 
-  <chapter>
-    <title>{$test}</title>
-    
-    <para>bla bla bla</para>
-    <xdoc:transform href="transforms/test.xpl"/>
-    <xdoc:transform href="transforms/test.xsl"/>
-    
-  </chapter>
 
-  
 </book>

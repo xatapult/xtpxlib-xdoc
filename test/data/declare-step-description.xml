@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.xatapult.nl/ns/xdoc ../../xsd/element-description.xsd" xmlns="http://www.xtpxlib.nl/ns/xdoc" name="p:declare-step"
+  id="declare-step-description">
+
+  <description>
+    <para>Main description of p:declare-step...</para>
+  </description>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute-table-header>
+    <para>The attribute-table-header, yoho!</para>
+  </attribute-table-header>
+
+  <attribute name="name" required="false">
+    <description>
+      <para>The name of this step. You need this name to refer to its ports from within the step itself.</para>
+    </description>
+    <type name="xs:NCName"/>
+  </attribute>
+
+  <attribute name="type" required="false">
+    <description>
+      <para>The value of the <code>type</code> attribute is used to invoke/call this step.</para>
+      <para>A step's type <emphasis>must</emphasis> always be in a namespace, so it <emphasis>must</emphasis> use a namespace prefix (and of course
+        this prefix must be declared). You cannot use the XProc <code>p:</code> namespace.</para>
+    </description>
+    <type name="xs:QName"/>
+  </attribute>
+
+  <attribute name="psvi-required" default="false">
+    <description>
+      <para>Whether or not PSVI ("Post Schema Validation Infoset") support is required.</para>
+      <para>PSVI allows you to carry type information together with your XML document. PSVI information is added when validating documents against a
+        schema. Advanced XSLT and other transformations can use this to make decisions based on the type of something (e.g. elements or
+        attributes).</para>
+      <para>If your XProc transformation requires PSVI support, set this attribute to <code>true</code>. This will make sure that non-PSVI-supporting
+        XProc processors will not even dare to execute them.</para>
+    </description>
+    <type name="xs:boolean"/>
+  </attribute>
+
+  <attribute name="xpath-version" default="3.1">
+    <description>
+      <para>The XPath version that must be used for evaluating the XPath expressions within the pipeline.</para>
+      <para>The only value XProc 3.0 processors are required to support is <code>3.1</code>. It's not allowed to specify a version lower than
+          <code>3.1</code> and whether your XProc processor supports higher values is implementation defined. Versions </para>
+      <para>If a new version of XPath arrives (if ever) <emphasis>and</emphasis> the latest and greatest release of your XProc processor starts
+        supporting this, there might be a good reason to change it to the new (higher) value. In all other cases I would say: don't bother.</para>
+    </description>
+    <type name="xs:decimal"/>
+  </attribute>
+
+  <attribute name="exclude-inline-prefixes">
+    <description>
+      <para>Defines what to do with inline namespace definitions in your documents (see <xref linkend="sect-exclude-namespace-prefixes"/>).</para>
+    </description>
+    <type name="xs:string"/>
+  </attribute>
+
+  <attribute name="version">
+    <description>
+      <para>This identifies the XProc version for your pipeline.</para>
+      <para><emphasis role="bold">Important:</emphasis> This attribute is <emphasis>mandatory</emphasis> on <tag>p:declare-step</tag> elements that
+        are the root element of a document. It is <emphasis>optional</emphasis> on nested <tag>p:declare-step</tag> elements (if not set, these
+        inherit the version setting from their parent).</para>
+      <para>If specified, its value <emphasis>must</emphasis> be <code>3.0</code>. Specifying a different value is an error. </para>
+      <para> </para>
+    </description>
+    <type name="xs:decimal"/>
+  </attribute>
+
+  <attribute name="visibility" required="false" default="public">
+    <description>
+      <para>Controls whether this step is visible for the importing pipeline when part of a library (<tag>p:library</tag>, see <xref
+          linkend="sect-step-libraries"/>). If this step is not part of a library the attribute is ignored.</para>
+    </description>
+    <type name="xs:string">
+      <enum value="public">
+        <description>
+          <para>The step is visible to the importing pipeline</para>
+        </description>
+      </enum>
+      <enum value="private">
+        <description>
+          <para>The step is <emphasis>in</emphasis>visible to the importing pipeline and can only be used in the library itself.</para>
+        </description>
+      </enum>
+    </type>
+
+  </attribute>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <element-table-header>
+    <para>The elements in the prolog of a <tag>p:declare-step</tag> are about:</para>
+    <itemizedlist>
+      <listitem>
+        <para>Imports of external XProc pipelines, libraries or XPath function libraries.</para>
+      </listitem>
+      <listitem>
+        <para>Declaring static variables.</para>
+      </listitem>
+      <listitem>
+        <para>Declarations of input ports, output ports, options and/or variables.</para>
+      </listitem>
+      <listitem>
+        <para>Declarations of locally defined steps.</para>
+      </listitem>
+    </itemizedlist>
+  </element-table-header>
+
+  <choice occurs="*">
+    <element name="p:import">
+      <description>
+        <para>Imports a step from an external source. See <xref linkend="sect-using-imports"/>.</para>
+        <para>You can also use this to import step <emphasis>libraries</emphasis>. See <xref linkend="sect-step-libraries"/>.</para>
+      </description>
+    </element>
+    <element name="p:import-functions">
+      <description>
+        <para>Imports functions (not global variables) from another language so these become useable inside the XPath expressions in your pipeline.
+          The most common ones are XSLT and XQuery libraries, but other languages are not ruled out. See <xref linkend="sect-import-functions"/>.
+          Whether importing functions is supported is implementation specific.</para>
+      </description>
+    </element>
+  </choice>
+
+  <choice occurs="*">
+    <element name="p:input">
+      <description>
+        <para>Declares an input port for this step. See <xref linkend="sect-declaring-input-ports"/>.</para>
+      </description>
+    </element>
+    <element name="p:output">
+      <description>
+        <para>Declares an output port for this step. See <xref linkend="sect-declaring-output-ports"/>.</para>
+      </description>
+    </element>
+    <element name="p:option">
+      <description>
+        <para>Declares an option for this step. See <xref linkend="sect-declaring-options"/>.</para>
+      </description>
+    </element>
+    <element name="p:variable">
+      <description>
+        <para>Declares a variable.</para>
+        <para>Variables declared in the prolog must be <emphasis>static</emphasis> (they must always carry the <code>static="true"</code> attribute).
+          See <xref linkend="sect-variables-prolog"/>.</para>
+      </description>
+    </element>
+  </choice>
+
+  <element name="p:declare-step" occurs="*">
+    <description>
+      <para>Use nested <tag>p:declare-step</tag> elements to declare steps that are local to the encompassing step. The effect is the same as for
+        steps imported by a <tag>p:import</tag> element (<xref linkend="sect-using-imports"/>).</para>
+      <para>You may also use this element to declare an <emphasis>atomic step</emphasis>, see <xref linkend="sect-atomic-steps"/>.</para>
+    </description>
+  </element>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <additional-text-coded-description as-comment="true">Step's body…</additional-text-coded-description>
+
+</element-description>
