@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <info>
+    <title>xtpxlib/xdocbook module</title>
+    <subtitle>xdoc extensions description</subtitle>
+    <pubdate>${DATETIME}</pubdate>
+    <author>
+      <personname>Erik&#160;Siegel</personname>
+    </author>
+    <orgname>Xatapult</orgname>
+    <mediaobject role="top-logo">
+      <imageobject>
+        <imagedata fileref="figures/logo-xatapult.jpg" width="10%"/>
+      </imageobject>
+    </mediaobject>
+  </info>
+
+  <!-- ================================================================== -->
+
+  <sect1>
+    <title>Introduction</title>
+
+    <para xml:id="first-para">The <code>xtpxlib-xdoc</code> component (GitHub: <code>https://github.com/eriksiegel/xtpxlib-xdoc</code>) uses
+      DocBook&#160;5 as its target vocabulary. Within this DocBook source there can be so-called <emphasis>xdoc extensions</emphasis> that will be
+      converted into "pure" DocBook by pipelines in this component. This article documents how this works (<xref linkend="sect-xdoc-mechanism"
+      />).</para>
+    <para>Specific xdoc transformations can come from the <code>xtpxlib-xdoc</code> component, for instance the conversion of XML element descriptions
+        (<xref linkend="sect-builtin-xdoc"/>). They can also be specifically written in XProc (1.0) or XSLT (<xref linkend="sect-own-xdoc"/>).</para>
+    <para>Since the DocBook specification is huge, it is not fully supported. What is supported and what not is described in
+        <code>db5-dialect-description-article.*</code>.</para>
+
+  </sect1>
+
+  <!-- ================================================================== -->
+
+  <sect1 xml:id="sect-xdoc-mechanism">
+    <title>xdoc conversion mechanism</title>
+
+    <para>[TBD pipeline]</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Step 1: Parameter substitution</title>
+
+      <para>[TBD also how to show]</para>
+    </sect2>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Step 2: Expand xdoc:transform</title>
+
+      <para>[TBD]</para>
+    </sect2>
+
+  </sect1>
+
+  <!-- ================================================================== -->
+
+  <sect1 xml:id="sect-builtin-xdoc">
+    <title>Built-in xdoc transformations</title>
+
+    <para>[TBD]</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>XML element descriptions</title>
+
+      <para>[TBD]</para>
+    </sect2>
+  </sect1>
+  
+  <!-- ================================================================== -->
+  
+  <sect1 xml:id="sect-own-xdoc">
+    <title>Writing your own xdoc transformations</title>
+    
+    <para>[TBD]</para>
+    
+    
+  </sect1>
+
+</article>

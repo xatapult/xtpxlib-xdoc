@@ -7,8 +7,8 @@
 
   <info>
     <title>xtpxlib/xdocbook module</title>
-    <subtitle>Docbook 5 dialect description</subtitle>
-    <pubdate>March 2018</pubdate>
+    <subtitle>DocBook 5 xtpxlib-xdoc dialect description</subtitle>
+    <pubdate>${DATETIME}</pubdate>
     <author>
       <personname>Erik&#160;Siegel</personname>
     </author>
@@ -25,7 +25,7 @@
   <sect1>
     <title>Introduction</title>
 
-    <para xml:id="first-para">The <code>xtpxlib-xdoc</code> module (GitHub: <code>https://github.com/eriksiegel/xtpxlib-xdoc</code>) uses
+    <para xml:id="first-para">The <code>xtpxlib-xdoc</code> component (<link xlink:href="https://github.com/eriksiegel/xtpxlib-xdoc"/>) uses
       DocBook&#160;5 as its target vocabulary. However, it does not implement the full standard (which is huge!) but only those elements/attributes
       that were deemed necessary. This document will explain what is in and what's not.</para>
 

@@ -14,11 +14,41 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../doc/xdoc-extensions-description-article.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>documentation-convert</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../doc/db5-dialect-description-article.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>db5-dialect-description-article</String>
+                                        <String>documentation-convert</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xslmod/xdoclib.mod.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>TEST-xdoc-to-docbook</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -49,21 +79,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>TEST-xdoc-to-pdf</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../xslmod/xdoclib.mod.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>TEST-xdoc-to-docbook</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -568,7 +583,7 @@
                                             </field>
                                             <field name="urls">
                                                 <String-array>
-                                                    <String>${ROOT}/doc/db5-dialect-description-article.xml</String>
+                                                    <String>${currentFileURL}</String>
                                                 </String-array>
                                             </field>
                                         </xprocInputPort>
@@ -581,7 +596,7 @@
                                                 <String>result</String>
                                             </field>
                                             <field name="url">
-                                                <String>${TMP}/db5-dialect-description-article-convert-result.xml</String>
+                                                <String>${TMP}/${cfn}-convert-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
@@ -621,7 +636,7 @@
                                                 <String>dref-pdf</String>
                                             </field>
                                             <field name="value">
-                                                <String>${ROOT}/doc/db5-dialect-description-article.pdf</String>
+                                                <String>${ROOT}/doc/${cfn}.pdf</String>
                                             </field>
                                         </xprocOption>
                                         <xprocOption>
@@ -697,7 +712,7 @@
                                     <null/>
                                 </field>
                                 <field name="name">
-                                    <String>db5-dialect-description-article</String>
+                                    <String>documentation-convert</String>
                                 </field>
                                 <field name="baseURL">
                                     <null/>
@@ -742,7 +757,7 @@
                                     <Boolean>true</Boolean>
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
-                                    <String>${ROOT}/doc/db5-dialect-description-article.pdf</String>
+                                    <String>${ROOT}/doc/${cfn}.pdf</String>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean>true</Boolean>
