@@ -54,7 +54,7 @@
   </p:option>
 
   <p:output port="result" primary="true" sequence="false">
-    <p:documentation>Some XML report about the conversion</p:documentation>
+    <p:documentation>The resulting XSL-FO that was transformed into the PDF</p:documentation>
     <p:pipe port="result" step="final-output"/>
   </p:output>
 

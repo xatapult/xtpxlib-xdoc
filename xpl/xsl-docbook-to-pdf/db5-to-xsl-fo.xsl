@@ -676,11 +676,20 @@
       </xsl:if>
       <xsl:if test="not($is-special)">
         <block font-weight="bold" keep-with-next="always" color="{$title-color}">
-          <xsl:value-of select="if ($is-note) then 'NOTE:' else 'WARNING:'"/>
+          <xsl:choose>
+            <xsl:when test="exists(db:title)">
+              <xsl:call-template name="handle-inline-text">
+                <xsl:with-param name="contents" select="db:title/node()"/>
+              </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:value-of select="if ($is-note) then 'NOTE:' else 'WARNING:'"/>
+            </xsl:otherwise>  
+          </xsl:choose>
         </block>
       </xsl:if>
 
-      <xsl:apply-templates mode="#current"/>
+      <xsl:apply-templates select="* except db:title" mode="#current"/>
     </block>
     <xsl:call-template name="empty-line">
       <xsl:with-param name="size-pt" select="$standard-extra-paragraph-distance-pt"/>
