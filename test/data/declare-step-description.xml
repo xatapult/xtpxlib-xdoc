@@ -17,7 +17,11 @@
     <description>
       <para>The name of this step. You need this name to refer to its ports from within the step itself.</para>
     </description>
-    <type name="xs:NCName"/>
+    <type name="xs:NCName">
+      <description>
+        <para>Bla bla bla additioal type description</para>
+      </description>
+    </type>
   </attribute>
 
   <attribute name="type" required="false">

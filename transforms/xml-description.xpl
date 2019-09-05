@@ -4,6 +4,9 @@
 
   <p:documentation>
       Turns an XML element description into the appropriate Docbook.
+      
+      Remark: Since it is currently a single XSL only, we could have done this with an XSL only transformation. But Is think this
+      is not the end of it and therefore I've put in a pipeline, so we can be flexible.
     </p:documentation>
 
   <!-- ================================================================== -->

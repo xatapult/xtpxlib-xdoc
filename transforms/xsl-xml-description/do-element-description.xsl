@@ -14,15 +14,8 @@
 
   <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
   <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
-  <!--  <xsl:include href="../../../xslmod/xdocbook-lib.xsl"/>-->
 
   <xsl:mode on-no-match="shallow-copy"/>
-
-  <!-- ================================================================== -->
-  <!-- PARAMETERS: -->
-
-  <xsl:param name="main-font-size" as="xs:string" required="false" select="'10'"/>
-  <xsl:variable name="main-font-size-dbl" as="xs:double" select="xs:double($main-font-size)"/>
 
   <!-- ================================================================== -->
   <!-- GLOBALS: -->
@@ -47,9 +40,6 @@
 
   <xsl:variable name="enums-table-value-column-min-width-cm" as="xs:double" select="0.8"/>
   <xsl:variable name="enums-table-value-column-max-width-cm" as="xs:double" select="2"/>
-
-  <!-- An educated guess about the number of fixed width characters per cm.  -->
-  <xsl:variable name="fixed-width-characters-per-cm-dbl" as="xs:double" select="5.55 + ((10 - $main-font-size-dbl) * 0.45) "/>
 
   <!-- ================================================================== -->
 
@@ -90,7 +80,7 @@
     </xsl:call-template>
 
     <!-- Elements table (remove doubles): -->
-     <xsl:call-template name="output-description-table">
+    <xsl:call-template name="output-description-table">
       <xsl:with-param name="descriptions" as="element(xdoc:element)*">
         <xsl:for-each-group select=".//xdoc:element" group-by="@name">
           <xsl:sequence select="current-group()[1]"/>
@@ -343,13 +333,13 @@
       <xsl:call-template name="output-docbook-contents">
         <xsl:with-param name="elms" select="$header"/>
       </xsl:call-template>
-      <xsl:variable name="name-column-width" as="xs:double"
-        select="local:compute-fixed-width-column-width($descriptions-to-use/@name, 
-          $description-table-name-column-min-width-cm, $description-table-name-column-max-width-cm)"/>
+      <!-- Add role to the name column so the final goal transformations (e.g. the one that creates XSL-FO) can compute the actual width. -->
+      <xsl:variable name="name-column-role" as="xs:string"
+        select="'code-width-cm:' || $description-table-name-column-min-width-cm || '-' || $description-table-name-column-max-width-cm"/>
       <table role="nonumber">
         <title/>
         <tgroup cols="{if ($has-type-info) then 4 else 3}">
-          <colspec colname="name" colwidth="{$name-column-width}cm"/>
+          <colspec colname="name" role="{$name-column-role}"/>
           <colspec colname="occurrences" colwidth="{$description-table-occurs-column-width-cm}cm"/>
           <xsl:if test="$has-type-info">
             <colspec colname="type" colwidth="{$description-table-type-column-width-cm}cm"/>
@@ -371,10 +361,9 @@
             <xsl:for-each select="$descriptions-to-use">
               <row>
                 <entry>
-                  <xsl:call-template name="text-out-fixed-width-limited">
-                    <xsl:with-param name="text" select="@name"/>
-                    <xsl:with-param name="width-cm" select="$name-column-width"/>
-                  </xsl:call-template>
+                  <code role="code-width-limited">
+                    <xsl:value-of select="@name"/>
+                  </code>
                 </entry>
                 <entry>
                   <para>
@@ -428,10 +417,11 @@
     <xsl:param name="column-width-cm" as="xs:double" required="yes"/>
 
     <xsl:for-each select="$type">
-      <xsl:call-template name="text-out-fixed-width-limited">
-        <xsl:with-param name="text" select="(@base, @name)[1]"/>
-        <xsl:with-param name="width-cm" select="$column-width-cm"/>
-      </xsl:call-template>
+      <para>
+        <code role="code-width-limited">
+          <xsl:value-of select="(@base, @name)[1]"/>
+        </code>
+      </para>
       <xsl:call-template name="output-docbook-contents">
         <xsl:with-param name="encompassing-element" select="xdoc:description"/>
       </xsl:call-template>
@@ -446,14 +436,13 @@
     <xsl:for-each select="$type">
       <xsl:variable name="enums" as="element(xdoc:enum)*" select="xdoc:enum"/>
       <xsl:if test="exists($enums)">
-        <xsl:variable name="value-column-width" as="xs:double"
-          select="local:compute-fixed-width-column-width($enums/@value, 
-            $enums-table-value-column-min-width-cm, $enums-table-value-column-max-width-cm)"/>
+        <xsl:variable name="enums-column-role" as="xs:string"
+          select="'code-width-cm:' || $enums-table-value-column-min-width-cm || '-' || $enums-table-value-column-max-width-cm"/>
         <table role="nonumber">
           <title/>
           <tgroup cols="2">
-            <colspec colname="value" colnum="1" colwidth="{$value-column-width}cm"/>
-            <colspec colname="description" colnum="2"/>
+            <colspec colname="value" role="{$enums-column-role}"/>
+            <colspec colname="description"/>
             <thead>
               <row>
                 <entry>Value</entry>
@@ -464,10 +453,9 @@
               <xsl:for-each select="$enums">
                 <row>
                   <entry>
-                    <xsl:call-template name="text-out-fixed-width-limited">
-                      <xsl:with-param name="text" select="@value"/>
-                      <xsl:with-param name="width-cm" select="$value-column-width"/>
-                    </xsl:call-template>
+                    <code role="code-width-limited">
+                      <xsl:value-of select="@value"/>
+                    </code>
                   </entry>
                   <entry>
                     <xsl:call-template name="output-docbook-contents">
@@ -515,57 +503,6 @@
     <xsl:param name="element-with-occurs" as="element()"/>
     <xsl:variable name="occurs" as="xs:string" select="($element-with-occurs/@occurs, '1')[1]"/>
     <xsl:sequence select="if ($occurs eq '1') then '' else $occurs"/>
-  </xsl:function>
-
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <xsl:template name="text-out-fixed-width-limited">
-    <xsl:param name="text" as="xs:string" required="true"/>
-    <xsl:param name="width-cm" as="xs:double" required="true"/>
-
-    <xsl:choose>
-      <xsl:when test="contains($text, ' ') or contains($text, '-')">
-        <!-- Assume the text will break "naturally"... -->
-        <para>
-          <code>
-            <xsl:value-of select="$text"/>
-          </code>
-        </para>
-      </xsl:when>
-      <xsl:otherwise>
-        <!-- Perform nifty calculations and break the line: -->
-        <xsl:variable name="characters-per-line" as="xs:integer" select="xs:integer(floor( ($width-cm - 0.3) * $fixed-width-characters-per-cm-dbl))"/>
-        <xsl:variable name="nr-of-lines" as="xs:integer" select="xs:integer(ceiling(string-length($text) div $characters-per-line))"/>
-        <!--<para>
-          <code><xsl:value-of select="$width-cm"/> / <xsl:value-of select="$fixed-width-characters-per-cm-dbl"/> / <xsl:value-of
-              select="$characters-per-line"/> / <xsl:value-of select="$nr-of-lines"/></code>
-        </para>-->
-        <xsl:for-each select="1 to $nr-of-lines">
-          <xsl:variable name="line-nr" as="xs:integer" select="."/>
-          <para>
-            <code>
-              <xsl:value-of select="substring($text, 1 + (($line-nr - 1) * $characters-per-line), $characters-per-line)"/>
-            </code>
-          </para>
-        </xsl:for-each>
-      </xsl:otherwise>
-    </xsl:choose>
-
-
-  </xsl:template>
-
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <xsl:function name="local:compute-fixed-width-column-width" as="xs:double">
-    <xsl:param name="names" as="xs:string*"/>
-    <xsl:param name="min-width" as="xs:double"/>
-    <xsl:param name="max-width" as="xs:double"/>
-
-    <xsl:variable name="max-nr-of-characters" as="xs:integer" select="max(for $n in $names return string-length($n))"/>
-    <xsl:variable name="width-based-on-nr-of-characters" as="xs:double" select="$max-nr-of-characters div $fixed-width-characters-per-cm-dbl"/>
-    <!-- Find the right width and add just a  tiny bit to make sure everything goes ok (otherwise sometimes words still go to the next line) -->
-    <xsl:variable name="width" as="xs:double" select="max(($min-width, $width-based-on-nr-of-characters)) + 0.3"/>
-    <xsl:sequence select="if ($width gt $max-width) then $max-width else $width"/>
   </xsl:function>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

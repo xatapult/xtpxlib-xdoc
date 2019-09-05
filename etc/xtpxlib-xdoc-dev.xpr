@@ -570,6 +570,5 @@
         <folder path="../"/>
         <folder path="../../xtpxlib-xwebgen/"/>
         <folder path="../../../xproc-3/XProc-book/"/>
-        <folder path="../../../../xmldev/xtpxlib/"/>
     </projectTree>
 </project>

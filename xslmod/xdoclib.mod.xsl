@@ -59,5 +59,13 @@
     <xsl:sequence select="map:merge(($special-values-map, xtlc:parameters-get($href-parameters, $filtermap)))"/>
 
   </xsl:function>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:function name="xdoc:fixed-width-characters-per-cm-dbl" as="xs:double">
+    <!-- Computes the number of fixed-width characters based on the main font size (based on using FOP) -->
+    <xsl:param name="main-font-size-dbl" as="xs:double"/>
+    <xsl:sequence select="5.55 + ((10 - $main-font-size-dbl) * 0.45) "/>
+  </xsl:function>
+  
 </xsl:stylesheet>

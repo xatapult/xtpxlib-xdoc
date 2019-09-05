@@ -74,6 +74,21 @@
     <p:with-param name="null" select="()"/>
   </p:xslt>
 
+  <!-- Handle columns with code contents and code width limitations 
+    (<colspec role="code-width-cm:1.2-4"/> and <code role="code-width-limited">) -->
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-docbook-to-pdf/handle-code-width-limited-columns.xsl"/>
+    </p:input>
+    <p:with-param name="main-font-size" select="$main-font-size"/>
+  </p:xslt>
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-docbook-to-pdf/handle-code-width-limited-contents.xsl"/>
+    </p:input>
+    <p:with-param name="main-font-size" select="$main-font-size"/>
+  </p:xslt>
+
   <!-- Create the XSL-FO: -->
   <p:xslt>
     <p:input port="stylesheet">
