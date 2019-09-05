@@ -17,10 +17,11 @@
   </mode>
 
   <mode name="attach">
-    <!-- Added: TBD Change this into a real schema ref with our own elements in it! -->
+    <!-- ADJUSTMENT FOR XTPXLIB-XDOC: Add reference to the xdoc schema: -->
     <namespace ns="http://www.xtpxlib.nl/ns/xdoc">
       <validate schema="../xdoc.xsd"/>
     </namespace>
+    <!-- END ADJUSTMENT -->
 
     <anyNamespace>
       <attach/>

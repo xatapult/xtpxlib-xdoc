@@ -11,59 +11,16 @@ Erik Siegel - erik@xatapult.nl - +31 6 53260792
 **`xtpxlib`** is a library containing software for processing XML, using languages like 
 XSLT, XProc etc. It consists of several separate components, named `xtpxlib-*`. Everything can be found on GitHub ([https://github.com/eriksiegel](https://github.com/eriksiegel)).
 
-**`xtpxlib-xdoc`** ([https://github.com/eriksiegel/xtpxlib-TBD](https://github.com/eriksiegel/xtpxlib-TBD)) is TBD.
+**`xtpxlib-xdoc`** ([https://github.com/eriksiegel/xtpxlib-xdoc](https://github.com/eriksiegel/xtpxlib-xdoc)) is a library that supports conversions from DocBook&#160;5 with so-called xdoc extensions into "pure" DocBook&#160;5. From there you can convert it into some target format (currently only PDF through FOP is supported).
 
-----
-
-## TODOs
-
-
-* Revisit the XML structure stuff. Too complex (refers to global stuff nobody uses), different format?
-  * Generate from schemas/check against schemas? 
-* For FOP: Table column width when column is fixed width based on code entries. @role based?
-* What do we do with refs to chapters etc. Text must be multilingual!
-
-* Rewrite documentation and eat own dogshit: Add constructs for XML structures, pipeline calls, schema calls, etc.
-  * Explain $xdoc ==> in  `xtpxlib-xdoc/transforms`
-  * Explain no params ==> Use attributes on root `<xdoc:transform>` element
-  
-* Check for TBSs in the code!  
-
-## MAYBEs
-
-* Contents based on parameters? if/choose constructs?
-* Output to others: HTML, Markdown 
+Xdoc extensions in the source DocBook can be standard ones, defined by this component (for instance formatting XML element descriptions). You can also easily add special conversions of your own, either in XProc or XSLT. There is documentation about all this in the component's `doc` folder.
 
 ----
 
 ## Using `xtpxlib`
 
-* Clone the GitHub repository to some appropriate location on disk. That's basicly it for installation.
+* Clone the GitHub repository to some appropriate location on disk. That's basically it for installation.
 * If you use more than one `xtpxlib` component, all repositories must be cloned in the same base directory.
-
-----
-
-## Notes on installing the DocBook schemas
-
-TBD: in docbook folder, remove tools and documentation. From downloaded zip in [https://docbook.org/xml/5.1/](https://docbook.org/xml/5.1/)
-
-Use currently V5.1
-
-Adapt nvdl
-
-----
-
-## FROM OLD TBD
-
-## XProc libraries
-
-Subdirectory: `xplmod`
-
-| Library | Description |
-|----|----|
-| `db5-pdf.mod/db5-pdf.mod.xpl` | Turns a limited subset of Docbook 5 into PDF using XSL-FO/FOP. The Docbook 5 dialect used van be found in `test/db5-dialect-description/db5-dialect-description.xml`. If you want to turn this into a PDF, use the module test script `xplmod/db5-pdf.mod/test/test-db5-pdf.xpl`. |
-| `descriptions-db5.mod/descriptions-db5.mod.xpl` | Turns descriptions of XML constructs, that you can mingle with your Docbook 5 contents, into full descriptions. Examples in `test/element-description/` | 
-| `convert-db5.mod/convert-db5.mod.xpl` | Checks for several conversion elements in the source to apply an XSL or XProc directly. See also the documentation of the module.| 
 
 ----
 
@@ -73,13 +30,36 @@ Subdirectory: `xplmod`
 
 | Directory | Description | Remarks |
 | --------- | ----------- | --------|
-| `data` | Static data files. |  |
+| `doc` | Documentation. | See the documentation section below. This directory contains both the source and the PDF versions. So it can also serve as an example. |
 | `etc` | Other files, mostly for use inside oXygen. |  |
-| `xplmod` | XProc 1.0 libraries. |  |
-| `xsd` | XML Schemas. |  |
-| `xsl` | XSLT scripts. |  |
-| `xslmod` | XSLT libraries. |  |
+| `test` | Test scripts and sources. |  |
+| `transforms` | Special transformations. | See the documentation section below. |
+| `xpl` | XProc pipelines for conversion of the DocBook. |  |
+| `xsd` | Schemas for some of the formats used  by this component. |  |
+| `xslmod` | XSLT libraries for internal component usage. |  |
 
 The subdirectories named `tmp` and  `build` may appear while running parts of the library. These directories are for temporary and build results. Git will ignore them because of the `.gitignore` settings.
 
 Most files contain a header comment about what they're for.
+
+----
+
+## Documentation
+
+The `doc` folder contains several pieces of important documentation, all created for the conversion pipelines in this component. For each documentation part, as mentioned in the table below, there is both the XML xdoc source *and* the resulting PDF. The XML sources also serve as examples. The PDF's are created with the `xpl/xdoc-to-pdf` pipeline.
+
+
+| Documentation | Description |
+| ------------- | ----------- |
+| `db5-dialect-description-article` | Describes which DocBook&#160;5 constructs are supported and which not. |
+| `xdoc-extensions-description-article` | Describes the xdoc extension mechanism and the built-in xdoc conversions. |
+
+----
+
+## Notes on the DocBook schemas
+
+The component contains an `xsd/docbook` folder that contains the docbook schemas with the adaptation that it now also accepts the xdoc extensions used by this library.
+
+The original schemas were downloaded from [https://docbook.org/xml/5.1/](https://docbook.org/xml/5.1/) and stored in `xsd/docbook` The `docbook.nvdl` file was changed. The changes are marked with comments.
+
+Use the `xsd/docbook/docbook.nvdl` file for validating your DocBook-with-xdoc contents.
