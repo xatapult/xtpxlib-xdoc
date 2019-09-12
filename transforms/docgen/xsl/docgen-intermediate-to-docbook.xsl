@@ -22,8 +22,11 @@
   <!-- ================================================================== -->
   <!-- DECLARATIONS: -->
 
-  <xsl:variable name="href-in" as="xs:string" select="xtlc:href-protocol-remove(xtlc:href-canonical(/dgi:document/@href))"/>
+  <xsl:variable name="href-in" as="xs:string" select="/*/@href"/>
   <xsl:variable name="filename" as="xs:string" select="xtlc:href-name($href-in)"/>
+
+  <xsl:variable name="type-id" as="xs:string" select="/*/@type-id"/>
+  <xsl:variable name="filecomponents" as="xs:integer" select="xtlc:str2int(/*/@filecomponents, 0)"/>
 
   <xsl:variable name="standard-title" as="xs:string" select="concat($filename, ' documentation')"/>
 
@@ -45,7 +48,25 @@
     <!-- Put everything in a group since we're going to create multiple elements and need a root element. This element will be removed later. -->
     <xdoc:GROUP>
 
-      <para>File: <code><xsl:value-of select="xtlc:href-protocol-remove(xtlc:href-canonical(@href))"/></code></para>
+      <!-- Display the filename if requested: -->
+      <xsl:variable name="href-normalized" as="xs:string" select="xtlc:href-protocol-remove(xtlc:href-canonical($href-in))"/>
+      <xsl:variable name="file-display" as="xs:string?">
+        <xsl:choose>
+          <xsl:when test="$filecomponents lt 0">
+            <xsl:sequence select="()"/>
+          </xsl:when>
+          <xsl:when test="$filecomponents eq 0">
+            <xsl:sequence select="$href-normalized"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:variable name="href-components" as="xs:string*" select="tokenize($href-normalized, '/')"/>
+            <xsl:sequence select="string-join($href-components[position() gt (last() - $filecomponents)], '/')"/>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:variable>
+      <xsl:if test="exists($file-display)">
+        <para role="keep-with-next">File: <code>{ $file-display }</code></para>
+      </xsl:if>
 
       <!-- Main documentation: -->
       <xsl:call-template name="documentation-to-docbook"/>
@@ -55,17 +76,25 @@
 
       <!-- Global parameters: -->
       <xsl:call-template name="parameters-to-docbook">
-        <xsl:with-param name="id" select="local:get-id('global-parameters')"/>
+        <xsl:with-param name="id" select="local:get-id('global')"/>
         <xsl:with-param name="title" select="'Parameters in ' || $filename"/>
       </xsl:call-template>
 
       <!-- Objects ToC: -->
       <xsl:variable name="object-entries" as="element(dgi:object)*" select="dgi:objects/dgi:object"/>
+      <xsl:variable name="add-title" as="xs:boolean" select="xtlc:str2bln(dgi:objects/@title, true())"/>
       <xsl:if test="exists($object-entries)">
         <xsl:for-each-group select="$object-entries" group-by="@type-id">
           <xsl:sort select="local:type-to-priority(current-grouping-key())" order="descending"/>
           <table xml:id="{local:get-id(('toc', current-grouping-key()))}">
-            <title>{ local:type-to-description(current-grouping-key()) }s in { $filename }</title>
+            <xsl:if test="not($add-title)">
+              <xsl:attribute name="role" select="'nonumber'"/>
+            </xsl:if>
+            <title>
+              <xsl:if test="$add-title">
+                <xsl:value-of select="local:type-to-description(current-grouping-key()) || 's in ' || $filename"/>
+              </xsl:if>
+            </title>
             <tgroup cols="2">
               <!-- Remark: We would like to make the first column flexible width (with role="code-width-cm:..."), but that doesn’t work here 
                 since the contents of the column sometimes comes from an <xref> and is therefore generated... -->
@@ -230,9 +259,10 @@
     <xsl:param name="id" as="xs:string?" required="false" select="()"/>
     <xsl:param name="title" as="xs:string?" required="false" select="()"/>
 
-    <xsl:variable name="parameter-entries" as="element(dgi:parameter)*" select="$elm/dgi:parameters/dgi:parameter"/>
-    <xsl:if test="exists($parameter-entries)">
-
+    <xsl:for-each select="$elm/dgi:parameters[exists(dgi:parameter)]">
+      <xsl:variable name="parameter-entries" as="element(dgi:parameter)*" select="dgi:parameter"/>
+      <xsl:variable name="typename" as="xs:string" select="(@typename, 'parameter')[1]"/>
+      <xsl:variable name="add-title" as="xs:boolean" select="xtlc:str2bln(@title, true()) and exists($title)"/>
       <xsl:variable name="has-type-info" as="xs:boolean" select="exists($parameter-entries/@type)"/>
       <xsl:variable name="has-required-info" as="xs:boolean" select="exists($parameter-entries/@required)"/>
       <xsl:variable name="has-default-info" as="xs:boolean" select="exists($parameter-entries/@default)"/>
@@ -240,13 +270,13 @@
         select="2 + (if ($has-type-info) then 1 else 0) + (if ($has-required-info) then 1 else 0) + (if ($has-default-info) then 1 else 0)"/>
 
       <table>
-        <xsl:if test="empty($title)">
+        <xsl:if test="not($add-title)">
           <xsl:attribute name="role" select="'nonumber'"/>
         </xsl:if>
         <xsl:if test="exists($id)">
-          <xsl:attribute name="xml:id" select="$id"/>
+          <xsl:attribute name="xml:id" select="$id || '-' || $typename || 's'"/>
         </xsl:if>
-        <title>{ $title }</title>
+        <title>{ if ($add-title) then $title else () }</title>
         <tgroup cols="{$nr-of-columns}">
           <colspec role="code-width-cm:1.5-4"/>
           <xsl:if test="$has-type-info">
@@ -261,7 +291,7 @@
           <colspec/>
           <thead>
             <row>
-              <entry>Parameter</entry>
+              <entry>{ xtlc:capitalize($typename) }</entry>
               <xsl:if test="$has-type-info">
                 <entry>Type</entry>
               </xsl:if>
@@ -303,8 +333,7 @@
           </tbody>
         </tgroup>
       </table>
-
-    </xsl:if>
+    </xsl:for-each>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -315,7 +344,7 @@
     <xsl:for-each select="$object">
       <bridgehead xml:id="{local:get-object-id(.)}" xreflabel="{@name}">
         <xsl:value-of select="local:type-to-description(@type-id)"/>
-        <xsl:text> </xsl:text>
+        <xsl:text>: </xsl:text>
         <code>{ @name }</code>
         <xsl:if test="normalize-space(@type) ne ''">
           <xsl:text> =&gt; </xsl:text>

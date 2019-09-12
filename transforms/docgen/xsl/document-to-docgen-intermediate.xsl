@@ -52,6 +52,7 @@
       <!-- Remark: the construction below is to keep things working when we run the stylesheet on its own, outside an xdoc context. -->
       <xsl:choose>
         <xsl:when test="exists(/xdoc:transform)">
+          <xsl:copy-of select="/xdoc:transform/@filecomponents"/>
           <xsl:apply-templates select="/xdoc:transform/*[1]"/>
         </xsl:when>
         <xsl:otherwise>
@@ -104,11 +105,8 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="*" priority="-1">
-    <!-- Unrecognized root element. Raise error": -->
-    <xsl:call-template name="xtlc:raise-error">
-      <xsl:with-param name="msg-parts"
-        select="('Document &quot;', base-uri(.), '&quot;: Unrecognized root element for document generation: ', name(.))"/>
-    </xsl:call-template>
+    <xsl:attribute name="type-id" select="'xml'"/>
+    <xsl:call-template name="get-element-documentation"/>
   </xsl:template>
 
   <!-- ================================================================== -->
@@ -204,7 +202,7 @@
       select="$root/p:declare-step[exists(@type)][local:object-name-is-relevant(string(@type))]"/>
 
     <!-- Process all objects: -->
-    <xsl:if test="exists($objects)">
+    <xsl:where-populated>
       <objects>
         <xsl:for-each select="$objects">
           <xsl:variable name="object" as="element()" select="."/>
@@ -214,7 +212,7 @@
           </object>
         </xsl:for-each>
       </objects>
-    </xsl:if>
+    </xsl:where-populated>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -222,34 +220,36 @@
   <xsl:template name="xpl-gather-parameters">
     <xsl:param name="elm" as="element()" required="no" select="."/>
 
-    <xsl:variable name="parameters" as="element()*" select="$elm/(p:input | p:output | p:option)"/>
-    <xsl:if test="exists($parameters)">
-      <parameters>
-        <xsl:for-each select="$parameters">
-          <xsl:choose>
-
-            <!-- Input/output ports: -->
-            <xsl:when test="self::p:input or self::p:output">
-              <parameter name="{concat(local-name(.), '[', @port, ']')}">
-                <xsl:call-template name="xpl-get-element-documentation"/>
-              </parameter>
-            </xsl:when>
-
-            <!-- Options: -->
-            <xsl:otherwise>
-              <parameter name="{@name}">
-                <xsl:copy-of select="@required"/>
-                <xsl:if test="exists(@select)">
-                  <xsl:attribute name="default" select="@select"/>
-                </xsl:if>
-                <xsl:call-template name="xpl-get-element-documentation"/>
-              </parameter>
-            </xsl:otherwise>
-
-          </xsl:choose>
+    <!-- Ports: -->
+    <xsl:where-populated>
+      <parameters typename="port" title="false">
+        <xsl:for-each select="$elm/(p:input | p:output)">
+          <parameter name="{@port}">
+            <xsl:variable name="port-type" as="xs:string" select="local-name(.)"/>
+            <xsl:variable name="is-only-definition-of-this-type" as="xs:boolean"
+              select="empty(preceding-sibling::*[local-name() eq $port-type]) and empty(following-sibling::*[local-name() eq $port-type])"/>
+            <xsl:variable name="is-primary" as="xs:boolean" select="xtlc:str2bln(@primary, false()) or $is-only-definition-of-this-type"/>
+            <xsl:attribute name="type" select="$port-type || (if ($is-primary) then ', primary' else ())"/>
+            <xsl:call-template name="xpl-get-element-documentation"/>
+          </parameter>
         </xsl:for-each>
       </parameters>
-    </xsl:if>
+    </xsl:where-populated>
+
+    <!-- Options: -->
+    <xsl:where-populated>
+      <parameters typename="option" title="false">
+        <xsl:for-each select="$elm/p:option">
+          <parameter name="{@name}">
+            <xsl:copy-of select="@required"/>
+            <xsl:if test="exists(@select)">
+              <xsl:attribute name="default" select="@select"/>
+            </xsl:if>
+            <xsl:call-template name="xpl-get-element-documentation"/>
+          </parameter>
+        </xsl:for-each>
+      </parameters>
+    </xsl:where-populated>
   </xsl:template>
 
   <!-- ================================================================== -->
@@ -266,7 +266,7 @@
 
     <!-- Process all objects: -->
     <xsl:if test="exists($objects)">
-      <objects>
+      <objects title="false">
         <xsl:for-each select="$objects">
           <xsl:variable name="object" as="element()" select="."/>
           <object type-id="{local-name($object)}" name="{@name}">
@@ -450,5 +450,9 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="xdoc:warning-prevention-template"/>
+  
 </xsl:stylesheet>

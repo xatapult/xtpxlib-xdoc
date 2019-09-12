@@ -75,6 +75,17 @@
 
       <para>[TBD]</para>
     </sect2>
+    
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <sect2>
+      <title>Documentation generation</title>
+      
+      <para>[TBD]</para>
+      <para>Supports xpl, xsl, xsd and plain xml</para>
+      <para>Don't forget <code>@filecomponents</code></para>
+    </sect2>
+    
   </sect1>
   
   <!-- ================================================================== -->

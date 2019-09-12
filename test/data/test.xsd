@@ -10,7 +10,7 @@
     </xs:annotation>
     <xs:complexType>
       <xs:sequence>
-        <xs:group ref="dgi:g-documentation" minOccurs="0">
+        <xs:group ref="dgi:g-documentation">
           <xs:annotation>
             <xs:documentation>The documentation for the document.</xs:documentation>
           </xs:annotation>
@@ -84,11 +84,6 @@
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
-            <xs:attribute default="true" name="title" type="xs:boolean">
-              <xs:annotation>
-                <xs:documentation>Add a table title if applicable</xs:documentation>
-              </xs:annotation>
-            </xs:attribute>
           </xs:complexType>
         </xs:element>
       </xs:sequence>
@@ -105,11 +100,6 @@
       <xs:attribute name="timestamp" type="xs:dateTime" use="required">
         <xs:annotation>
           <xs:documentation>Date/time the intermediate format was created</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-      <xs:attribute default="0" name="filecomponents" type="xs:integer">
-        <xs:annotation>
-          <xs:documentation>The number of components of a filename that will be shown (1=filename only, 2=filename+direct directory, etc.). 0 means all. le 0 means none.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>
@@ -186,11 +176,6 @@
             <xs:annotation>
               <xs:documentation>The name of this type of parameter (e.g. option or port or...). Singular, lower-case.
 </xs:documentation>
-            </xs:annotation>
-          </xs:attribute>
-          <xs:attribute default="true" name="title" type="xs:boolean">
-            <xs:annotation>
-              <xs:documentation>Add a table title if applicable</xs:documentation>
             </xs:annotation>
           </xs:attribute>
         </xs:complexType>
