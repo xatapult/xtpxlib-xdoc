@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:local="#local" xmlns:db="http://docbook.org/ns/docbook"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns="http://www.w3.org/1999/XSL/Format" xmlns:xtlc="http://www.xtpxlib.nl/ns/common"
-  xmlns:xlink="http://www.w3.org/1999/xlink" exclude-result-prefixes="#all" expand-text="true">
+  xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns="http://www.w3.org/1999/XSL/Format"
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xlink="http://www.w3.org/1999/xlink" exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!--*	
     Turns the db5 (in XProc book dialect) into XSL-FO 	
@@ -28,7 +28,7 @@
   <!-- PARAMETERS: -->
 
   <xsl:param name="preliminary-version" as="xs:string" required="no" select="string(false())"/>
-  
+
   <xsl:param name="chapter-id" as="xs:string" required="no" select="''">
     <!-- With this parameter you can provide the identifier of a chapter (or preface) to output only. Front page and TOC will not be output.
       Use for debugging. -->
@@ -47,6 +47,8 @@
   <xsl:variable name="is-preliminary-version" as="xs:boolean" select="xtlc:str2bln($preliminary-version, false())"/>
   <xsl:variable name="do-chapter-id" as="xs:string" select="normalize-space($chapter-id)"/>
   <xsl:variable name="chapter-id-provided" as="xs:boolean" select="$do-chapter-id ne ''"/>
+
+  <xsl:variable name="original-document" as="document-node()" select="/"/>
 
   <!-- ================================================================== -->
   <!-- LAYOUT STUFF -->
@@ -684,7 +686,7 @@
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="if ($is-note) then 'NOTE:' else 'WARNING:'"/>
-            </xsl:otherwise>  
+            </xsl:otherwise>
           </xsl:choose>
         </block>
       </xsl:if>
@@ -912,9 +914,10 @@
   <xsl:template match="db:xref" mode="mode-inline">
 
     <xsl:variable name="id" as="xs:string" select="@linkend"/>
-    <xsl:variable name="referenced-element" as="element()?" select="key($id-index-name, $id)"/>
+    <xsl:variable name="referenced-element" as="element()?" select="key($id-index-name, $id, $original-document)"/>
     <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(@role)"/>
-    <xsl:variable name="do-capitalize" as="xs:boolean" select="$roles =  ('capitalize')"/>
+    <xsl:variable name="do-capitalize" as="xs:boolean" select="'capitalize' = $roles"/>
+    <xsl:variable name="text-only" as="xs:boolean" select="'text' = $roles"/>
 
     <xsl:choose>
       <xsl:when test="exists($referenced-element)">
@@ -928,10 +931,17 @@
               <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
             </xsl:when>
             <xsl:when test="exists($referenced-element/@xreflabel)">
-              <xsl:text>&quot;</xsl:text>
-              <xsl:value-of select="$referenced-element/@xreflabel"/>
-              <xsl:text>&quot; on page&#160;</xsl:text>
-              <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
+              <xsl:choose>
+                <xsl:when test="$text-only">
+                  <xsl:value-of select="$referenced-element/@xreflabel"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:text>&quot;</xsl:text>
+                  <xsl:value-of select="$referenced-element/@xreflabel"/>
+                  <xsl:text>&quot; on page&#160;</xsl:text>
+                  <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:when>
             <xsl:when test="$referenced-element/self::db:chapter">
               <xsl:value-of select="local:xref-capitalize('chapter&#160;', $do-capitalize)"/>
@@ -942,6 +952,17 @@
               <xsl:value-of select="$referenced-element/@number"/>
             </xsl:when>
             <xsl:when test="matches(local-name($referenced-element), '^sect[0-9]$')">
+              <xsl:choose>
+                <xsl:when test="$text-only">
+                  <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:text>"</xsl:text>
+                  <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
+                  <xsl:text>" on page&#160;</xsl:text>
+                  <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
+                </xsl:otherwise>
+              </xsl:choose>
               <xsl:text>"</xsl:text>
               <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
               <xsl:text>" on page&#160;</xsl:text>
@@ -950,7 +971,7 @@
             <xsl:when
               test="$referenced-element/self::db:figure[exists(@number)] or $referenced-element/self::db:table[exists(@number)] or
                 $referenced-element/self::db:example[exists(@number)]">
-              <xsl:value-of select="xtlc:capitalize(local-name($referenced-element))"/>
+              <xsl:value-of select="local:xref-capitalize(local-name($referenced-element), $do-capitalize)"/>
               <xsl:text>&#160;</xsl:text>
               <xsl:value-of select="$referenced-element/@number"/>
             </xsl:when>

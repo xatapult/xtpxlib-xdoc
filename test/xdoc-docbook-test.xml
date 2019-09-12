@@ -47,12 +47,12 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <sect1>
+    <!--<sect1>
       <title>Parameters</title>
       <xdoc:dump-parameters type="table"/>
     </sect1>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\->
 
     <sect1>
       <title>{$test}</title>
@@ -62,13 +62,24 @@
       <xdoc:transform href="transforms/test.xsl"/>
     </sect1>
     
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\->
     
     <sect1>
       <title>XML Descriptions</title>
       
-      <xdoc:transform href="$xdoc/xml-description.xpl">
+      <xdoc:transform href="$xdoc/xml-description/xml-description.xpl">
         <xi:include href="data/declare-step-description.xml"/>
+      </xdoc:transform>
+      
+    </sect1>-->
+    
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <sect1>
+      <title>Documentation generation</title>
+      
+       <xdoc:transform href="$xdoc/docgen/docgen.xpl">
+        <xi:include href="data/test.mod.xsl"/>
       </xdoc:transform>
       
     </sect1>

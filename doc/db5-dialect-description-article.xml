@@ -505,10 +505,18 @@
             <listitem>
               <para>Use <code>role="simple"</code> to always get: page #</para>
             </listitem>
+            <listitem>
+              <para>Use <code>role="text"</code> to only get the (unquoted) text only in cases where a "…" on page&#160;… would normally
+                appear.</para>
+            </listitem>
+            <listitem>
+              <para>Use <code>role="capitalize"</code> to force the reference string (for chapters/appendices/pages/figures/tables/…) to start with an
+                upper-case character (so you can be sure a sentence that starts with an <tag>xref</tag> always starts with a capital).</para>
+            </listitem>
           </itemizedlist>
           <para>Otherwise it depends on what is pointed to:</para>
           <table xml:id="table-xref">
-            <title/>
+            <title>Examples of <tag>xref</tag> usage</title>
             <tgroup cols="2">
               <colspec colname="c1" colnum="1" colwidth="4cm"/>
               <colspec colname="c2" colnum="2"/>
@@ -579,9 +587,6 @@
               </tbody>
             </tgroup>
           </table>
-          <para>Use <code>xref/@role="capitalize"</code> to force the reference string (for chapters/appendices/pages) to start with an upper-case
-            character (so you can be sure a sentence that starts with an <tag>xref</tag> always starts with a capital).</para>
-          <para role="break"/>
         </listitem>
 
       </itemizedlist>
@@ -632,7 +637,8 @@
             <para>This is (currently) not completely fool-proof: if the contents contains whitespace or hyphens, it is assumed to line-break correctly
               by itself. That, of course, does not guarantee correct results. So it may need a little experimenting before things look right.</para>
             <para>A column that contains <tag>code role="code-width-limited"</tag> contents <emphasis>must</emphasis> have a column width set
-                <emphasis>in cm</emphasis> (either directly with <tag>colspec colwidth="…cm"</tag> or by the dynamic mechanism described above).</para>
+                <emphasis>in cm</emphasis> (either directly with <tag>colspec colwidth="…cm"</tag> or by the dynamic mechanism described
+              above).</para>
           </listitem>
         </varlistentry>
       </variablelist>

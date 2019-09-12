@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:local="#local" xmlns:db="http://docbook.org/ns/docbook"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns="http://docbook.org/ns/docbook"
+  xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:local="#local-zz55g" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:db="http://docbook.org/ns/docbook" xmlns="http://docbook.org/ns/docbook"
   exclude-result-prefixes="#all">
   <!-- ================================================================== -->
   <!--*	
@@ -12,8 +12,8 @@
 
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
-  <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
-  <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
+  <xsl:include href="../../../../xtpxlib-common/xslmod/general.mod.xsl"/>
+  <xsl:include href="../../../../xtpxlib-common/xslmod/href.mod.xsl"/>
 
   <xsl:mode on-no-match="shallow-copy"/>
 

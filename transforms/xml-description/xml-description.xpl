@@ -24,7 +24,7 @@
 
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-xml-description/do-element-description.xsl"/>
+      <p:document href="xsl/do-element-description.xsl"/>
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>

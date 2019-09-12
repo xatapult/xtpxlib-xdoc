@@ -92,9 +92,14 @@
           <xs:documentation>The type identifier for this document. Tells whether this is a xsd, xsl, etc.</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="dref" type="xs:anyURI" use="required">
+      <xs:attribute name="href" type="xs:anyURI" use="required">
         <xs:annotation>
           <xs:documentation>The absolute reference to this document.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="timestamp" type="xs:dateTime" use="required">
+        <xs:annotation>
+          <xs:documentation>Date/time the intermediate format was created</xs:documentation>
         </xs:annotation>
       </xs:attribute>
     </xs:complexType>

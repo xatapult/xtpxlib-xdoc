@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local"
-  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc" xmlns="http://www.xtpxlib.nl/ns/xdoc/docgen-intermediate"
-  xmlns:dgi="http://www.xtpxlib.nl/ns/xdoc/docgen-intermediate" exclude-result-prefixes="#all">
+<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local-u67gh"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
+  xmlns="http://www.xtpxlib.nl/ns/xdoc/docgen-intermediate" xmlns:dgi="http://www.xtpxlib.nl/ns/xdoc/docgen-intermediate"
+  exclude-result-prefixes="#all">
   <!-- ================================================================== -->
   <!--*	
     TBD
@@ -14,9 +15,9 @@
   <xsl:output method="xml" indent="yes" encoding="UTF-8"/>
 
   <xsl:mode on-no-match="fail"/>
-  
-  <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
-  <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
+
+  <xsl:include href="../../../../xtpxlib-common/xslmod/general.mod.xsl"/>
+  <xsl:include href="../../../../xtpxlib-common/xslmod/href.mod.xsl"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
@@ -29,64 +30,80 @@
     <!-- Anything in namespaces that uses one of these prefixes are considered local and ignored. -->
   </xsl:variable>
 
-  <xsl:variable name="document-dref" as="xs:string" select="xtlc:href-canonical(base-uri(/))">
+  <xsl:variable name="document-href" as="xs:string">
     <!-- The reference to the main document. -->
+    <xsl:variable name="href-raw" as="xs:string">
+      <xsl:choose>
+        <xsl:when test="exists(/xdoc:transform)">
+          <xsl:sequence select="/xdoc:transform/*[1]/@xml:base"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="base-uri(/*)"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+    <xsl:sequence select="xtlc:href-canonical($href-raw)"/>
   </xsl:variable>
 
   <!-- ================================================================== -->
 
   <xsl:template match="/">
-    <xsl:apply-templates select="/*"/>
+    <document href="{$document-href}" timestamp="{current-dateTime()}">
+      <!-- Remark: the construction below is to keep things working when we run the stylesheet on its own, outside an xdoc context. -->
+      <xsl:choose>
+        <xsl:when test="exists(/xdoc:transform)">
+          <xsl:apply-templates select="/xdoc:transform/*[1]"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:apply-templates select="/*[1]"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </document>
   </xsl:template>
 
   <!-- ================================================================== -->
   <!-- SELECT ON TYPE OF DOCUMENT BY ROOT ELEMENT: -->
 
-  <xsl:template match="/xsl:stylesheet">
-    <xsl:variable name="type-id" as="xs:string" select="if (ends-with(base-uri(.), '.mod.xsl')) then 'xslmod' else 'xsl'"/>
-    <document type-id="{$type-id}" dref="{$document-dref}">
-      <xsl:call-template name="get-element-documentation"/>
-      <xsl:call-template name="process-important-namespaces">
-        <xsl:with-param name="probable-names" select="xsl:*/@name/string()"/>
-      </xsl:call-template>
-      <xsl:call-template name="xsl-gather-parameters"/>
-      <xsl:call-template name="xsl-gather-objects"/>
-    </document>
+  <xsl:template match="xsl:stylesheet">
+    <xsl:attribute name="type-id" select="if (ends-with(base-uri(.), '.mod.xsl')) then 'xslmod' else 'xsl'"/>
+    <xsl:call-template name="get-element-documentation"/>
+    <xsl:call-template name="process-important-namespaces">
+      <xsl:with-param name="probable-names" select="xsl:*/@name/string()"/>
+    </xsl:call-template>
+    <xsl:call-template name="xsl-gather-parameters"/>
+    <xsl:call-template name="xsl-gather-objects"/>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="/p:library">
-    <document type-id="xplmod" dref="{$document-dref}">
-      <xsl:call-template name="xpl-get-element-documentation"/>
-      <xsl:call-template name="process-important-namespaces">
-        <xsl:with-param name="probable-names" select="p:declare-step/@type/string()"/>
-      </xsl:call-template>
-      <xsl:call-template name="xpl-gather-library-objects"/>
-    </document>
+  <xsl:template match="p:library">
+    <xsl:attribute name="type-id" select="'xplmod'"/>
+    <xsl:call-template name="xpl-get-element-documentation"/>
+    <xsl:call-template name="process-important-namespaces">
+      <xsl:with-param name="probable-names" select="p:declare-step/@type/string()"/>
+    </xsl:call-template>
+    <xsl:call-template name="xpl-gather-library-objects"/>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="/p:declare-step">
-    <document type-id="xpl" dref="{$document-dref}">
-      <xsl:call-template name="xpl-get-element-documentation"/>
-      <xsl:call-template name="xpl-gather-parameters"/>
-    </document>
+  <xsl:template match="p:declare-step">
+    <xsl:attribute name="type-id" select="'xpl'"/>
+    <xsl:call-template name="xpl-get-element-documentation"/>
+    <xsl:call-template name="xpl-gather-parameters"/>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="/xs:schema">
-    <document type-id="xsd" dref="{$document-dref}">
-      <xsl:call-template name="xsd-get-element-documentation"/>
-      <xsl:call-template name="xsd-gather-objects"/>
-    </document>
+  <xsl:template match="xs:schema">
+    <xsl:attribute name="type-id" select="'xsd'"/>
+    <xsl:call-template name="xsd-get-element-documentation"/>
+    <xsl:call-template name="xsd-gather-objects"/>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="/*" priority="-1">
+  <xsl:template match="*" priority="-1">
     <!-- Unrecognized root element. Raise error": -->
     <xsl:call-template name="xtlc:raise-error">
       <xsl:with-param name="msg-parts"
@@ -301,7 +318,7 @@
           <xsl:if test="$uri eq ''">
             <xsl:call-template name="xtlc:raise-error">
               <xsl:with-param name="msg-parts"
-                select="('Document &quot;', $document-dref, '&quot;: Namespace prefix &quot;', $prefix, '&quot; not defined on root element')"/>
+                select="('Document &quot;', $document-href, '&quot;: Namespace prefix &quot;', $prefix, '&quot; not defined on root element')"/>
             </xsl:call-template>
           </xsl:if>
 
