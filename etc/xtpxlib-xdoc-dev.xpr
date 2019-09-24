@@ -14,7 +14,67 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../doc/xdoc-extensions-description-article.xml</String>
+                                    <String>../xplmod/markdown-to-docbook/test/test-markdown.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-markdown-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xplmod/markdown-to-docbook/xsl/convert-to-lines.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-markdown-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xplmod/markdown-to-docbook/markdown-to-docbook.mod.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-markdown-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xplmod/markdown-to-docbook/test/test-markdown-to-docbook.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-markdown-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../test/test-markdown.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -44,6 +104,21 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../xpl/xdoc-to-docbook.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>TEST-xdoc-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../transforms/docgen/xsl/docgen-intermediate-to-docbook.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -55,6 +130,36 @@
                                 <field name="scenarioTypes">
                                     <list>
                                         <String>XPROC</String>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xslmod/xdoclib.mod.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>TEST-xdoc-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../doc/xdoc-extensions-description-article.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>documentation-convert</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
                                         <String>XPROC</String>
                                     </list>
                                 </field>
@@ -121,21 +226,6 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/xdoc-to-docbook.xpl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>TEST-xdoc-to-docbook</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
                                     <String>../xpl/docbook-to-pdf.xpl</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -171,21 +261,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>TEST-xdoc-to-pdf</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../xslmod/xdoclib.mod.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>TEST-xdoc-to-docbook</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -936,6 +1011,131 @@
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInHTMLPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInXMLPane">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="showInSVGPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInResultSetPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="useXSLTInput">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="xsltParams">
+                                    <list/>
+                                </field>
+                                <field name="cascadingStylesheets">
+                                    <String-array/>
+                                </field>
+                                <field name="xslTransformer">
+                                    <String>Add-on for Calabash XProc Engine</String>
+                                </field>
+                                <field name="extensionURLs">
+                                    <String-array/>
+                                </field>
+                            </xprocScenario>
+                            <xprocScenario>
+                                <field name="inputPorts">
+                                    <xprocInputPort-array>
+                                        <xprocInputPort>
+                                            <field name="portName">
+                                                <String>source</String>
+                                            </field>
+                                            <field name="urls">
+                                                <String-array/>
+                                            </field>
+                                        </xprocInputPort>
+                                    </xprocInputPort-array>
+                                </field>
+                                <field name="outputPorts">
+                                    <xprocOutputPort-array>
+                                        <xprocOutputPort>
+                                            <field name="portName">
+                                                <String>result</String>
+                                            </field>
+                                            <field name="url">
+                                                <String>${TMP}/test-markdown-to-docbook-result.xml</String>
+                                            </field>
+                                            <field name="showInSequenceView">
+                                                <Boolean>false</Boolean>
+                                            </field>
+                                        </xprocOutputPort>
+                                    </xprocOutputPort-array>
+                                </field>
+                                <field name="xprocOptions">
+                                    <xprocOption-array/>
+                                </field>
+                                <field name="xprocParameters">
+                                    <xprocParameterPort-array>
+                                        <xprocParameterPort>
+                                            <field name="portName">
+                                                <String>*</String>
+                                            </field>
+                                            <field name="parameters">
+                                                <xprocParameter-array/>
+                                            </field>
+                                        </xprocParameterPort>
+                                    </xprocParameterPort-array>
+                                </field>
+                                <field name="advancedOptionsMap">
+                                    <null/>
+                                </field>
+                                <field name="name">
+                                    <String>test-markdown-to-docbook</String>
+                                </field>
+                                <field name="baseURL">
+                                    <null/>
+                                </field>
+                                <field name="footerURL">
+                                    <null/>
+                                </field>
+                                <field name="fOPMethod">
+                                    <null/>
+                                </field>
+                                <field name="fOProcessorName">
+                                    <null/>
+                                </field>
+                                <field name="headerURL">
+                                    <null/>
+                                </field>
+                                <field name="inputXSLURL">
+                                    <String>${ROOT}/xplmod/markdown-to-docbook/test/test-markdown-to-docbook.xpl</String>
+                                </field>
+                                <field name="inputXMLURL">
+                                    <String></String>
+                                </field>
+                                <field name="defaultScenario">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="isFOPPerforming">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="type">
+                                    <String>XPROC</String>
+                                </field>
+                                <field name="saveAs">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="openInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="outputResource">
+                                    <null/>
+                                </field>
+                                <field name="openOtherLocationInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="locationToOpenInBrowserURL">
+                                    <null/>
+                                </field>
+                                <field name="openInEditor">
+                                    <Boolean>true</Boolean>
                                 </field>
                                 <field name="showInHTMLPane">
                                     <Boolean>false</Boolean>
