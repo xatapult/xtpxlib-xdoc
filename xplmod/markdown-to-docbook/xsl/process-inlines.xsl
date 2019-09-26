@@ -5,9 +5,9 @@
   xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
-    This is the second stage of the Markdown conversion process.
+    Markdown conversion process.
     
-    TBD
+    It handles all the inline coding in the simple Markdown, like `code`, *italic*, etc.
   -->
   <!-- ================================================================== -->
   <!-- SETUP: -->
@@ -18,21 +18,20 @@
 
   <!-- ================================================================== -->
 
-  <xsl:template match="db:para">
+  <xsl:template match="xdoc:MARKDOWN/db:*[string(.) ne '']">
     <xsl:copy copy-namespaces="false">
       <xsl:copy-of select="@*"/>
-
-      <xsl:call-template name="process-text">
+      <xsl:call-template name="process-text-1">
         <xsl:with-param name="text" select="string(.)"/>
       </xsl:call-template>
     </xsl:copy>
-
-
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template name="process-text" as="node()*">
+  <xsl:template name="process-text-1" as="node()*">
+    <!-- Takes care of anything wrapped in stars (*italic*, **bod** and ***italic-and-bold***). Then passes the remaining string on for
+      further checks.-->
     <xsl:param name="text" as="xs:string" required="yes"/>
 
     <xsl:analyze-string select="$text" regex="\*+[^*]+?\*+">
@@ -53,14 +52,14 @@
         <xsl:choose>
           <xsl:when test="$effective-stars eq 1">
             <emphasis role="italic">
-              <xsl:call-template name="process-text-for-code-and-links">
+              <xsl:call-template name="process-text-2">
                 <xsl:with-param name="text" select="$text-no-stars"/>
               </xsl:call-template>
             </emphasis>
           </xsl:when>
           <xsl:when test="$effective-stars eq 2">
             <emphasis role="bold">
-              <xsl:call-template name="process-text-for-code-and-links">
+              <xsl:call-template name="process-text-2">
                 <xsl:with-param name="text" select="$text-no-stars"/>
               </xsl:call-template>
             </emphasis>
@@ -68,7 +67,7 @@
           <xsl:otherwise>
             <emphasis role="italic">
               <emphasis role="bold">
-                <xsl:call-template name="process-text-for-code-and-links">
+                <xsl:call-template name="process-text-2">
                   <xsl:with-param name="text" select="$text-no-stars"/>
                 </xsl:call-template>
               </emphasis>
@@ -81,7 +80,7 @@
       </xsl:matching-substring>
 
       <xsl:non-matching-substring>
-        <xsl:call-template name="process-text-for-code-and-links">
+        <xsl:call-template name="process-text-2">
           <xsl:with-param name="text" select="."/>
         </xsl:call-template>
       </xsl:non-matching-substring>
@@ -92,21 +91,22 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template name="process-text-for-code-and-links" as="node()*">
+  <xsl:template name="process-text-2" as="node()*">
+    <!-- Checks for `code` markers and then passes the remaining texts on for further processing. -->
     <xsl:param name="text" as="xs:string" required="yes"/>
 
     <xsl:analyze-string select="$text" regex="`[^`]*?`">
 
       <xsl:matching-substring>
         <code>
-          <xsl:call-template name="process-text-for-links">
+          <xsl:call-template name="process-text-3">
             <xsl:with-param name="text" select="substring(., 2, string-length(.) - 2)"/>
           </xsl:call-template>
         </code>
       </xsl:matching-substring>
 
       <xsl:non-matching-substring>
-        <xsl:call-template name="process-text-for-links">
+        <xsl:call-template name="process-text-3">
           <xsl:with-param name="text" select="."/>
         </xsl:call-template>
       </xsl:non-matching-substring>
@@ -116,7 +116,8 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template name="process-text-for-links" as="node()*">
+  <xsl:template name="process-text-3" as="node()*">
+    <!-- Processes links [link-text](http://...) constructions -->
     <xsl:param name="text" as="xs:string" required="yes"/>
 
     <xsl:analyze-string select="$text" regex="\[(.+?)\]\((.+?)\)">

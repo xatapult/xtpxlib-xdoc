@@ -5,7 +5,7 @@
   xmlns="http://docbook.org/ns/docbook" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
-    This is the first stage of the Markdown conversion process.
+    Markdown conversion process.
     
     Takes the raw text and turns this into <line indent="..."> elements (surrounded by an <xdoc:GROUP>).
     The indent is adjusted when the text is indented as a whole block (which is normal in code).
@@ -20,7 +20,7 @@
   <!-- ================================================================== -->
 
   <xsl:template match="/">
-    <xdoc:GROUP>
+    <xdoc:MARKDOWN>
 
       <!-- Turn the block of text into individual lines: -->
       <xsl:variable name="fulltext-no-cr" as="xs:string" select="translate(string(/*), '&#13;', '')"/>
@@ -30,7 +30,7 @@
       <xsl:variable name="lines-raw" as="element(db:line)*">
         <xsl:for-each select="$textlines-raw">
           <line>
-            <xsl:variable name="start-space-character-count" as="xs:integer" select="local:count-start-characters(., ' ')"/>
+            <xsl:variable name="start-space-character-count" as="xs:integer" select="local:count-start-spaces(.)"/>
             <xsl:attribute name="indent" select="$start-space-character-count"/>
             <xsl:value-of select="normalize-space(.)"/>
           </line>
@@ -62,21 +62,20 @@
         </xsl:copy>
       </xsl:for-each>
 
-    </xdoc:GROUP>
+    </xdoc:MARKDOWN>
   </xsl:template>
 
   <!-- ================================================================== -->
 
-  <xsl:function name="local:count-start-characters" as="xs:integer">
+  <xsl:function name="local:count-start-spaces" as="xs:integer">
     <xsl:param name="text" as="xs:string"/>
-    <xsl:param name="char" as="xs:string"/>
 
     <xsl:choose>
-      <xsl:when test="($text eq '') or ($char eq '')">
+      <xsl:when test="($text eq '')">
         <xsl:sequence select="0"/>
       </xsl:when>
-      <xsl:when test="substring($text, 1, 1) eq substring($char, 1, 1)">
-        <xsl:sequence select="local:count-start-characters(substring($text, 2), $char) + 1"/>
+      <xsl:when test="substring($text, 1, 1) eq ' '">
+        <xsl:sequence select="local:count-start-spaces(substring($text, 2)) + 1"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:sequence select="0"/>

@@ -23,12 +23,11 @@
   </xdoc:MARKDOWN>
 
   <xdoc:MARKDOWN>
-    # Title
+    # Title with *italic* stuff
     
-    This is a line of text
+    This is a line of text.
     And this is a second one of this para.
-    
-    
+    =======
     This is **bold** this is *italic* What about ***both***? And inline `code`!
     And some *****weird** patterns with stars... 
     And **`bold code`** 
@@ -41,17 +40,21 @@
     
     - Item
       - Indented item
-      - One more
+      - One more on this level...
         - More indentation
     more lines in the indented para
+        - xxxxx
       - Back one level    
-    - Item
-    - Item
+    - Item itemized
+    - Item itemized
     
     
-    1. Item
-    1. Item
-    1. Item
+    1. Item 1
+    1. Item 1b
+    1. Item 2
+    1. Item 3
+    - Itemized inbetween
+    1. More ordered
     
     Link to [xatapult](http:/www.xatapult.nl)
     
