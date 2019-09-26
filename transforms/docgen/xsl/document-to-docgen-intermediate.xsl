@@ -4,10 +4,11 @@
   xmlns="http://www.xtpxlib.nl/ns/xdoc/docgen-intermediate" xmlns:dgi="http://www.xtpxlib.nl/ns/xdoc/docgen-intermediate"
   exclude-result-prefixes="#all">
   <!-- ================================================================== -->
-  <!--*	
-    TBD
+  <!--~
+    Converts an incoming XML document into the docgen intermediate format. From this we can easily generate the DocBook for the
+    documentation.
     
-    NAMESPACE?
+    There is a schema for this format in ../xsd/docgen-intermediate.xsd.
 	-->
   <!-- ================================================================== -->
   <!-- SETUP: -->

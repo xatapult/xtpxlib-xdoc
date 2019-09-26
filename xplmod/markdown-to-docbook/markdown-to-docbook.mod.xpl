@@ -52,7 +52,7 @@
         </p:input>
         <p:with-param name="null" select="()"/>
       </p:xslt>
-      
+
       <!-- List handling: -->
       <p:xslt>
         <p:input port="stylesheet">
@@ -66,13 +66,12 @@
         </p:input>
         <p:with-param name="null" select="()"/>
       </p:xslt>
-      
-      
-      <!-- Remove the trigger element: -->
-      <p:unwrap match="xdoc:MARKDOWN"/>
-      
+
     </p:viewport>
 
+    <!-- Remove the trigger element: -->
+    <p:unwrap match="xdoc:MARKDOWN"/>
+    
   </p:declare-step>
 
 </p:library>

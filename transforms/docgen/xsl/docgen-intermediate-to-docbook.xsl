@@ -4,11 +4,11 @@
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook" xmlns="http://docbook.org/ns/docbook"
   exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
-  <!--*	
-		TBD
-		
-		- GENERATE ID BASED ON FLEXIBLE PREFIX (PARAMETER?)
-	-->
+  <!--~	
+    Turns the docgen intermediate format into (almost) DocBook.
+    
+    Parts that must be checked for Markdown are wrapped inside xdoc:MARKDOWN elements.
+  -->
   <!-- ================================================================== -->
   <!-- SETUP: -->
 
@@ -120,7 +120,9 @@
                         </xsl:choose>
                       </code>
                     </entry>
-                    <entry>{ local:header-documentation-line(., '') }</entry>
+                    <entry>
+                      <xdoc:MARKDOWN>{ local:header-documentation-line(., '') }</xdoc:MARKDOWN>
+                    </entry>
                   </row>
                 </xsl:for-each>
               </tbody>
@@ -186,24 +188,20 @@
   <xsl:function name="local:object-has-more-info" as="xs:boolean">
     <xsl:param name="object" as="element(dgi:object)"/>
 
-    <xsl:sequence select="(count($object/dgi:documentation/dgi:lineline) gt 1) or exists($object/dgi:parameters/dgi:parameter)"/>
+    <xsl:sequence select="(count($object/dgi:documentation/dgi:line) gt 1) or exists($object/dgi:parameters/dgi:parameter)"/>
   </xsl:function>
 
   <!-- ================================================================== -->
   <!-- HTML GENERIC SUPPORT: -->
 
   <xsl:template name="documentation-to-docbook">
+    <!-- Generate somethjing that will be transformed from Markdown into Docbook in a later stage of the pipeline: -->
     <xsl:param name="elm" as="element()?" required="no" select="."/>
 
     <xsl:variable name="lines" as="element(dgi:line)*" select="$elm/dgi:documentation/dgi:line"/>
-    <xsl:for-each select="$lines">
-      <!-- ***TBD: Do something with indent (or get away with it). Simple Markdown translation? -->
-      <xsl:variable name="indent" as="xs:integer" select="xtlc:str2int(@indent, 0)"/>
-      <para>
-        <xsl:value-of select="."/>
-      </para>
-
-    </xsl:for-each>
+    <xdoc:MARKDOWN>
+      <xsl:value-of select="string-join($lines/string(), '&#10;')"/>
+    </xdoc:MARKDOWN>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

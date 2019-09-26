@@ -22,7 +22,7 @@
   <!-- Date time formatting: -->
 
   <xsl:variable name="xtlc:default-dt-format" as="xs:string" select="'[Y]-[M01]-[D01] [H01]:[m01]:[s01]'">
-    <!--~ Default date/time format string (yyyy-mm-dd ...). -->
+    <!--~ Default date/time format string (`yyyy-mm-dd ...`). -->
   </xsl:variable>
   <xsl:variable name="xtlc:default-dt-format-nl" as="xs:string" select="'[D01]-[M01]-[Y] [H01]:[m01]:[s01]'">
     <!--~ Date/time format string (Dutch: dd-mm-yyyy ...). -->
