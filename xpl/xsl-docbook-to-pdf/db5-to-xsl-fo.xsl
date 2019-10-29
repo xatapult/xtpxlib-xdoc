@@ -963,10 +963,6 @@
                   <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
                 </xsl:otherwise>
               </xsl:choose>
-              <xsl:text>"</xsl:text>
-              <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
-              <xsl:text>" on page&#160;</xsl:text>
-              <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
             </xsl:when>
             <xsl:when
               test="$referenced-element/self::db:figure[exists(@number)] or $referenced-element/self::db:table[exists(@number)] or
