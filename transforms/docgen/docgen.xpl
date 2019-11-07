@@ -14,7 +14,7 @@
       You can use an `@filecomponents` attribute on the `xdoc:transform` element to control the way the filename is displayed:
       - When lt 0, no filename is displayed
       - When eq 0, the full filename (with full path) is displayed
-      - When gt 0, this number of filename componets is displayed. So 1 means filename only, 2 means filename and direct foldername, etc.
+      - When gt 0, this number of filename components is displayed. So 1 means filename only, 2 means filename and direct foldername, etc.
   </p:documentation>
 
   <!-- ================================================================== -->

@@ -35,6 +35,13 @@
 
   <p:xslt>
     <p:input port="stylesheet">
+      <p:document href="xsl-shared/add-numbering.xsl"/>
+    </p:input>
+    <p:with-param name="null" select="()"/>
+  </p:xslt>
+  
+  <p:xslt>
+    <p:input port="stylesheet">
       <p:document href="xsl-docbook-to-xhtml/db5-to-xhtml.xsl"/>
     </p:input>
     <p:with-param name="create-header" select="$create-header"/>

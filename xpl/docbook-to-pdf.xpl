@@ -69,7 +69,7 @@
   </p:xslt>
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-docbook-to-pdf/add-numbering.xsl"/>
+      <p:document href="xsl-shared/add-numbering.xsl"/>
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>

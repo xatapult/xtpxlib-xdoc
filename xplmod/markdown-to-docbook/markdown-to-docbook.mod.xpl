@@ -7,7 +7,7 @@
   <p:declare-step type="xdoc:markdown-to-docbook">
 
     <p:documentation>
-      Checks for elements xdoc:MARKDOWN. Replaces this with Docbook contents.
+      Checks for elements xdoc:MARKDOWN. Replaces these with Docbook contents.
       
       Only simple Markdown is supported (e.g. no tables).
     </p:documentation>

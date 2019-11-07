@@ -38,7 +38,7 @@
       </xsl:variable>
 
       <!-- Find the main indent. This is defined as the minimum number of initial spacing of non-empty lines. 
-        The assumption is this text comes from code and might be indented as a full block.
+        The assumption is this text comes from code and is indented as a full block.
       -->
       <xsl:variable name="indents-non-empty-lines" as="xs:integer*"
         select="for $non-empty-line in $lines-raw[string(.) ne ''] return xs:integer($non-empty-line/@indent)"/>
