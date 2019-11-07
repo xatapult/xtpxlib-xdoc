@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step"
-  version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all">
+  version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:xdoc-to-xhtml">
 
   <p:documentation>
      Convenience pipeline: Combines the xdoc-to-docbook and the docbook-to-xhtml steps in one.

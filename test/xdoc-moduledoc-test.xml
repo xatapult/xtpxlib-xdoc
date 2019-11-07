@@ -13,7 +13,7 @@
       <personname>Erik&#160;Siegel</personname>
     </author>
     <orgname>Xatapult</orgname>
-   <!-- <mediaobject role="top-logo">
+    <!-- <mediaobject role="top-logo">
       <imageobject>
         <imagedata fileref="figures/logo-xatapult.jpg" width="20%"/>
       </imageobject>
@@ -26,16 +26,16 @@
   </info>
 
   <!-- ================================================================== -->
-  
+
   <preface>
     <title>Preface part</title>
-    
+
     <para>Can we do something with the preface part, like using it for a home page?</para>
   </preface>
 
 
   <!-- ================================================================== -->
-  
+
   <chapter>
     <title>Introduction</title>
 
@@ -54,9 +54,13 @@
   <chapter>
     <title>Stuff</title>
 
+
+    <para>Link to another chapter: <xref linkend="second-stuff"/></para>
+    <para>Link to this chapter: <xref linkend="hiero"/></para>
+    
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <sect1>
+    <sect1 xml:id="hiero">
       <title>Parameters</title>
       <xdoc:dump-parameters type="table"/>
     </sect1>
@@ -70,9 +74,12 @@
       <para role="break-before">Comes from an XSLT transformation:</para>
       <xdoc:transform href="transforms/test.xsl"/>
     </sect1>
+  </chapter>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
+  <!-- ================================================================== -->
+  
+  <chapter xml:id="second-stuff">
+    <title>Stuff</title>
     <sect1>
       <title>XML Descriptions</title>
 

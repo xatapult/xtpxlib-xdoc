@@ -39,7 +39,7 @@
 
   <xsl:variable name="phase-description-main" as="xs:string" select="'main'"/>
   <xsl:variable name="phase-description-inline" as="xs:string" select="'inline'"/>
-  
+
   <xsl:variable name="all-linkend-references" as="xs:string*" select="distinct-values(//db:xref/@linkend/string())"/>
 
   <!-- ================================================================== -->
@@ -57,6 +57,7 @@
     <div class="{local-name(.)}">
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
+        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <xsl:apply-templates select="db:*"/>
     </div>
@@ -127,12 +128,15 @@
     <div class="{local-name(.)}">
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
+        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <h1 class="{local-name(.)}">
-        <span class="{local-name(.)}-number">
-          <xsl:value-of select="@number"/>
-        </span>
-        <xsl:text> </xsl:text>
+        <xsl:if test="not(self::db:preface)">
+          <span class="{local-name(.)}-number">
+            <xsl:value-of select="@number"/>
+            <xsl:text> </xsl:text>
+          </span>
+        </xsl:if>
         <xsl:call-template name="handle-inline-contents">
           <xsl:with-param name="contents" select="db:title/node()"/>
         </xsl:call-template>
@@ -148,6 +152,7 @@
     <div class="{local-name(.)}">
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
+        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <xsl:element name="h{$level}">
         <xsl:attribute name="class" select="local-name(.)"/>
@@ -763,9 +768,10 @@
   <xsl:template name="copy-id">
     <xsl:param name="elm" as="element()" required="no" select="."/>
     <xsl:param name="create-anchor" as="xs:boolean" required="false" select="false()"/>
+    <xsl:param name="force" as="xs:boolean" required="false" select="false()"/>
 
     <xsl:variable name="id" as="xs:string?" select="$elm/@xml:id"/>
-    <xsl:if test="exists($id) and ($id = $all-linkend-references)">
+    <xsl:if test="exists($id) and ($force or ($id = $all-linkend-references))">
       <xsl:attribute name="id" select="$id"/>
       <xsl:if test="$create-anchor">
         <a name="{$id}"/>

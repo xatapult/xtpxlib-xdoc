@@ -37,11 +37,11 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:chapter | db:preface" mode="mode-book">
+  <xsl:template match="db:chapter" mode="mode-book">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:variable name="chapter-number" as="xs:string"
-        select="string(count(preceding-sibling::db:chapter) + count(preceding-sibling::db:preface) + 1)"/>
+        select="if (self::db:preface) then '0' else string(count(preceding-sibling::db:chapter) + 1)"/>
       <xsl:attribute name="number" select="$chapter-number"/>
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$chapter-number" tunnel="true"/>
