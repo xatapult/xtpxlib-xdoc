@@ -299,7 +299,7 @@
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
-      <para class="{local-name(.)}-title">
+      <p class="{local-name(.)}-title">
         <xsl:choose>
           <xsl:when test="exists(db:title)">
             <xsl:call-template name="handle-inline-text">
@@ -310,7 +310,7 @@
             <xsl:value-of select="upper-case(local-name(.)) || ':'"/>
           </xsl:otherwise>
         </xsl:choose>
-      </para>
+      </p>
       <xsl:apply-templates select="* except db:title" mode="#current"/>
     </div>
   </xsl:template>
@@ -337,7 +337,7 @@
     <xsl:param name="object-name" as="xs:string?" required="no" select="()"/>
 
     <xsl:if test="(normalize-space($object/db:title) ne '') or exists($object/@number)">
-      <para class="{local-name($object)}-title">
+      <p class="{local-name($object)}-title">
         <xsl:if test="exists($object-name) and exists($object/@number)">
           <xsl:value-of select="$object-name"/>
           <xsl:text>&#160;</xsl:text>
@@ -349,7 +349,7 @@
         <xsl:call-template name="handle-inline-contents">
           <xsl:with-param name="contents" select="db:title/node()"/>
         </xsl:call-template>
-      </para>
+      </p>
     </xsl:if>
   </xsl:template>
 

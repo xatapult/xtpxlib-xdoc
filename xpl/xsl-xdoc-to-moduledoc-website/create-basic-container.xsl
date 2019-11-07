@@ -45,11 +45,12 @@
     <xtlcon:document-container timestamp="{current-dateTime()}" href-target-path="{$href-target-path}"
       moduledoc-website-template="{$href-moduledoc-website-template}">
       <xsl:for-each select="/*/xhtml:div[@class = ('preface', 'chapter', 'appendix')]">
+        <xsl:variable name="is-preface" as="xs:boolean" select="@class eq 'preface'"/>
         <!-- Create a container document entry: -->
         <xsl:variable name="title" as="xs:string" select="local:get-title(.)"/>
-        <xtlcon:document title="{$title}">
+        <xtlcon:document title="{$title}" index="{$is-preface}">
           <xsl:choose>
-            <xsl:when test="@class eq 'preface'">
+            <xsl:when test="$is-preface">
               <xsl:attribute name="href-target" select="'index.html'"/>
             </xsl:when>
             <xsl:otherwise>

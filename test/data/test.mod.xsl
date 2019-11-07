@@ -212,7 +212,7 @@
   <xsl:function name="xtlc:str2bln" as="xs:boolean">
     <!--~ 
       Safe conversion of a string into a boolean.
-      When $in is empty or not convertible into a boolean, $default is returned.
+      When `$in` is empty or not convertible into a boolean, `$default` is returned.
     -->
     <xsl:param name="in" as="xs:string?">
       <!--~ String to convert. -->

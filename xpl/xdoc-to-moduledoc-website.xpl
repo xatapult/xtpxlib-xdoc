@@ -80,8 +80,16 @@
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>
-
-  <!-- Insert directory information for the resources and re-qork this to the right container external document entries: -->
+  
+  <!-- Add internal linking between the pages (TOC, etc.): -->
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-xdoc-to-moduledoc-website/add-additional-links.xsl"/>
+    </p:input>
+    <p:with-param name="null" select="()"/>
+  </p:xslt>
+  
+  <!-- Insert directory information for the resources and re-work this to the right container external document entries: -->
   <p:insert match="/*" position="first-child">
     <p:input port="insertion">
       <p:pipe port="result" step="resources-directory-list"/>

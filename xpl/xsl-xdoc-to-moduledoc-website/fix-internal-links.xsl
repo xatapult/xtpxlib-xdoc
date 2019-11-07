@@ -38,6 +38,7 @@
           <xsl:attribute name="href" select="$referred-elm-document-elm/@href-target || $current-element/@href"/>
         </xsl:if>
       </xsl:if>
+      <xsl:apply-templates/>
     </xsl:copy>
   </xsl:template>
 

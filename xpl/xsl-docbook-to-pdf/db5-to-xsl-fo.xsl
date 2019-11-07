@@ -1286,7 +1286,7 @@
 
   <xsl:template name="toc-entry-out">
     <xsl:param name="id" as="xs:string" required="no" select="@xml:id"/>
-    <xsl:param name="number" as="xs:string" required="no" select="@number"/>
+    <xsl:param name="number" as="xs:string?" required="no" select="@number"/>
     <xsl:param name="title" as="element(db:title)" required="no" select="db:title"/>
     <xsl:param name="level" as="xs:integer" required="yes"/>
 
@@ -1304,8 +1304,10 @@
           <xsl:if test="$top-level">
             <xsl:attribute name="font-weight" select="'bold'"/>
           </xsl:if>
-          <xsl:value-of select="$number"/>
-          <xsl:text>&#160;&#160;</xsl:text>
+          <xsl:if test="exists($number)">
+            <xsl:value-of select="$number"/>
+            <xsl:text>&#160;&#160;</xsl:text>
+          </xsl:if>
           <xsl:value-of select="$title"/>
         </inline>
 
@@ -1425,7 +1427,7 @@
 
   <xsl:template name="chapter-section-header-title-out">
     <xsl:param name="id" as="xs:string" required="no" select="@xml:id"/>
-    <xsl:param name="number" as="xs:string" required="no" select="@number"/>
+    <xsl:param name="number" as="xs:string?" required="no" select="@number"/>
     <xsl:param name="title" as="element(db:title)?" required="no" select="db:title"/>
     <xsl:param name="font-size" as="xs:double" required="yes"/>
     <xsl:param name="page-break" as="xs:boolean" required="no" select="false()"/>

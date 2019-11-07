@@ -52,12 +52,12 @@
   <!-- ================================================================== -->
 
   <chapter>
-    <title>Stuff</title>
+    <title>Stuff 1</title>
 
 
     <para>Link to another chapter: <xref linkend="second-stuff"/></para>
     <para>Link to this chapter: <xref linkend="hiero"/></para>
-    
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <sect1 xml:id="hiero">
@@ -77,9 +77,9 @@
   </chapter>
 
   <!-- ================================================================== -->
-  
+
   <chapter xml:id="second-stuff">
-    <title>Stuff</title>
+    <title>Stuff 2</title>
     <sect1>
       <title>XML Descriptions</title>
 
