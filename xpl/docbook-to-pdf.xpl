@@ -63,7 +63,7 @@
   <!-- Add identifiers and numbering: -->
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-docbook-to-pdf/add-identifiers.xsl"/>
+      <p:document href="xsl-shared/add-identifiers.xsl"/>
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>

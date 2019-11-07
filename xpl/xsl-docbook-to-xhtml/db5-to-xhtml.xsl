@@ -39,6 +39,8 @@
 
   <xsl:variable name="phase-description-main" as="xs:string" select="'main'"/>
   <xsl:variable name="phase-description-inline" as="xs:string" select="'inline'"/>
+  
+  <xsl:variable name="all-linkend-references" as="xs:string*" select="distinct-values(//db:xref/@linkend/string())"/>
 
   <!-- ================================================================== -->
   <!-- MAIN TEMPLATES: -->
@@ -53,6 +55,9 @@
 
   <xsl:template match="/db:book | /db:article">
     <div class="{local-name(.)}">
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <xsl:apply-templates select="db:*"/>
     </div>
   </xsl:template>
@@ -120,7 +125,9 @@
       </xsl:call-template>
     </xsl:if>
     <div class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <h1 class="{local-name(.)}">
         <span class="{local-name(.)}-number">
           <xsl:value-of select="@number"/>
@@ -139,7 +146,9 @@
   <xsl:template match="db:sect1 | db:sect2 | db:sect3">
     <xsl:variable name="level" as="xs:integer" select="xs:integer(substring-after(local-name(.), 'sect')) + (if ($is-book) then 1 else 0)"/>
     <div class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <xsl:element name="h{$level}">
         <xsl:attribute name="class" select="local-name(.)"/>
         <span class="{local-name(.)}-number">
@@ -167,7 +176,9 @@
       <p class="break">&#160;</p>
     </xsl:if>
     <p class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <xsl:choose>
         <xsl:when test="$is-break or $is-halfbreak">
           <!-- Ignore any contents, just emit a hard-space: -->
@@ -197,10 +208,14 @@
     <xsl:variable name="in-ordered-list" as="xs:boolean" select="exists(self::db:orderedlist)"/>
     <xsl:element name="{if ($in-ordered-list) then 'ol' else 'ul'}">
       <xsl:attribute name="class" select="local-name(.)"/>
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <xsl:for-each select="db:listitem | db:member">
         <li>
-          <xsl:call-template name="copy-id"/>
+          <xsl:call-template name="copy-id">
+            <xsl:with-param name="create-anchor" select="true()"/>
+          </xsl:call-template>
           <xsl:choose>
             <xsl:when test="self::db:member">
               <xsl:call-template name="handle-inline-contents"/>
@@ -220,7 +235,9 @@
     <xsl:variable name="imagedata" as="element(db:imagedata)" select="(.//db:imagedata)[1]"/>
 
     <div class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <img src="{$imagedata/@fileref}" class="{local-name(.)}">
         <xsl:copy-of select="$imagedata/@width, $imagedata/@height"/>
       </img>
@@ -241,7 +258,9 @@
     <!-- Remove trailing and leading whitespace and CR characters before output: -->
     <xsl:variable name="contents-prepared" as="xs:string" select="string(.) => replace('^\s+', '') => replace('\s+$', '') => replace('&#x0d;', '')"/>
     <div class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <pre class="{local-name(.)}"><xsl:value-of select="$contents-prepared"/></pre>
     </div>
   </xsl:template>
@@ -251,7 +270,9 @@
   <xsl:template match="db:variablelist">
 
     <dl class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <xsl:for-each select="db:varlistentry">
         <dt>
           <xsl:call-template name="handle-inline-contents">
@@ -270,7 +291,9 @@
   <xsl:template match="db:note | db:warning | db:sidebar">
 
     <div class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <para class="{local-name(.)}-title">
         <xsl:choose>
           <xsl:when test="exists(db:title)">
@@ -292,7 +315,9 @@
   <xsl:template match="db:example">
 
     <div class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <xsl:apply-templates select="* except db:title" mode="#current"/>
       <xsl:call-template name="add-object-title">
         <xsl:with-param name="object-name" select="'Example'"/>
@@ -329,7 +354,9 @@
   <xsl:template match="db:table | db:informaltable">
 
     <div class="{local-name(.)}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <table class="{local-name(.)}">
         <xsl:apply-templates mode="mode-table" select="db:* except db:title"/>
       </table>
@@ -348,12 +375,13 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:colspec" mode="mode-table">
-    <col>
-      <!--<xsl:if test="exists(@colwidth)">
+    <!-- Not sure whether we should generate something... -->
+    <!--<col>
+      <xsl:if test="exists(@colwidth)">
         <xsl:attribute name="width" select="@colwidth"/>
-      </xsl:if>-->
+      </xsl:if>
       <xsl:call-template name="copy-id"/>
-    </col>
+    </col>-->
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -390,7 +418,9 @@
   <xsl:template match="db:entry" mode="mode-table">
     <xsl:param name="in-table-header" as="xs:boolean" required="false" select="false()" tunnel="true"/>
     <xsl:element name="{if ($in-table-header) then 'th' else 'td'}">
-      <xsl:call-template name="copy-id"/>
+      <xsl:call-template name="copy-id">
+        <xsl:with-param name="create-anchor" select="true()"/>
+      </xsl:call-template>
       <xsl:choose>
         <xsl:when test="empty(db:para)">
           <!-- No surrounding <para> or so it seems, create one: -->
@@ -732,10 +762,14 @@
 
   <xsl:template name="copy-id">
     <xsl:param name="elm" as="element()" required="no" select="."/>
+    <xsl:param name="create-anchor" as="xs:boolean" required="false" select="false()"/>
+
     <xsl:variable name="id" as="xs:string?" select="$elm/@xml:id"/>
-    <xsl:if test="exists($id)">
+    <xsl:if test="exists($id) and ($id = $all-linkend-references)">
       <xsl:attribute name="id" select="$id"/>
-      <a name="{$id}"/>
+      <xsl:if test="$create-anchor">
+        <a name="{$id}"/>
+      </xsl:if>
     </xsl:if>
   </xsl:template>
 
