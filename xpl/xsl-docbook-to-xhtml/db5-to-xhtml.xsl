@@ -26,8 +26,6 @@
 
   <xsl:param name="create-header" as="xs:string" required="false" select="string(true())"/>
 
-  <xsl:param name="base-href" as="xs:string?" required="false" select="()"/>
-
   <xsl:variable name="do-create-header" as="xs:boolean" select="xtlc:str2bln($create-header, true())"/>
 
   <!-- ================================================================== -->

@@ -61,7 +61,6 @@
     <p:with-option name="href-parameters" select="$full-href-parameters"/>
     <p:with-option name="parameter-filters" select="$parameter-filters"/>
     <p:with-option name="create-header" select="false()"/>
-    <p:with-option name="base-href" select="$resources-target-subdirectory"/>
   </xdoc:xdoc-to-xhtml>
 
   <!-- Create a basic container structure. -->

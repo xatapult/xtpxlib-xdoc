@@ -23,10 +23,6 @@
     <p:documentation>Whether to create header (title, etc.) information</p:documentation>
   </p:option>
 
-  <p:option name="base-href" required="false" select="''">
-    <p:documentation>Base href for resolving image references</p:documentation>
-  </p:option>
-  
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting XHTML</p:documentation>
   </p:output>
@@ -51,7 +47,6 @@
       <p:document href="xsl-docbook-to-xhtml/db5-to-xhtml.xsl"/>
     </p:input>
     <p:with-param name="create-header" select="$create-header"/>
-    <p:with-param name="base-href" select="$base-href"/>
   </p:xslt>
 
 </p:declare-step>

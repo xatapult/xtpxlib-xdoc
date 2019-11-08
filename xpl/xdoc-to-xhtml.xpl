@@ -25,10 +25,6 @@
     <p:documentation>Whether to create header (title, etc.) information</p:documentation>
   </p:option>
   
-  <p:option name="base-href" required="false" select="''">
-    <p:documentation>Base href for resolving image references</p:documentation>
-  </p:option>
-  
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting XHTML</p:documentation>
   </p:output>
@@ -46,7 +42,6 @@
 
   <xdoc:docbook-to-xhtml>
     <p:with-option name="create-header" select="$create-header"/> 
-    <p:with-option name="base-href" select="$base-href"/> 
   </xdoc:docbook-to-xhtml>
 
 </p:declare-step>

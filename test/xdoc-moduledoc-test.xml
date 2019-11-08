@@ -31,6 +31,14 @@
     <title>Preface part</title>
 
     <para>Can we do something with the preface part, like using it for a home page?</para>
+    <figure xml:id="figure-example">
+      <title>An example of a figure... </title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="resources/logo-xatapult.jpg" width="10%"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
   </preface>
 
 

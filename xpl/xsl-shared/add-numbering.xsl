@@ -37,7 +37,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:chapter" mode="mode-book">
+  <xsl:template match="db:chapter |db:preface" mode="mode-book">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:variable name="chapter-number" as="xs:string"
