@@ -1,4 +1,4 @@
-/*From: https://www.cssscript.com/create-a-multi-level-drop-down-menu-with-pure-css/*/
+/*  Main: */
 
 body {
   font-family: Verdana, sans-serif;
@@ -8,6 +8,10 @@ body {
   padding-top: 5em;
   overflow: auto;
 }
+
+/* TOC and header */
+/* Menu from: https://www.cssscript.com/create-a-multi-level-drop-down-menu-with-pure-css/*/
+
 
 h1.toc-header {
   padding: 0.1em;
@@ -105,4 +109,55 @@ div.toc ul:after {
 
 div.toc ul:after {
   clear: both;
+}
+
+/* Various */
+
+p {
+  padding: 0.3em;;
+  margin:0;
+}
+
+pre {
+  background: lightgrey;
+  font-size: 110%;
+  padding: 0.5em;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+code {
+  font-size: 125%;
+}
+
+p[class$="-title"] {
+  font-size: 80%;
+  color: grey;
+  padding: 0.1em;
+  padding-bottom: 1em;
+}
+
+p.bridgehead {
+  font-weight: bold;
+  font-size: 120%;
+  padding-top: 1em;
+}
+
+/* Tables: */
+
+table {
+  border-collapse: collapse;
+}
+
+table, th, td {
+  border: 1px solid black;
+  vertical-align:top;
+  font-size: 100%
+}
+
+th {
+  text-align: left;
+  background-color: black;
+  color: white;
+  font-weight: normal;
 }

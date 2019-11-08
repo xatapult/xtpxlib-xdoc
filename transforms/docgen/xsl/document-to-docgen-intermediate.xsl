@@ -223,7 +223,7 @@
 
     <!-- Ports: -->
     <xsl:where-populated>
-      <parameters typename="port" title="false">
+      <parameters typename="port" title="true">
         <xsl:for-each select="$elm/(p:input | p:output)">
           <parameter name="{@port}">
             <xsl:variable name="port-type" as="xs:string" select="local-name(.)"/>
@@ -239,7 +239,7 @@
 
     <!-- Options: -->
     <xsl:where-populated>
-      <parameters typename="option" title="false">
+      <parameters typename="option" title="true">
         <xsl:for-each select="$elm/p:option">
           <parameter name="{@name}">
             <xsl:copy-of select="@required"/>
@@ -267,7 +267,7 @@
 
     <!-- Process all objects: -->
     <xsl:if test="exists($objects)">
-      <objects title="false">
+      <objects title="true">
         <xsl:for-each select="$objects">
           <xsl:variable name="object" as="element()" select="."/>
           <object type-id="{local-name($object)}" name="{@name}">

@@ -77,7 +77,7 @@
       <!-- Global parameters: -->
       <xsl:call-template name="parameters-to-docbook">
         <xsl:with-param name="id" select="local:get-id('global')"/>
-        <xsl:with-param name="title" select="'Parameters in ' || $filename"/>
+        <xsl:with-param name="title" select="'Global parameters in ' || $filename"/>
       </xsl:call-template>
 
       <!-- Objects ToC: -->
@@ -195,7 +195,7 @@
   <!-- HTML GENERIC SUPPORT: -->
 
   <xsl:template name="documentation-to-docbook">
-    <!-- Generate somethjing that will be transformed from Markdown into Docbook in a later stage of the pipeline: -->
+    <!-- Generate something that will be transformed from Markdown into Docbook in a later stage of the pipeline: -->
     <xsl:param name="elm" as="element()?" required="no" select="."/>
 
     <xsl:variable name="lines" as="element(dgi:line)*" select="$elm/dgi:documentation/dgi:line"/>
@@ -340,8 +340,10 @@
     <xsl:param name="object" as="element(dgi:object)" required="no" select="."/>
 
     <xsl:for-each select="$object">
+      <xsl:variable name="type-description" as="xs:string" select="local:type-to-description(@type-id)"/>
+      <xsl:variable name="typename-for-title" as="xs:string" select="($object//@typename, 'parameter')[1]"/>
       <bridgehead xml:id="{local:get-object-id(.)}" xreflabel="{@name}">
-        <xsl:value-of select="local:type-to-description(@type-id)"/>
+        <xsl:value-of select="$type-description"/>
         <xsl:text>: </xsl:text>
         <code>{ @name }</code>
         <xsl:if test="normalize-space(@type) ne ''">
@@ -350,7 +352,9 @@
         </xsl:if>
       </bridgehead>
       <xsl:call-template name="documentation-to-docbook"/>
-      <xsl:call-template name="parameters-to-docbook"/>
+      <xsl:call-template name="parameters-to-docbook">
+        <xsl:with-param name="title" select="xtlc:capitalize($typename-for-title) || 's of ' || @name"/>
+      </xsl:call-template>
     </xsl:for-each>
   </xsl:template>
 
