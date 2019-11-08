@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:local="#local-xdoc-to-moduledoc-website" xmlns:db="http://docbook.org/ns/docbook" xmlns:xtlcon="http://www.xtpxlib.nl/ns/container"
-  xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="#all">
+  xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml" exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!--*	
     TBD
@@ -12,6 +12,12 @@
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
   <xsl:mode on-no-match="shallow-copy"/>
+
+  <!-- ================================================================== -->
+  <!-- PARAMETERS: -->
+
+  <xsl:param name="module-name" as="xs:string" required="yes"/>
+  <xsl:param name="pdf-href" as="xs:string" required="yes"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
@@ -25,10 +31,15 @@
   <!-- ================================================================== -->
 
   <xsl:template match="xtlcon:document//xhtml:body">
-
+    <xsl:variable name="is-index-page" as="xs:boolean" select="xs:boolean(ancestor::xtlcon:document/@index)"/>
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:copy-of select="node()"/>
+      <xsl:if test="$is-index-page">
+        <p class="pdf-link">
+          <a href="{$pdf-href}">PDF version</a>
+        </p>
+      </xsl:if>
       <xsl:comment> == TOC == </xsl:comment>
       <xsl:copy-of select="$toc"/>
     </xsl:copy>
@@ -40,6 +51,7 @@
   <xsl:template name="create-toc">
 
     <div class="toc">
+      <h1 class="toc-header">{$module-name} documentation</h1>
       <xsl:where-populated>
         <ul class="toc-level-0">
           <li>

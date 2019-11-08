@@ -5,7 +5,17 @@ body {
   font-size: 80%;
   padding: 0.5em;
   /* Make room for the menu: */
-  margin-top: 2.5em;
+  padding-top: 5em;
+  overflow: auto;
+}
+
+h1.toc-header {
+  padding: 0.1em;
+  padding-left: 0.5em;
+  margin: 0;
+  color: grey;
+  font-size: 150%;
+  background: white;
 }
 
 div.toc {
@@ -16,6 +26,8 @@ div.toc {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 999;
+  border-bottom: 1.5em solid white;
 }
 
 div.toc ul {
@@ -34,8 +46,8 @@ div.toc ul li {
   position: relative;
   float: left;
   padding: 0;
-  padding-left: 0.5em !important;
-  padding-right: 0.5em !important;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
   margin: 0;
   background: black;
 }

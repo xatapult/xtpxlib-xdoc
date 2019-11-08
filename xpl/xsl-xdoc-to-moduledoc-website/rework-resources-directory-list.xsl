@@ -18,14 +18,14 @@
 <!-- ================================================================== -->
   <!-- PARAMETERS -->
   
-  <xsl:param name="resources-target-subdirectory" as="xs:string" required="yes"/>
+  <xsl:param name="resources-target-directory" as="xs:string" required="yes"/>
   
   <!-- ================================================================== -->
 
   <xsl:template match="c:directory">
     <xsl:comment> == RESOURCES START == </xsl:comment>
     <xsl:for-each select="c:file">
-      <xtlcon:external-document href-source="{@href-abs}" href-target="{xtlc:href-concat(($resources-target-subdirectory, @href-rel))}"/>
+      <xtlcon:external-document href-source="{@href-abs}" href-target="{xtlc:href-concat(($resources-target-directory, @href-rel))}"/>
     </xsl:for-each>
     <xsl:comment> == RESOURCES END == </xsl:comment>
   </xsl:template>

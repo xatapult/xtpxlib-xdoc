@@ -14,6 +14,36 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../xpl/xdoc-to-moduledoc-website.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-generate-moduledoc-website</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xsl-xdoc-to-moduledoc-website/rework-resources-directory-list.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-generate-moduledoc-website</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../test/xdoc-moduledoc-test.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -29,7 +59,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/xdoc-to-moduledoc-website.xpl</String>
+                                    <String>../xpl/xsl-xdoc-to-moduledoc-website/add-additional-links.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -119,37 +149,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/xsl-xdoc-to-moduledoc-website/add-additional-links.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>test-generate-moduledoc-website</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
                                     <String>../xpl/xsl-xdoc-to-moduledoc-website/create-basic-container.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>test-generate-moduledoc-website</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../xpl/xsl-xdoc-to-moduledoc-website/rework-resources-directory-list.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -1097,6 +1097,28 @@
                                             </field>
                                             <field name="value">
                                                 <null/>
+                                            </field>
+                                        </xprocOption>
+                                        <xprocOption>
+                                            <field name="namespaceURI">
+                                                <String></String>
+                                            </field>
+                                            <field name="localName">
+                                                <String>global-resources-directory</String>
+                                            </field>
+                                            <field name="value">
+                                                <null/>
+                                            </field>
+                                        </xprocOption>
+                                        <xprocOption>
+                                            <field name="namespaceURI">
+                                                <String></String>
+                                            </field>
+                                            <field name="localName">
+                                                <String>module-name</String>
+                                            </field>
+                                            <field name="value">
+                                                <String>xtpxlib-xdoc-test</String>
                                             </field>
                                         </xprocOption>
                                     </xprocOption-array>
