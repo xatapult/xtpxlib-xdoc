@@ -78,7 +78,7 @@
     <xsl:param name="min-width-cm" as="xs:double"/>
     <xsl:param name="max-width-cm" as="xs:double"/>
 
-    <xsl:variable name="max-nr-of-characters" as="xs:integer" select="max(for $t in $texts return string-length($t))"/>
+    <xsl:variable name="max-nr-of-characters" as="xs:integer" select="(max(for $t in $texts return string-length($t)), 0)[1]"/>
     <xsl:variable name="width-based-on-nr-of-characters-cm" as="xs:double" select="$max-nr-of-characters div $fixed-width-characters-per-cm-dbl"/>
     <!-- Find the right width and add just a  tiny bit to make sure everything goes ok (otherwise sometimes words still go to the next line) -->
     <xsl:variable name="width-cm" as="xs:double" select="max(($min-width-cm, $width-based-on-nr-of-characters-cm)) + 0.3"/>
