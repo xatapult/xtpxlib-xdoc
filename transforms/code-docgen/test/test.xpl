@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
-  version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" >
+  version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:blablabla">
 
   <p:documentation>
-      TBD
+      TBD *a bit more* `code code`
   </p:documentation>
 
   <!-- ================================================================== -->
@@ -12,13 +12,25 @@
   <p:input port="source" primary="true" sequence="false">
     <p:documentation>The document to generate documentation for, wrapped in an xdoc:transform element.</p:documentation>
   </p:input>
-
-  <p:output port="result" primary="true" sequence="false">
+  
+ 
+  <p:output port="result"  sequence="false">
     <p:documentation>The resulting docbook 5 output</p:documentation>
   </p:output>
   
-  <p:option name="blabla" required="true">
+  <p:input port="aux">
+    
+  </p:input>
+  
+  <p:option name="xdoc:blabla" required="false" select="'xyzbla bla bla bla bla'" >
     <p:documentation>More bla</p:documentation>
+  </p:option>
+  
+  <p:option name="xdoc:blabla2" required="true"  >
+    <p:documentation>
+      More bla 222
+      - xx
+    </p:documentation>
   </p:option>
   
   <!-- ================================================================== -->

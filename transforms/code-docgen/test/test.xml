@@ -2,7 +2,7 @@
 <element-description xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://www.xatapult.nl/ns/xdoc ../../xsd/element-description.xsd" xmlns="http://www.xtpxlib.nl/ns/xdoc" name="p:declare-step"
   id="declare-step-description">
-  <!--~ Some utter nonsense  -->
+  <!--~ Some utter nonsense in `markdown` *yes* -->
 
   <description>
     <para>Main description of p:declare-step...</para>

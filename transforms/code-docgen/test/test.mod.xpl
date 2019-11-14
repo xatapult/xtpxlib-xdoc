@@ -6,6 +6,18 @@
   <p:documentation>
     XProc library with generic steps.
   </p:documentation>
+  
+  <p:option name="global-path" required="true">
+    <p:documentation>
+        The path to get the directory listing from.
+      </p:documentation>
+  </p:option>
+  
+  <p:option name="global-path2" required="true" visibility="private">
+    <p:documentation>
+        The path to get the directory listing from.
+      </p:documentation>
+  </p:option>
 
   <!-- ================================================================== -->
   <!-- READ A DIRECTORY, RECURSIVE: -->

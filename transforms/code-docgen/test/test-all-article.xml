@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <info>
+    <title>code-docgen test</title>
+    <pubdate>${DATETIME}</pubdate>
+    <author>
+      <personname>Erik&#160;Siegel</personname>
+    </author>
+    <orgname>Xatapult</orgname>
+  </info>
+
+  <!-- ================================================================== -->
+
+  <sect1>
+    <title>Documents</title>
+
+    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="1" header-level="2" add-table-titles="true">
+      <xi:include href="test.mod.xsl"/>
+    </xdoc:transform>
+
+    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="2" header-level="2" add-table-titles="true">
+      <xi:include href="test.mod.xpl"/>
+    </xdoc:transform>
+
+    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" header-level="2" add-table-titles="true">
+      <xi:include href="test.xpl"/>
+    </xdoc:transform>
+
+    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="0" header-level="2" add-table-titles="true">
+      <xi:include href="test.xsd"/>
+    </xdoc:transform>
+
+    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="-1" header-level="2" add-table-titles="true">
+      <xi:include href="test.xml"/>
+    </xdoc:transform>
+
+
+  </sect1>
+
+
+</article>
