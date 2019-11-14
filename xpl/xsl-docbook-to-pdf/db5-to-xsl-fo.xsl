@@ -1027,12 +1027,47 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:link" mode="mode-inline">
-    <basic-link external-destination="{@xlink:href}">
-      <xsl:call-template name="handle-inline-text">
-        <xsl:with-param name="color" select="$link-color"/>
-        <xsl:with-param name="text" select="if (normalize-space(.) eq '') then @xlink:href else ()"/>
-      </xsl:call-template>
-    </basic-link>
+    <xsl:choose>
+
+      <!-- Link to something external: -->
+      <xsl:when test="exists(@xlink:href)">
+        <basic-link external-destination="{@xlink:href}">
+          <xsl:call-template name="handle-inline-text">
+            <xsl:with-param name="color" select="$link-color"/>
+            <xsl:with-param name="text" select="if (normalize-space(.) eq '') then @xlink:href else ()"/>
+          </xsl:call-template>
+        </basic-link>
+      </xsl:when>
+
+      <!-- Link to something internal: -->
+      <xsl:when test="exists(@linkend)">
+        <xsl:variable name="id" as="xs:string" select="@linkend"/>
+        <xsl:variable name="referenced-element" as="element()?" select="key($id-index-name, $id, $original-document)"/>
+        <xsl:choose>
+          <xsl:when test="exists($referenced-element)">
+            <basic-link internal-destination="{$id}">
+              <xsl:apply-templates mode="#current"/>
+            </basic-link>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:call-template name="insert-error">
+              <xsl:with-param name="msg-parts" select="('Referenced linkend id ', xtlc:q(@linkend), ' not found')"/>
+              <xsl:with-param name="block" select="false()"/>
+            </xsl:call-template>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:when>
+
+      <!-- Unknown: -->
+      <xsl:otherwise>
+        <xsl:call-template name="insert-error">
+          <xsl:with-param name="block" select="false()"/>
+          <xsl:with-param name="msg-parts" select="('Invalid link element. Missing @xlink:href or @linkend')"/>
+        </xsl:call-template>
+
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

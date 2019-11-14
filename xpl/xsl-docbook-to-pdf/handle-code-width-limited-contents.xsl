@@ -75,6 +75,14 @@
       <!-- Now try to make it fit: -->
       <xsl:variable name="text" as="xs:string" select="string(.)"/>
       <xsl:choose>
+        <xsl:when test="exists($code/*)">
+          <!-- Child elements, scary situation, probably links,, let it be: -->
+          <para>
+            <code>
+              <xsl:copy-of select="$code/node()"/>
+            </code>
+          </para>
+        </xsl:when>
         <xsl:when test="contains($text, ' ') or contains($text, '-')">
           <!-- Assume the text will break "naturally"... -->
           <para>
