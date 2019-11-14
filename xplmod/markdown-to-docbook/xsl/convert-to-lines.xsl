@@ -15,12 +15,13 @@
 
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
-  <xsl:mode on-no-match="fail"/>
+  <xsl:mode on-no-match="shallow-copy"/>
 
   <!-- ================================================================== -->
-
-  <xsl:template match="/">
-    <xdoc:MARKDOWN>
+  
+  <xsl:template match="xdoc:MARKDOWN">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
 
       <!-- Turn the block of text into individual lines: -->
       <xsl:variable name="fulltext-no-cr" as="xs:string" select="translate(string(/*), '&#13;', '')"/>
@@ -62,7 +63,7 @@
         </xsl:copy>
       </xsl:for-each>
 
-    </xdoc:MARKDOWN>
+    </xsl:copy>
   </xsl:template>
 
   <!-- ================================================================== -->

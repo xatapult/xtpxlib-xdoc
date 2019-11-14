@@ -25,98 +25,114 @@
   <!-- ================================================================== -->
 
   <xsl:template match="xdoc:MARKDOWN">
+
+    <xsl:variable name="header-only" as="xs:boolean" select="(xs:boolean(@header-only), false())[1]"/>
+
     <xsl:copy copy-namespaces="false">
       <xsl:copy-of select="@*"/>
 
-      <xsl:iterate select="db:line">
-        <xsl:param name="in-grouping" as="xs:boolean" select="false()"/>
-        <xsl:param name="group" as="element(db:line)*" select="()"/>
+      <!-- Gather everything in a variable first so we can process the header-only situation later: -->
+      <xsl:variable name="result" as="element()*">
+        <xsl:iterate select="db:line">
+          <xsl:param name="in-grouping" as="xs:boolean" select="false()"/>
+          <xsl:param name="group" as="element(db:line)*" select="()"/>
 
-        <!-- Make sure that in the unlikely event there's still a group going on when we finish this is output as well. -->
-        <xsl:on-completion>
-          <xsl:if test="$in-grouping">
-            <xsl:call-template name="output-group">
-              <xsl:with-param name="line-group" select="$group"/>
-            </xsl:call-template>
-          </xsl:if>
-        </xsl:on-completion>
-
-        <xsl:variable name="line" as="element(db:line)" select="."/>
-        <xsl:variable name="line-text" as="xs:string" select="string($line)"/>
-        <xsl:variable name="line-is-empty" as="xs:boolean" select="$line-text eq ''"/>
-        <xsl:variable name="line-is-code-block-marker" as="xs:boolean" select="starts-with($line-text, $code-block-marker)"/>
-        <xsl:variable name="line-is-horizontal-rule-marker" as="xs:boolean" select="starts-with($line-text, $horizontal-rule-marker)"/>
-        <xsl:variable name="line-is-header" as="xs:boolean" select="starts-with($line-text, $header-marker)"/>
-        <xsl:variable name="line-starts-list-entry" as="xs:boolean" select="matches($line-text, '^[0-9]\.\s+|-\s+')"/>
-
-        <xsl:choose>
-          <!-- When we find a horizontal rule marker or header, this ends the current group and is output on its own: -->
-          <xsl:when test="$line-is-horizontal-rule-marker or $line-is-header">
+          <!-- Make sure that in the unlikely event there's still a group going on when we finish this is output as well. -->
+          <xsl:on-completion>
             <xsl:if test="$in-grouping">
               <xsl:call-template name="output-group">
                 <xsl:with-param name="line-group" select="$group"/>
               </xsl:call-template>
             </xsl:if>
-            <xsl:call-template name="output-group">
-              <xsl:with-param name="line-group" select="$line"/>
-            </xsl:call-template>
-            <xsl:next-iteration>
-              <xsl:with-param name="in-grouping" select="false()"/>
-              <xsl:with-param name="group" select="()"/>
-            </xsl:next-iteration>
-          </xsl:when>
-          <!-- If we're not grouping yet, every non-empty line starts a group: -->
-          <xsl:when test="not($in-grouping) and not($line-is-empty)">
-            <xsl:next-iteration>
-              <xsl:with-param name="in-grouping" select="true()"/>
-              <xsl:with-param name="group" select="."/>
-            </xsl:next-iteration>
-          </xsl:when>
-          <!-- We're grouping and found a line that starts something special (header, list). Output the collected group and start a new one: -->
-          <xsl:when test="$in-grouping and $line-starts-list-entry">
-            <xsl:call-template name="output-group">
-              <xsl:with-param name="line-group" select="$group"/>
-            </xsl:call-template>
-            <xsl:next-iteration>
-              <xsl:with-param name="in-grouping" select="true()"/>
-              <xsl:with-param name="group" select="."/>
-            </xsl:next-iteration>
-          </xsl:when>
-          <!-- When we're grouping and find a code-block marker, this belongs to the group and ends it: -->
-          <xsl:when test="$in-grouping and $line-is-code-block-marker">
-            <xsl:call-template name="output-group">
-              <xsl:with-param name="line-group" select="($group, .)"/>
-            </xsl:call-template>
-            <xsl:next-iteration>
-              <xsl:with-param name="in-grouping" select="false()"/>
-              <xsl:with-param name="group" select="()"/>
-            </xsl:next-iteration>
-          </xsl:when>
-          <!-- When we're grouping and find a n0n-empty line (that does not start with anything special, caught in the when's above), 
+          </xsl:on-completion>
+
+          <xsl:variable name="line" as="element(db:line)" select="."/>
+          <xsl:variable name="line-text" as="xs:string" select="string($line)"/>
+          <xsl:variable name="line-is-empty" as="xs:boolean" select="$line-text eq ''"/>
+          <xsl:variable name="line-is-code-block-marker" as="xs:boolean" select="starts-with($line-text, $code-block-marker)"/>
+          <xsl:variable name="line-is-horizontal-rule-marker" as="xs:boolean" select="starts-with($line-text, $horizontal-rule-marker)"/>
+          <xsl:variable name="line-is-header" as="xs:boolean" select="starts-with($line-text, $header-marker)"/>
+          <xsl:variable name="line-starts-list-entry" as="xs:boolean" select="matches($line-text, '^[0-9]\.\s+|-\s+')"/>
+
+          <xsl:choose>
+            <!-- When we find a horizontal rule marker or header, this ends the current group and is output on its own: -->
+            <xsl:when test="$line-is-horizontal-rule-marker or $line-is-header">
+              <xsl:if test="$in-grouping">
+                <xsl:call-template name="output-group">
+                  <xsl:with-param name="line-group" select="$group"/>
+                </xsl:call-template>
+              </xsl:if>
+              <xsl:call-template name="output-group">
+                <xsl:with-param name="line-group" select="$line"/>
+              </xsl:call-template>
+              <xsl:next-iteration>
+                <xsl:with-param name="in-grouping" select="false()"/>
+                <xsl:with-param name="group" select="()"/>
+              </xsl:next-iteration>
+            </xsl:when>
+            <!-- If we're not grouping yet, every non-empty line starts a group: -->
+            <xsl:when test="not($in-grouping) and not($line-is-empty)">
+              <xsl:next-iteration>
+                <xsl:with-param name="in-grouping" select="true()"/>
+                <xsl:with-param name="group" select="."/>
+              </xsl:next-iteration>
+            </xsl:when>
+            <!-- We're grouping and found a line that starts something special (header, list). Output the collected group and start a new one: -->
+            <xsl:when test="$in-grouping and $line-starts-list-entry">
+              <xsl:call-template name="output-group">
+                <xsl:with-param name="line-group" select="$group"/>
+              </xsl:call-template>
+              <xsl:next-iteration>
+                <xsl:with-param name="in-grouping" select="true()"/>
+                <xsl:with-param name="group" select="."/>
+              </xsl:next-iteration>
+            </xsl:when>
+            <!-- When we're grouping and find a code-block marker, this belongs to the group and ends it: -->
+            <xsl:when test="$in-grouping and $line-is-code-block-marker">
+              <xsl:call-template name="output-group">
+                <xsl:with-param name="line-group" select="($group, .)"/>
+              </xsl:call-template>
+              <xsl:next-iteration>
+                <xsl:with-param name="in-grouping" select="false()"/>
+                <xsl:with-param name="group" select="()"/>
+              </xsl:next-iteration>
+            </xsl:when>
+            <!-- When we're grouping and find a n0n-empty line (that does not start with anything special, caught in the when's above), 
             this simply part of the group: -->
-          <xsl:when test="$in-grouping and not($line-is-empty)">
-            <xsl:next-iteration>
-              <xsl:with-param name="in-grouping" select="true()"/>
-              <xsl:with-param name="group" select="($group, .)"/>
-            </xsl:next-iteration>
-          </xsl:when>
-          <!-- An empty line ends any grouping: -->
-          <xsl:when test="$in-grouping and $line-is-empty">
-            <xsl:call-template name="output-group">
-              <xsl:with-param name="line-group" select="$group"/>
-            </xsl:call-template>
-            <xsl:next-iteration>
-              <xsl:with-param name="in-grouping" select="false()"/>
-              <xsl:with-param name="group" select="()"/>
-            </xsl:next-iteration>
-          </xsl:when>
-          <xsl:otherwise>
-            <!-- Ignore... -->
-          </xsl:otherwise>
-        </xsl:choose>
+            <xsl:when test="$in-grouping and not($line-is-empty)">
+              <xsl:next-iteration>
+                <xsl:with-param name="in-grouping" select="true()"/>
+                <xsl:with-param name="group" select="($group, .)"/>
+              </xsl:next-iteration>
+            </xsl:when>
+            <!-- An empty line ends any grouping: -->
+            <xsl:when test="$in-grouping and $line-is-empty">
+              <xsl:call-template name="output-group">
+                <xsl:with-param name="line-group" select="$group"/>
+              </xsl:call-template>
+              <xsl:next-iteration>
+                <xsl:with-param name="in-grouping" select="false()"/>
+                <xsl:with-param name="group" select="()"/>
+              </xsl:next-iteration>
+            </xsl:when>
+            <xsl:otherwise>
+              <!-- Ignore... -->
+            </xsl:otherwise>
+          </xsl:choose>
 
-      </xsl:iterate>
-
+        </xsl:iterate>
+      </xsl:variable>
+      
+      <!-- Process a header-only situation: -->
+      <xsl:choose>
+        <xsl:when test="$header-only">
+          <xsl:sequence select="($result/self::db:para)[1]"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="$result"/>
+        </xsl:otherwise>  
+      </xsl:choose>
+      
     </xsl:copy>
   </xsl:template>
 
