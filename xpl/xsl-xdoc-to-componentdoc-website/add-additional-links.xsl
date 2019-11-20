@@ -16,13 +16,13 @@
   <!-- ================================================================== -->
   <!-- PARAMETERS: -->
 
-  <xsl:param name="module-name" as="xs:string" required="yes"/>
   <xsl:param name="pdf-href" as="xs:string" required="yes"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
 
   <xsl:variable name="href-index-document" as="xs:string" select="/*/xtlcon:document[xs:boolean(@index)]/@href-target"/>
+  <xsl:variable name="title" as="xs:string" select="/*/@title"/>
 
   <xsl:variable name="toc" as="element(xhtml:div)">
     <xsl:call-template name="create-toc"/>
@@ -31,15 +31,9 @@
   <!-- ================================================================== -->
 
   <xsl:template match="xtlcon:document//xhtml:body">
-    <xsl:variable name="is-index-page" as="xs:boolean" select="xs:boolean(ancestor::xtlcon:document/@index)"/>
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:copy-of select="node()"/>
-      <xsl:if test="$is-index-page">
-        <p class="pdf-link">
-          <a href="{$pdf-href}">PDF version</a>
-        </p>
-      </xsl:if>
       <xsl:comment> == TOC == </xsl:comment>
       <xsl:copy-of select="$toc"/>
     </xsl:copy>
@@ -51,7 +45,7 @@
   <xsl:template name="create-toc">
 
     <div class="toc">
-      <h1 class="toc-header">{$module-name} documentation</h1>
+      <h1 class="toc-header">{$title} documentation</h1>
       <xsl:where-populated>
         <ul class="toc-level-0">
           <li>
@@ -69,6 +63,9 @@
               </xsl:call-template>
             </li>
           </xsl:for-each>
+          <li>
+            <a href="{$pdf-href}">PDF</a>
+          </li>
         </ul>
       </xsl:where-populated>
     </div>

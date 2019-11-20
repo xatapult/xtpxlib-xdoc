@@ -20,19 +20,19 @@
   <!-- PARAMETERS: -->
 
   <xsl:param name="href-target-path" as="xs:string" required="yes"/>
-  <xsl:param name="href-moduledoc-website-template" as="xs:string" required="yes"/>
+  <xsl:param name="href-componentdoc-website-template" as="xs:string" required="yes"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
 
   <xsl:variable name="template" as="document-node()">
     <xsl:choose>
-      <xsl:when test="doc-available($href-moduledoc-website-template)">
-        <xsl:sequence select="doc($href-moduledoc-website-template)"/>
+      <xsl:when test="doc-available($href-componentdoc-website-template)">
+        <xsl:sequence select="doc($href-componentdoc-website-template)"/>
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="('Module documentation website template ', xtlc:q($href-moduledoc-website-template), ' not found')"
+          <xsl:with-param name="msg-parts" select="('Module documentation website template ', xtlc:q($href-componentdoc-website-template), ' not found')"
           />
         </xsl:call-template>
       </xsl:otherwise>
@@ -42,8 +42,15 @@
   <!-- ================================================================== -->
 
   <xsl:template match="/">
+    
+   <!-- Generate a title for this site: -->
+    <xsl:variable name="title" as="xs:string" select="(/*/xhtml:div[@class eq 'header']/xhtml:*[@class eq 'title'])[1]"/>
+    <xsl:variable name="subtitle" as="xs:string?" select="(/*/xhtml:div[@class eq 'header']/xhtml:*[@class eq 'subtitle'])[1]"/>
+    <xsl:variable name="full-title" as="xs:string" select="string-join(($title, $subtitle), ' - ')"/>
+    
+    <!-- Create the container: -->
     <xtlcon:document-container timestamp="{current-dateTime()}" href-target-path="{$href-target-path}"
-      moduledoc-website-template="{$href-moduledoc-website-template}">
+      moduledoc-website-template="{$href-componentdoc-website-template}" title="{$full-title}">
       <xsl:for-each select="/*/xhtml:div[@class = ('preface', 'chapter', 'appendix')]">
         <xsl:variable name="is-preface" as="xs:boolean" select="@class eq 'preface'"/>
         <!-- Create a container document entry: -->

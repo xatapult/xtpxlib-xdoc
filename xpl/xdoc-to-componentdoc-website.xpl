@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step"
   xmlns:xtlcon="http://www.xtpxlib.nl/ns/container" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" version="1.0" xpath-version="2.0"
-  exclude-inline-prefixes="#all" type="xdoc:xdoc-to-moduledoc-website">
+  exclude-inline-prefixes="#all" type="xdoc:xdoc-to-componentdoc-website">
 
   <p:documentation>
-     Creates a documentation website for a module from an xdoc book style document.
+     Creates a documentation website for a component from an xdoc book style document.
      Relative names are resolved against the base URI of the *source document*.
   </p:documentation>
 
@@ -23,28 +23,24 @@
     <p:documentation>Filter settings for processing the parameters. Format: "name=value|name=value|..."</p:documentation>
   </p:option>
 
-  <p:option name="resources-subdirectory" required="false" select="'resources'">
-    <p:documentation>The *relative* name of the subdirectory that contains specific resources (like CSS, images, etc.) 
-      for this module.</p:documentation>
+  <p:option name="resources-subdirectory" required="false" select="()">
+    <p:documentation>The *relative* name of the subdirectory that contains specific resources (like CSS, images, etc.) for this component.</p:documentation>
   </p:option>
 
-  <p:option name="global-resources-directory" required="false" select="'../../xtpxlib-common/doc/resources/'">
-    <p:documentation>The name of the subdirectory that contains global resources (resources used for documenting a group of modules).
-      Set this to the empty string when there are no global resources.
-    </p:documentation>
+  <p:option name="global-resources-directory" required="false" select="()">
+    <p:documentation>The name of the subdirectory that contains global resources (resources used for documenting a group of components).</p:documentation>
   </p:option>
 
-  <p:option name="output-directory" required="false" select="'../docs'">
-    <p:documentation>The name of the output directory for this website. 
-      If not set it is the (GitHub pages standard) docs directory.</p:documentation>
+  <p:option name="output-directory" required="true" >
+    <p:documentation>The name of the output directory for the generated website.</p:documentation>
   </p:option>
 
-  <p:option name="href-template" required="false" select="'moduledoc-website-template.html'">
-    <p:documentation/>
+  <p:option name="href-template" required="true" >
+    <p:documentation>TBD</p:documentation>
   </p:option>
 
-  <p:option name="module-name" required="true">
-    <p:documentation>The name of the module (e.g. `xtpxlib-xdoc`) for which the documentation is generated.</p:documentation>
+  <p:option name="component-name" required="true">
+    <p:documentation>The name of the component (e.g. `xtpxlib-xdoc`) for which the documentation is generated.</p:documentation>
   </p:option>
 
   <p:output port="result" primary="true" sequence="false">
@@ -62,19 +58,20 @@
   <!-- ================================================================== -->
 
   <!-- Make sure all relative directory and file names are resolved against the directory of the source document: -->
-  <p:variable name="full-href-parameters" select="resolve-uri($href-parameters, base-uri(/))"/>
-  <p:variable name="full-resources-source-directory" select="resolve-uri($resources-subdirectory, base-uri(/))"/>
-  <p:variable name="full-global-resources-directory" select="resolve-uri($global-resources-directory, base-uri(/))"/>
-  <p:variable name="full-output-directory" select="resolve-uri($output-directory, base-uri(/))"/>
+  <p:variable name="base-uri-source-document" select="base-uri(/)"/>
+  <p:variable name="full-href-parameters" select="resolve-uri($href-parameters, $base-uri-source-document)"/>
+  <p:variable name="full-resources-source-directory" select="resolve-uri($resources-subdirectory, $base-uri-source-document)"/>
+  <p:variable name="full-global-resources-directory" select="resolve-uri($global-resources-directory, $base-uri-source-document)"/>
+  <p:variable name="full-output-directory" select="resolve-uri($output-directory, $base-uri-source-document)"/>
   <p:variable name="full-resources-target-directory" select="string-join(($full-output-directory, $resources-subdirectory), '/')"/>
-  <p:variable name="full-href-template" select="resolve-uri($href-template, base-uri(/))"/>
+  <p:variable name="full-href-template" select="resolve-uri($href-template, $base-uri-source-document)"/>
   
   <!-- Definitions for the PDF version: -->
-  <p:variable name="pdf-filename" select="concat(replace($module-name, '[^A-Za-z0-9\-.]', '_'), '-documentation.pdf')"/>
+  <p:variable name="pdf-filename" select="concat(replace($component-name, '[^A-Za-z0-9\-.]', '_'), '-documentation.pdf')"/>
   <p:variable name="pdf-relative-href" select="string-join(($resources-subdirectory, $pdf-filename), '/')"/>
   <p:variable name="pdf-absolute-href" select="string-join(($full-output-directory, $pdf-relative-href), '/')"/>
 
-  <!-- Make the xdoc source into Docbook: -->
+  <!-- Turn the xdoc source into Docbook: -->
   <xdoc:xdoc-to-docbook>
     <p:with-option name="href-parameters" select="$full-href-parameters"/>
     <p:with-option name="parameter-filters" select="$parameter-filters"/>
@@ -83,7 +80,7 @@
 
   <!-- Now create the XHTML version: -->
   <xdoc:docbook-to-xhtml>
-    <p:with-option name="create-header" select="false()"/>
+    <p:with-option name="create-header" select="true()"/>
   </xdoc:docbook-to-xhtml>
 
   <!-- Create an xtpxlib-container structure for writing the XHTML results:. -->
@@ -92,24 +89,24 @@
   -->
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-xdoc-to-moduledoc-website/create-basic-container.xsl"/>
+      <p:document href="xsl-xdoc-to-componentdoc-website/create-basic-container.xsl"/>
     </p:input>
     <p:with-param name="href-target-path" select="$full-output-directory"/>
-    <p:with-param name="href-moduledoc-website-template" select="$full-href-template"/>
+    <p:with-param name="href-componentdoc-website-template" select="$full-href-template"/>
   </p:xslt>
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-xdoc-to-moduledoc-website/fix-internal-links.xsl"/>
+      <p:document href="xsl-xdoc-to-componentdoc-website/fix-internal-links.xsl"/>
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>
+  
 
   <!-- Add internal linking between the pages (TOC, etc.): -->
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-xdoc-to-moduledoc-website/add-additional-links.xsl"/>
+      <p:document href="xsl-xdoc-to-componentdoc-website/add-additional-links.xsl"/>
     </p:input>
-    <p:with-param name="module-name" select="$module-name"/>
     <p:with-param name="pdf-href" select="$pdf-relative-href"/>
   </p:xslt>
 
@@ -127,7 +124,7 @@
   </p:insert>
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-xdoc-to-moduledoc-website/rework-resources-directory-list.xsl"/>
+      <p:document href="xsl-xdoc-to-componentdoc-website/rework-resources-directory-list.xsl"/>
     </p:input>
     <p:with-param name="resources-target-directory" select="$full-resources-target-directory"/>
   </p:xslt>
