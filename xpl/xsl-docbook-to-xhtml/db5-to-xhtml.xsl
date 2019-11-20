@@ -542,9 +542,13 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:link" mode="mode-inline">
+    <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
     <a href="{@xlink:href}">
+      <xsl:if test="'newpage' = $roles">
+        <xsl:attribute name="target" select="'_blank'"/>
+      </xsl:if>
       <xsl:call-template name="handle-inline-text">
-        <xsl:with-param name="text" select="if (normalize-space(.) eq '') then @xlink:href else ()"/>
+        <xsl:with-param name="text" select="if ((normalize-space(.) eq '') and empty(*)) then @xlink:href else ()"/>
       </xsl:call-template>
     </a>
   </xsl:template>

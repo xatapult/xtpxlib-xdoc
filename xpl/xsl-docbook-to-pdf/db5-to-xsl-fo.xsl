@@ -1034,7 +1034,7 @@
         <basic-link external-destination="{@xlink:href}">
           <xsl:call-template name="handle-inline-text">
             <xsl:with-param name="color" select="$link-color"/>
-            <xsl:with-param name="text" select="if (normalize-space(.) eq '') then @xlink:href else ()"/>
+            <xsl:with-param name="text" select="if ((normalize-space(.) eq '') and empty(*)) then @xlink:href else ()"/>
           </xsl:call-template>
         </basic-link>
       </xsl:when>
