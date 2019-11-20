@@ -46,6 +46,10 @@
     <p:documentation>Main font size as an integer. Usual values somewhere between 8 and 10.</p:documentation>
   </p:option>
   
+  <p:option name="global-resources-directory" required="false" select="()">
+    <p:documentation>Images that are tagged as `role="global"` are searched here (discarding any directory information in the image's URI)</p:documentation>
+  </p:option>
+  
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>Some XML report about the conversion</p:documentation>
   </p:output>
@@ -67,6 +71,7 @@
     <p:with-option name="fop-config" select="$fop-config"/> 
     <p:with-option name="output-type" select="$output-type"/> 
     <p:with-option name="main-font-size" select="$main-font-size"/> 
+    <p:with-option name="global-resources-directory" select="$global-resources-directory"/> 
   </xdoc:docbook-to-pdf>
 
 </p:declare-step>

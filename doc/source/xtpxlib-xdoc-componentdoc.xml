@@ -18,85 +18,123 @@
   <!-- ================================================================== -->
 
   <preface>
-    <title>Preface part</title>
+    <title>Documentation generation with {$component-name}</title>
 
-    <xdoc:dump-parameters type="table"/>
+    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is a component for generating documentation. It uses <link
+        xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> + additional markup and has (currently) PDF and XHTML as output
+      formats. It can also generate component documentation sites.</para>
 
-    <para>Can we do something with the preface part, like using it for a home page?</para>
+    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is part of the <emphasis role="bold"><code>xtpxlib</code></emphasis>
+      library. <emphasis role="bold"><code>xtpxlib</code></emphasis> contains software for processing XML, using languages like XSLT and XProc. It
+      consists of several separate components, named <code>xtpxlib-*</code>. Everything can be found on GitHub (<link
+        xlink:href="https://github.com/xatapult"/>). The core component of <code>xtpxlib</code> is <link
+        xlink:href="https://github.com/xatapult/xtpxlib-common"><code>xtpxlib-common</code></link>. Most components will be accompanied by a GitHub
+      pages documentation site (<link xlink:href="TBD"/>).</para>
+
 
     <para role="break"/>
-
+    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is created by:</para>
     <para>
       <link xlink:href="http://www.xatapult.com" role="newpage">
-        
-        <inlinemediaobject>
+        <inlinemediaobject role="global">
           <imageobject>
             <imagedata fileref="resources/logo-xatapult.jpg" width="20%"/>
           </imageobject>
         </inlinemediaobject>
-        
-        
       </link>
     </para>
 
-    <para role="break"/>
-    <figure xml:id="figure-example" role="nonumber">
-      <title/>
-      <mediaobject>
-        <imageobject>
-          <imagedata fileref="resources/logo-xatapult.jpg" width="20%"/>
-        </imageobject>
-      </mediaobject>
-    </figure>
 
   </preface>
-
 
   <!-- ================================================================== -->
 
   <chapter>
     <title>Introduction</title>
 
-    <warning>
-      <para>This document is for testing the features of the <code>xtpxlib-xdoc</code> component.</para>
-    </warning>
+    <sect1>
+      <title>Installing and running {$component-name}</title>
 
-    <para>The <code>xtpxlib-xdoc</code> module uses DocBook&#160;5.1 as its target vocabulary. However, it does not implement the full standard (which
-      is huge!) but only those elements/attributes that were deemed necessary. The <code>xtpxlib-xdoc</code> component adds several extensions which
-      are tested by running this document through the conversion pipelines. This means it also serves as partial documentation and example.</para>
+      <para>[TBD]</para>
+    </sect1>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>How does {$component-name} work?</title>
+
+      <para>[TBD] xdoc to docbook to ...</para>
+      <para>The <code>xtpxlib-xdoc</code> module uses DocBook&#160;5.1 as its target vocabulary. However, it does not implement the full standard
+        (which is huge!) but only those elements/attributes that were deemed necessary. The <code>xtpxlib-xdoc</code> component adds several
+        extensions which are tested by running this document through the conversion pipelines. This means it also serves as partial documentation and
+        example.</para>
+    </sect1>
+
+
+
 
   </chapter>
-
+  
   <!-- ================================================================== -->
 
   <chapter>
+    <title>Code documentation</title>
+    
+    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="2">
+      <xi:include href="../../xpl/xdoc-to-componentdoc-website.xpl"/>
+    </xdoc:transform>
+    
+  </chapter>
+  
+  <!-- ================================================================== -->
+  
+  <chapter>
+    <title>xdoc transforms</title>
+    
+    <para>[TBD]</para>
+    
+  </chapter>
+  
+  <!-- ================================================================== -->
+
+  <chapter>
+    <title>DocBook dialect</title>
+    
+    <para>[TBD]</para>
+    
+  </chapter>
+  
+
+  <!-- ================================================================== -->
+
+  <!--<chapter>
     <title>Stuff 1</title>
 
 
     <para>Link to another chapter: <xref linkend="second-stuff"/></para>
     <para>Link to this chapter: <xref linkend="hiero"/></para>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\->
 
     <sect1 xml:id="hiero">
       <title>Parameters</title>
       <xdoc:dump-parameters type="table"/>
     </sect1>
 
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    <!-\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\->
 
-    <!-- <sect1>
+    <!-\- <sect1>
       <title>Coming from transformations</title>
       <para>Comes from an XProc transformation:</para>
       <xdoc:transform href="transforms/test.xpl"/>
       <para role="break-before">Comes from an XSLT transformation:</para>
       <xdoc:transform href="transforms/test.xsl"/>
     </sect1>
-  </chapter>-->
+  </chapter>-\->
 
-    <!-- ================================================================== -->
+    <!-\- ================================================================== -\->
 
-    <!--<chapter xml:id="second-stuff">
+    <!-\-<chapter xml:id="second-stuff">
     <title>Stuff 2</title>
     <sect1>
       <title>XML Descriptions</title>
@@ -107,12 +145,12 @@
 
     </sect1>
 
-    <!-\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\->
+    <!-\\- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\\->
 
     <sect1>
       <title>Documentation generation</title>
 
-      <!-\-<sect2>
+      <!-\\-<sect2>
         <title>XSLT Module</title>
         <xdoc:transform href="$xdoc/docgen/docgen.xpl" filecomponents="1">
           <xi:include href="data/test.mod.xsl"/>
@@ -145,10 +183,10 @@
         <xdoc:transform href="$xdoc/docgen/docgen.xpl" filecomponents="-1">
           <xi:include href="data/test.xml"/>
         </xdoc:transform>
-      </sect2>-\->
+      </sect2>-\\->
 
     </sect1>
--->
-  </chapter>
+-\->
+  </chapter>-->
 
 </book>

@@ -139,6 +139,7 @@
       <p:pipe port="result" step="docbook-contents"/>
     </p:input>
     <p:with-option name="dref-pdf" select="$pdf-absolute-href"/> 
+    <p:with-option name="global-resources-directory" select="$full-global-resources-directory"/> 
   </xdoc:docbook-to-pdf>
   <p:sink/>
 

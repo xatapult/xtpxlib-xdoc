@@ -45,7 +45,7 @@
   <xsl:template name="create-toc">
 
     <div class="toc">
-      <h1 class="toc-header">{$title} documentation</h1>
+      <h1 class="toc-header">{$title}</h1>
       <xsl:where-populated>
         <ul class="toc-level-0">
           <li>

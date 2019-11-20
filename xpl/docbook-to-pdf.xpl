@@ -33,7 +33,7 @@
   </p:option>
 
   <p:option name="preliminary-version" required="false" select="false()">
-    <p:documentation>If true, adds a prelimiary version marker and output any db:remark elements. 
+    <p:documentation>If true, adds a preliminary version marker and output any db:remark elements. 
         If this is set to false, db:remark elements will be suppressed.</p:documentation>
   </p:option>
 
@@ -52,7 +52,11 @@
   <p:option name="main-font-size" required="false" select="10">
     <p:documentation>Main font size as an integer. Usual values somewhere between 8 and 10.</p:documentation>
   </p:option>
-
+  
+  <p:option name="global-resources-directory" required="false" select="()">
+    <p:documentation>Images that are tagged as `role="global"` are searched here (discarding any directory information in the image's URI)</p:documentation>
+  </p:option>
+  
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting XSL-FO that was transformed into the PDF</p:documentation>
     <p:pipe port="result" step="final-output"/>
@@ -95,6 +99,7 @@
       <p:document href="xsl-docbook-to-pdf/db5-to-xsl-fo.xsl"/>
     </p:input>
     <p:with-param name="preliminary-version" select="$preliminary-version"/>
+    <p:with-param name="global-resources-directory" select="$global-resources-directory"/>
     <p:with-param name="chapter-id" select="$chapter-id"/>
     <p:with-param name="main-font-size" select="$main-font-size"/>
     <p:with-param name="output-type" select="$output-type"/>

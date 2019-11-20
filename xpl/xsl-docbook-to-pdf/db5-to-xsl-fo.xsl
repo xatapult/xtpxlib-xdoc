@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:local="#local" xmlns:db="http://docbook.org/ns/docbook"
-  xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns="http://www.w3.org/1999/XSL/Format"
-  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xlink="http://www.w3.org/1999/xlink" exclude-result-prefixes="#all" expand-text="true">
+<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local"
+  xmlns:db="http://docbook.org/ns/docbook" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns="http://www.w3.org/1999/XSL/Format" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xlink="http://www.w3.org/1999/xlink"
+  exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!--*	
     Turns the db5 (in XProc book dialect) into XSL-FO 	
@@ -28,6 +28,10 @@
   <!-- PARAMETERS: -->
 
   <xsl:param name="preliminary-version" as="xs:string" required="no" select="string(false())"/>
+
+  <xsl:param name="global-resources-directory" as="xs:string?" required="no" select="()">
+    <!-- If an image has role="global" set, the image is searched for here, discarding any directory information in the provided image URI. -->
+  </xsl:param>
 
   <xsl:param name="chapter-id" as="xs:string" required="no" select="''">
     <!-- With this parameter you can provide the identifier of a chapter (or preface) to output only. Front page and TOC will not be output.
@@ -197,17 +201,19 @@
 
   <xsl:template name="create-article-header">
 
-    <!-- Logo's at the top: -->
-    <xsl:variable name="logo-imagedata" as="element(db:imagedata)*"
-      select="/*/db:info/db:mediaobject[(@role eq 'top-logo') or empty(@role)]/db:imageobject/db:imagedata"/>
-    <xsl:for-each select="$logo-imagedata">
-      <block-container>
-        <block vertical-align="middle">
-          <xsl:call-template name="handle-imagedata">
-            <xsl:with-param name="imagedata" select="."/>
-          </xsl:call-template>
-        </block>
-      </block-container>
+    <!-- Logo's at the top (either no role or role="top-logo"): -->
+    <xsl:for-each select="/*/db:info/db:mediaobject">
+      <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
+      <xsl:if test="empty($roles) or ('top-logo' = $roles)">
+        <block-container>
+          <block vertical-align="middle">
+            <xsl:call-template name="handle-imagedata">
+              <xsl:with-param name="imagedata" select="(db:imageobject/db:imagedata)[1]"/>
+              <xsl:with-param name="is-global" select="'global' = $roles"/>
+            </xsl:call-template>
+          </block>
+        </block-container>
+      </xsl:if>
     </xsl:for-each>
 
     <!-- Title information: -->
@@ -266,20 +272,22 @@
         </block-container>
 
         <!-- Logo's center page: -->
-        <xsl:variable name="logo-imagedata" as="element(db:imagedata)*"
-          select="/*/db:info/db:mediaobject[@role eq 'center-page']/db:imageobject/db:imagedata"/>
-        <xsl:for-each select="$logo-imagedata">
-          <block-container absolute-position="fixed" top="{local:dimcm($standard-page-margin-top + 10)}"
-            left="{local:dimcm($standard-page-margin-left)}"
-            width="{local:dimcm($page-width - $standard-page-margin-right - $standard-page-margin-left)}">
-            <block vertical-align="middle" text-align="center">
-              <xsl:call-template name="handle-imagedata">
-                <xsl:with-param name="imagedata" select="."/>
-              </xsl:call-template>
-            </block>
-          </block-container>
+        <xsl:for-each select="/*/db:info/db:mediaobject">
+          <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
+          <xsl:if test="'center-page' = $roles">
+            <block-container absolute-position="fixed" top="{local:dimcm($standard-page-margin-top + 10)}"
+              left="{local:dimcm($standard-page-margin-left)}"
+              width="{local:dimcm($page-width - $standard-page-margin-right - $standard-page-margin-left)}">
+              <block vertical-align="middle" text-align="center">
+                <xsl:call-template name="handle-imagedata">
+                  <xsl:with-param name="imagedata" select="(db:imageobject/db:imagedata)[1]"/>
+                  <xsl:with-param name="is-global" select="'global' = $roles"/>
+                </xsl:call-template>
+              </block>
+            </block-container>
+          </xsl:if>
         </xsl:for-each>
-
+       
         <!-- Some more information at the bottom: -->
         <block-container absolute-position="fixed" top="{local:dimcm($page-height - 3)}" left="{local:dimcm($standard-page-margin-left)}">
           <xsl:variable name="publication-date" as="xs:string?" select="/*/db:info/db:pubdate"/>
@@ -555,11 +563,13 @@
 
   <xsl:template match="db:figure | db:informalfigure" mode="mode-block">
 
+    <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
     <block text-align="center" space-before="{local:dimpt(2 * $standard-paragraph-distance-pt)}"
       space-after="{local:dimpt(3 * $standard-paragraph-distance-pt)}" keep-with-previous="always">
       <xsl:call-template name="copy-id"/>
       <xsl:call-template name="handle-imagedata">
         <xsl:with-param name="imagedata" select="db:mediaobject/db:imageobject/db:imagedata"/>
+        <xsl:with-param name="is-global" select="'global' = $roles"/>
       </xsl:call-template>
     </block>
     <xsl:if test="exists(self::db:figure)">
@@ -1073,8 +1083,10 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:inlinemediaobject" mode="mode-inline">
+    <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
     <xsl:call-template name="handle-imagedata">
       <xsl:with-param name="imagedata" select="db:imageobject/db:imagedata"/>
+      <xsl:with-param name="is-global" select="'global' = $roles"/>
       <xsl:with-param name="block" select="false()"/>
     </xsl:call-template>
   </xsl:template>
@@ -1409,17 +1421,25 @@
       If this fails (no @xml:base), it tries the standard resolve-uri(). -->
     <xsl:param name="originating-elm" as="element()"/>
     <xsl:param name="href" as="xs:string"/>
+    <xsl:param name="is-global" as="xs:boolean"/>
 
-    <xsl:variable name="xml-bases" as="xs:string*" select="$originating-elm/ancestor-or-self::*/@xml:base"/>
     <xsl:choose>
-      <xsl:when test="xtlc:href-is-absolute($href)">
-        <xsl:sequence select="$href"/>
-      </xsl:when>
-      <xsl:when test="exists($xml-bases)">
-        <xsl:sequence select="xtlc:href-concat((for $base in $xml-bases return xtlc:href-path($base), $href))"/>
+      <xsl:when test="$is-global and (string($global-resources-directory) ne '')">
+        <xsl:sequence select="xtlc:href-concat(($global-resources-directory, xtlc:href-name($href)))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:sequence select="resolve-uri($href, base-uri($originating-elm))"/>
+        <xsl:variable name="xml-bases" as="xs:string*" select="$originating-elm/ancestor-or-self::*/@xml:base"/>
+        <xsl:choose>
+          <xsl:when test="xtlc:href-is-absolute($href)">
+            <xsl:sequence select="$href"/>
+          </xsl:when>
+          <xsl:when test="exists($xml-bases)">
+            <xsl:sequence select="xtlc:href-concat((for $base in $xml-bases return xtlc:href-path($base), $href))"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:sequence select="resolve-uri($href, base-uri($originating-elm))"/>
+          </xsl:otherwise>
+        </xsl:choose>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
@@ -1429,12 +1449,13 @@
   <xsl:template name="handle-imagedata">
     <xsl:param name="imagedata" as="element(db:imagedata)*" required="yes"/>
     <xsl:param name="block" as="xs:boolean" required="no" select="true()"/>
+    <xsl:param name="is-global" as="xs:boolean" required="no" select="false()"/>
 
     <xsl:choose>
       <xsl:when test="exists($imagedata)">
         <xsl:for-each select="$imagedata">
           <xsl:variable name="current-imagedata" as="element(db:imagedata)" select="."/>
-          <xsl:variable name="full-uri" as="xs:string" select="local:get-full-uri($current-imagedata, $current-imagedata/@fileref)"/>
+          <xsl:variable name="full-uri" as="xs:string" select="local:get-full-uri($current-imagedata, $current-imagedata/@fileref, $is-global)"/>
           <xsl:variable name="width" as="xs:string?" select="$current-imagedata/@width"/>
           <xsl:variable name="height" as="xs:string?" select="$current-imagedata/@height"/>
           <external-graphic src="url({$full-uri})" content-width="scale-to-fit" content-height="scale-to-fit" scaling="uniform"
