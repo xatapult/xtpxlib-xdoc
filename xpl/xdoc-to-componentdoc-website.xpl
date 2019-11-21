@@ -23,6 +23,14 @@
     <p:documentation>Filter settings for processing the parameters. Format: "name=value|name=value|..."</p:documentation>
   </p:option>
 
+  <p:option name="href-global-parameters" required="false" select="()">
+    <p:documentation>Optional global parameters file. The parameters from this file will be merged in as well.</p:documentation>
+  </p:option>
+
+  <p:option name="href-version-information" required="false" select="()">
+    <p:documentation>Reference to an optional standard xtpxlib version in formation document.</p:documentation>
+  </p:option>
+
   <p:option name="resources-subdirectory" required="false" select="()">
     <p:documentation>The *relative* name of the subdirectory that contains specific resources (like CSS, images, etc.) for this component.</p:documentation>
   </p:option>
@@ -31,11 +39,11 @@
     <p:documentation>The name of the subdirectory that contains global resources (resources used for documenting a group of components).</p:documentation>
   </p:option>
 
-  <p:option name="output-directory" required="true" >
+  <p:option name="output-directory" required="true">
     <p:documentation>The name of the output directory for the generated website.</p:documentation>
   </p:option>
 
-  <p:option name="href-template" required="true" >
+  <p:option name="href-template" required="true">
     <p:documentation>TBD</p:documentation>
   </p:option>
 
@@ -54,26 +62,42 @@
   <p:import href="docbook-to-pdf.xpl"/>
   <p:import href="../../xtpxlib-common/xplmod/common.mod/common.mod.xpl"/>
   <p:import href="../../xtpxlib-container/xplmod/container.mod/container.mod.xpl"/>
+  <p:import href="../xplmod/xtpxlib-xdoc.mod/xtpxlib-xdoc.mod.xpl"/>
 
   <!-- ================================================================== -->
 
   <!-- Make sure all relative directory and file names are resolved against the directory of the source document: -->
   <p:variable name="base-uri-source-document" select="base-uri(/)"/>
-  <p:variable name="full-href-parameters" select="resolve-uri($href-parameters, $base-uri-source-document)"/>
+  <p:variable name="full-href-parameters"
+    select="if (normalize-space($href-parameters) eq '') then () else resolve-uri($href-parameters, $base-uri-source-document)"/>
+  <p:variable name="full-href-global-parameters"
+    select="if (normalize-space($href-global-parameters) eq '') then () else resolve-uri($href-global-parameters, $base-uri-source-document)"/>
+  <p:variable name="full-href-version-information"
+    select="if (normalize-space($href-version-information) eq '') then () else resolve-uri($href-version-information, $base-uri-source-document)"/>
   <p:variable name="full-resources-source-directory" select="resolve-uri($resources-subdirectory, $base-uri-source-document)"/>
   <p:variable name="full-global-resources-directory" select="resolve-uri($global-resources-directory, $base-uri-source-document)"/>
   <p:variable name="full-output-directory" select="resolve-uri($output-directory, $base-uri-source-document)"/>
   <p:variable name="full-resources-target-directory" select="string-join(($full-output-directory, $resources-subdirectory), '/')"/>
   <p:variable name="full-href-template" select="resolve-uri($href-template, $base-uri-source-document)"/>
-  
+
   <!-- Definitions for the PDF version: -->
   <p:variable name="pdf-filename" select="concat(replace($component-name, '[^A-Za-z0-9\-.]', '_'), '-documentation.pdf')"/>
   <p:variable name="pdf-relative-href" select="string-join(($resources-subdirectory, $pdf-filename), '/')"/>
   <p:variable name="pdf-absolute-href" select="string-join(($full-output-directory, $pdf-relative-href), '/')"/>
 
+  <!-- We're going to write a temporary new parameters document to the output directory 
+    (it is deleted later when the output directory is overwritten): -->
+  <p:variable name="href-parameters-merged-temp" select="string-join(($full-output-directory, 'merged-parameters-temp.xml'), '/')"/>
+  <xdoc:merge-parameters-and-version-information>
+    <p:with-option name="href-parameters" select="$full-href-parameters"/>
+    <p:with-option name="href-global-parameters" select="$full-href-global-parameters"/>
+    <p:with-option name="href-version-information" select="$full-href-version-information"/>
+    <p:with-option name="href-result" select="$href-parameters-merged-temp"/>
+  </xdoc:merge-parameters-and-version-information>
+
   <!-- Turn the xdoc source into Docbook: -->
   <xdoc:xdoc-to-docbook>
-    <p:with-option name="href-parameters" select="$full-href-parameters"/>
+    <p:with-option name="href-parameters" select="$href-parameters-merged-temp"/>
     <p:with-option name="parameter-filters" select="$parameter-filters"/>
   </xdoc:xdoc-to-docbook>
   <p:identity name="docbook-contents"/>
@@ -100,7 +124,7 @@
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>
-  
+
 
   <!-- Add internal linking between the pages (TOC, etc.): -->
   <p:xslt>
@@ -132,31 +156,44 @@
   <!-- Write the result out to disk: -->
   <xtlcon:container-to-disk/>
   <p:identity name="end-result"/>
-  
+
   <!-- Create the PDF version of the documentation also: -->
   <xdoc:docbook-to-pdf>
     <p:input port="source">
       <p:pipe port="result" step="docbook-contents"/>
     </p:input>
-    <p:with-option name="dref-pdf" select="$pdf-absolute-href"/> 
-    <p:with-option name="global-resources-directory" select="$full-global-resources-directory"/> 
+    <p:with-option name="dref-pdf" select="$pdf-absolute-href"/>
+    <p:with-option name="global-resources-directory" select="$full-global-resources-directory"/>
   </xdoc:docbook-to-pdf>
   <p:sink/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Subpipeline to get the contents of the specific resources directory: -->
-
-  <xtlc:recursive-directory-list>
+  
+  <p:choose>
+    <p:when test="normalize-space($resources-subdirectory) ne ''">
+       <xtlc:recursive-directory-list>
     <p:with-option name="path" select="$full-resources-source-directory"/>
     <p:with-option name="flatten" select="true()"/>
   </xtlc:recursive-directory-list>
+    </p:when>
+    <p:otherwise>
+      <p:identity>
+        <p:input port="source">
+          <p:inline>
+            <c:directory/>
+          </p:inline>
+        </p:input>
+      </p:identity>
+    </p:otherwise>
+  </p:choose>
   <p:identity name="resources-directory-list"/>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Subpipeline to get the contents of the global resources directory: -->
 
   <p:choose>
-    <p:when test="$global-resources-directory ne ''">
+    <p:when test="normalize-space($global-resources-directory) ne ''">
       <xtlc:recursive-directory-list>
         <p:with-option name="path" select="$full-global-resources-directory"/>
         <p:with-option name="flatten" select="true()"/>

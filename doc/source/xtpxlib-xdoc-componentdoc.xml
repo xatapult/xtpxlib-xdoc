@@ -19,22 +19,26 @@
 
   <preface>
     <title>Documentation generation with {$component-name}</title>
+    
+    <xdoc:dump-parameters type="table"/>
 
-    <para>Component <emphasis role="bold"><code>{$component-name}</code></emphasis> version 1.1 - 2019-11-21</para>
-    <para>Xatapult Content Engineering - <link xlink:href="http://www.xatapult.nl"/></para>
-    <para>Erik Siegel - <link xlink:href="mailto:erik@xatapult.nl">erik@xatapult.nl</link> - +31&#160;6&#160;53260792</para>
+    <para>Component <emphasis role="bold"><code>{$component-name}</code></emphasis> version {$current-release-version} - {$current-release-date}</para>
+    <para>{$owner-company-name} - <link xlink:href="{$owner-company-website}"/> - {$owner-company-phone}</para>
+    <para>{$author-name} - <link xlink:href="mailto:{$author-email-address}">{$author-email-address}</link></para>
     <para role="break"/>
 
     <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is a component for generating documentation. It uses <link
         xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> + additional markup and has (currently) PDF and XHTML as output
       formats. It can also generate component documentation (like you're looking at now), as a simple website and PDF.</para>
 
-    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is part of the <emphasis role="bold"><code>xtpxlib</code></emphasis>
-      library. <emphasis role="bold"><code>xtpxlib</code></emphasis> contains software for processing XML, using languages like XSLT and XProc. It
-      consists of several separate components, named <code>xtpxlib-*</code>. Everything can be found on GitHub (<link
-        xlink:href="https://github.com/xatapult"/>). The core component of <code>xtpxlib</code> is <link
-        xlink:href="https://github.com/xatapult/xtpxlib-common"><code>xtpxlib-common</code></link>. Most components will be accompanied by a GitHub
+    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is part of the <emphasis role="bold"><code>{$library-name}</code></emphasis>
+      library. <emphasis role="bold"><code>{$library-name}</code></emphasis> contains software for processing XML, using languages like XSLT and XProc. It
+      consists of several separate components, named <code>{$library-name}-*</code>. Everything can be found on GitHub (<link
+        xlink:href="{$owner-company-github}"/>). The core component of <code>{$library-name}</code> is <link
+        xlink:href="{$owner-company-github}/{$core-component-name}"><code>{$core-component-name}</code></link>. Most components will be accompanied by a GitHub
       pages documentation site (<link xlink:href="TBD"/>).</para>
+    
+    <para>{$owner-company-github}/ {$core-component-name}</para>
 
     <para role="break-before keep-with-next"><emphasis role="bold"><code>{$component-name}</code></emphasis>'s main points:</para>
     <itemizedlist>
