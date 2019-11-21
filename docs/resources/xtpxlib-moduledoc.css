@@ -1,4 +1,4 @@
-/*  Main: */
+/*  Main: TBD HEADER */
 
 body {
   font-family: Verdana, sans-serif;
@@ -141,6 +141,18 @@ p.bridgehead {
   font-weight: bold;
   font-size: 120%;
   padding-top: 1em;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;  
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 /* Tables: */

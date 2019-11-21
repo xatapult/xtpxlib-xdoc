@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<?xml-model href="../../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
 
@@ -20,9 +20,14 @@
   <preface>
     <title>Documentation generation with {$component-name}</title>
 
+    <para>Component <emphasis role="bold"><code>{$component-name}</code></emphasis> version 1.1 - 2019-11-21</para>
+    <para>Xatapult Content Engineering - <link xlink:href="http://www.xatapult.nl"/></para>
+    <para>Erik Siegel - <link xlink:href="mailto:erik@xatapult.nl">erik@xatapult.nl</link> - +31&#160;6&#160;53260792</para>
+    <para role="break"/>
+
     <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is a component for generating documentation. It uses <link
         xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> + additional markup and has (currently) PDF and XHTML as output
-      formats. It can also generate component documentation sites.</para>
+      formats. It can also generate component documentation (like you're looking at now), as a simple website and PDF.</para>
 
     <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is part of the <emphasis role="bold"><code>xtpxlib</code></emphasis>
       library. <emphasis role="bold"><code>xtpxlib</code></emphasis> contains software for processing XML, using languages like XSLT and XProc. It
@@ -31,9 +36,45 @@
         xlink:href="https://github.com/xatapult/xtpxlib-common"><code>xtpxlib-common</code></link>. Most components will be accompanied by a GitHub
       pages documentation site (<link xlink:href="TBD"/>).</para>
 
+    <para role="break-before keep-with-next"><emphasis role="bold"><code>{$component-name}</code></emphasis>'s main points:</para>
+    <itemizedlist>
+      <listitem>
+        <para><emphasis role="bold"><code>{$component-name}</code></emphasis>'s starting point is documentation written in <link
+            xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> plus extensions. This source format is called <emphasis
+            role="bold italic"><code>xdoc</code></emphasis>.</para>
+      </listitem>
+      <listitem>
+        <para><code>xdoc</code> has two kinds of extensions:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Parameters, coming from a parameter file, that are expanded. This useful for, for instance, status information, dates/times,
+              standard words and phrases, etc. [TBD LINK]</para>
+          </listitem>
+          <listitem>
+            <para>The so-called <link linkend="chapter-xdoc-transforms"><code>xdoc</code> transforms</link>. These transformations convert something
+              into DocBook and insert the result back in the main document. This is used for, for instance code documentation generation. There are
+              standard transformations but you can also write your own (in XSLT or XProc).</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>An <code>xdoc</code> document can be converted into pure DocBook by an XProc pipeline [TBD LINK]</para>
+      </listitem>
+      <listitem>
+        <para>Additional XProc pipelines [TBD LINK] convert this DocBook into PDF (through XSL-FO) or basic XHTML.</para>
+      </listitem>
+      <listitem>
+        <para>This mechanism also serves as a basis for documentation generation of complete software components [TBD LINK]. The result's are meant to
+          be used as GitHub pages.</para>
+      </listitem>
+      <listitem>
+        <para>Noteworthy additional functionality is an XProc module [TBD LINK] that converts (simple) Markdown into DocBook.</para>
+      </listitem>
+    </itemizedlist>
+    <para>An extensive explanation of <emphasis role="bold"><code>{$component-name}</code></emphasis> can be found <link linkend="sect-explanation"
+        >here</link>.</para>
 
-    <para role="break"/>
-    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is created by:</para>
+    <para role="break-before keep-with-next"><emphasis role="bold"><code>{$component-name}</code></emphasis> is created by:</para>
     <para>
       <link xlink:href="http://www.xatapult.com" role="newpage">
         <inlinemediaobject role="global">
@@ -43,7 +84,6 @@
         </inlinemediaobject>
       </link>
     </para>
-
 
   </preface>
 
@@ -60,7 +100,7 @@
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-    <sect1>
+    <sect1 xml:id="sect-explanation">
       <title>How does {$component-name} work?</title>
 
       <para>[TBD] xdoc to docbook to ...</para>
@@ -74,36 +114,36 @@
 
 
   </chapter>
-  
+
   <!-- ================================================================== -->
 
   <chapter>
     <title>Code documentation</title>
-    
+
     <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="2">
       <xi:include href="../../xpl/xdoc-to-componentdoc-website.xpl"/>
     </xdoc:transform>
-    
+
   </chapter>
-  
+
   <!-- ================================================================== -->
-  
-  <chapter>
+
+  <chapter xml:id="chapter-xdoc-transforms">
     <title>xdoc transforms</title>
-    
+
     <para>[TBD]</para>
-    
+
   </chapter>
-  
+
   <!-- ================================================================== -->
 
   <chapter>
     <title>DocBook dialect</title>
-    
+
     <para>[TBD]</para>
-    
+
   </chapter>
-  
+
 
   <!-- ================================================================== -->
 
