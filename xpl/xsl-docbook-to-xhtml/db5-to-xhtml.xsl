@@ -517,14 +517,15 @@
 
   <xsl:template match="db:emphasis" mode="mode-inline">
 
-    <xsl:variable name="role" as="xs:string*" select="normalize-space(@role)"/>
-    <xsl:variable name="bold" as="xs:boolean" select="$role eq 'bold'"/>
-    <xsl:variable name="underline" as="xs:boolean" select="$role eq 'underline'"/>
+    <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
+    <xsl:variable name="bold" as="xs:boolean" select="'bold' =  $roles"/>
+    <xsl:variable name="underline" as="xs:boolean" select="'underline' = $roles"/>
+    <xsl:variable name="italic" as="xs:boolean" select="'italic' = $roles"/>
 
     <xsl:call-template name="handle-inline-text">
       <xsl:with-param name="bold" select="$bold"/>
       <xsl:with-param name="underline" select="$underline"/>
-      <xsl:with-param name="italic" select="not($bold) and not($underline)"/>
+      <xsl:with-param name="italic" select="$italic or (not($bold) and not($underline) and not($italic))"/>
     </xsl:call-template>
 
   </xsl:template>
@@ -543,7 +544,21 @@
 
   <xsl:template match="db:link" mode="mode-inline">
     <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
-    <a href="{@xlink:href}">
+    <xsl:variable name="href" as="xs:string?">
+      <xsl:choose>
+        <xsl:when test="exists(@xlink:href)">
+          <xsl:sequence select="@xlink:href"/>
+        </xsl:when>
+        <xsl:when test="exists(@linkend)">
+          <xsl:sequence select="'#' || @linkend"/>
+        </xsl:when>
+        <xsl:otherwise>
+         <!-- Let it be -->
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+    <a href="{$href}">
       <xsl:if test="'newpage' = $roles">
         <xsl:attribute name="target" select="'_blank'"/>
       </xsl:if>
@@ -702,7 +717,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template name="handle-inline-text" as="element()">
-    <xsl:param name="class" as="xs:string" required="false" select="local-name(.)"/>
+    <xsl:param name="base-class" as="xs:string" required="false" select="local-name(.)"/>
     <xsl:param name="contents" as="node()*" required="no" select="node()"/>
     <xsl:param name="text" as="xs:string?" required="no" select="()"/>
     <!-- When $text is specified, $contents is ignored. -->
@@ -711,16 +726,16 @@
     <xsl:param name="underline" as="xs:boolean" required="no" select="false()"/>
     <xsl:param name="fixed-width" as="xs:boolean" required="no" select="false()"/>
 
-    <xsl:variable name="inline-attributes" as="attribute()*">
-      <xsl:attribute name="class" select="$class"/>
+    <xsl:variable name="class-components" as="xs:string*">
+      <xsl:sequence select="$base-class"/>
       <xsl:if test="$bold">
-        <xsl:attribute name="font-weight" select="'bold'"/>
+        <xsl:sequence select="'bold'"/>
       </xsl:if>
       <xsl:if test="$italic">
-        <xsl:attribute name="font-style" select="'italic'"/>
+        <xsl:sequence select="'italic'"/>
       </xsl:if>
       <xsl:if test="$underline">
-        <xsl:attribute name="text-decoration" select="'underline'"/>
+        <xsl:sequence select="'underline'"/>
       </xsl:if>
     </xsl:variable>
 
@@ -736,7 +751,7 @@
     </xsl:variable>
 
     <xsl:element name="{if ($fixed-width) then 'code' else 'span'}">
-      <xsl:sequence select="$inline-attributes"/>
+      <xsl:attribute name="class" select="string-join($class-components, ' ')"/>
       <xsl:sequence select="$inline-contents"/>
     </xsl:element>
 
