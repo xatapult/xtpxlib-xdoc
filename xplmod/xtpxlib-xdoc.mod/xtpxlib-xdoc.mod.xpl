@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:library xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:local="#local.szy_4kg_2jb"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:db="http://docbook.org/ns/docbook" version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all">
+  
+  <p:documentation>
+    TBD Generic library
+  </p:documentation>
 
   <!-- ================================================================== -->
 
@@ -32,7 +36,7 @@
       <!-- Turn everything into lines: -->
       <p:xslt>
         <p:input port="stylesheet">
-          <p:document href="xsl/convert-to-lines.xsl"/>
+          <p:document href="xsl-markdown-to-docbook/convert-to-lines.xsl"/>
         </p:input>
         <p:with-param name="null" select="()"/>
       </p:xslt>
@@ -40,7 +44,7 @@
       <!-- Group lines into paragraphs: -->
       <p:xslt>
         <p:input port="stylesheet">
-          <p:document href="xsl/group-lines.xsl"/>
+          <p:document href="xsl-markdown-to-docbook/group-lines.xsl"/>
         </p:input>
         <p:with-param name="null" select="()"/>
       </p:xslt>
@@ -48,7 +52,7 @@
       <!-- Handle inline markup (like `code`, *italic*, etc.): -->
       <p:xslt>
         <p:input port="stylesheet">
-          <p:document href="xsl/process-inlines.xsl"/>
+          <p:document href="xsl-markdown-to-docbook/process-inlines.xsl"/>
         </p:input>
         <p:with-param name="null" select="()"/>
       </p:xslt>
@@ -56,13 +60,13 @@
       <!-- List handling: -->
       <p:xslt>
         <p:input port="stylesheet">
-          <p:document href="xsl/handle-lists.xsl"/>
+          <p:document href="xsl-markdown-to-docbook/handle-lists.xsl"/>
         </p:input>
         <p:with-param name="null" select="()"/>
       </p:xslt>
       <p:xslt>
         <p:input port="stylesheet">
-          <p:document href="xsl/handle-lists-finalize.xsl"/>
+          <p:document href="xsl-markdown-to-docbook/handle-lists-finalize.xsl"/>
         </p:input>
         <p:with-param name="null" select="()"/>
       </p:xslt>

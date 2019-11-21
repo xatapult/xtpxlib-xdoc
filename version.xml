@@ -9,10 +9,10 @@
 
   <dependencies>
     <component name="xtpxlib-common"/>
-    <!-- TBD -->
+    <component name="xtpxlib-container"/>
   </dependencies>
 
-  <release version="x.x" date="yyyy-mm-dd">
+  <release version="1.0" date="2019-11-11">
     TBD
   </release>
 

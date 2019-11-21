@@ -16,7 +16,7 @@
   <p:output port="result" primary="true" sequence="false"/>
   <p:serialization port="result" method="xml" encoding="UTF-8" indent="true" omit-xml-declaration="false"/>
 
-  <p:import href="../markdown-to-docbook.mod.xpl"/>
+  <p:import href="../xtpxlib-xdoc.mod.xpl"/>
 
   <!-- ================================================================== -->
  

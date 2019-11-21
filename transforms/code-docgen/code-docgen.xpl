@@ -31,7 +31,7 @@
   </p:output>
   <p:serialization port="result" indent="true" method="xml"/>
   
-  <p:import href="../../xplmod/markdown-to-docbook/markdown-to-docbook.mod.xpl"/>
+  <p:import href="../../xplmod/xtpxlib-xdoc.mod/xtpxlib-xdoc.mod.xpl"/>
 
   <!-- ================================================================== -->
 

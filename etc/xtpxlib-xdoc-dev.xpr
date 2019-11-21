@@ -14,11 +14,11 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../doc/old/db5-dialect-description-article.xml</String>
+                                    <String>../xpl/xdoc-to-componentdoc-website.xpl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>xdoc-to-pdf</String>
+                                        <String>generate-componentdoc</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -29,16 +29,31 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/docbook-to-pdf.xpl</String>
+                                    <String>../xplmod/xtpxlib-xdoc.mod/test/test-markdown-to-docbook.xpl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>test-docgen</String>
+                                        <String>test-markdown-to-docbook</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
                                     <list>
-                                        <String>XML</String>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xplmod/markdown-to-docbook/markdown-to-docbook.mod.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-markdown-to-docbook</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
                                     </list>
                                 </field>
                             </scenarioAssociation>
@@ -74,11 +89,11 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../doc/xpl/generate-componentdoc.xpl</String>
+                                    <String>../doc/old/db5-dialect-description-article.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>generate-componentdoc</String>
+                                        <String>xdoc-to-pdf</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -89,11 +104,26 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/xdoc-to-componentdoc-website.xpl</String>
+                                    <String>../xpl/docbook-to-pdf.xpl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>test-generate-moduledoc-website</String>
+                                        <String>test-docgen</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XML</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../doc/xpl/generate-componentdoc.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -270,21 +300,6 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../xplmod/markdown-to-docbook/xsl/convert-to-lines.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>test-markdown-to-docbook</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../xplmod/markdown-to-docbook/markdown-to-docbook.mod.xpl</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -1648,7 +1663,7 @@
                                     <null/>
                                 </field>
                                 <field name="inputXSLURL">
-                                    <String>${ROOT}/xplmod/markdown-to-docbook/test/test-markdown-to-docbook.xpl</String>
+                                    <String>${ROOT}/xplmod/xtpxlib-xdoc.mod/test/test-markdown-to-docbook.xpl</String>
                                 </field>
                                 <field name="inputXMLURL">
                                     <String></String>
