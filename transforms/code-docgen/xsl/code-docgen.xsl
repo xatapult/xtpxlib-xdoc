@@ -2,7 +2,7 @@
 <xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
   xmlns:map="http://www.w3.org/2005/xpath-functions/map" xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:local="#local-u67gh"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
-  exclude-result-prefixes="#all" expand-text="true" xmlns="http://docbook.org/ns/docbook">
+  xmlns:db="http://docbook.org/ns/docbook" exclude-result-prefixes="#all" expand-text="true" xmlns="http://docbook.org/ns/docbook">
   <!-- ================================================================== -->
   <!--~
     TBD
@@ -38,7 +38,7 @@
   <!-- Get some basic data. Make sure this also works when we *don't* have the XML to document wrapped inside an <xdoc:transform>: -->
   <xsl:variable name="document-root-element" as="element()" select="(/xdoc:transform/*, /*[1])[1]"/>
   <xsl:variable name="filecomponents" as="xs:integer" select="(xs:integer(/xdoc:transform/@filecomponents), 0)[1]"/>
-  <xsl:variable name="header-level" as="xs:integer" select="(xs:integer(/xdoc:transform/@header-level), 1)[1]"/>
+  <xsl:variable name="header-level" as="xs:integer" select="(xs:integer(/xdoc:transform/@header-level), -1)[1]"/>
   <xsl:variable name="add-table-titles" as="xs:boolean" select="xtlc:str2bln(/xdoc:transform/@add-table-titles, false())"/>
 
   <!-- Identifier information. The base id is either as @id on the xdoc:transform or is generated from the filename. -->
@@ -47,10 +47,20 @@
   <!-- ================================================================== -->
 
   <xsl:template match="/">
-    <xsl:element name="sect{$header-level}">
-      <xsl:attribute name="xml:id" select="$base-id"/>
-      <xsl:apply-templates select="$document-root-element"/>
-    </xsl:element>
+    <!-- First create a description in a <sect#> element: -->
+    <xsl:variable name="description-section" as="element()">
+      <xsl:element name="sect{$header-level}">
+        <xsl:attribute name="xml:id" select="$base-id"/>
+        <xsl:apply-templates select="$document-root-element"/>
+      </xsl:element>
+    </xsl:variable>
+    <!-- Now output it: -->
+    <xdoc:GROUP>
+      <xsl:call-template name="output-section">
+        <xsl:with-param name="title" as="node()+" select="$description-section/db:title/node()"/>
+        <xsl:with-param name="contents" as="element()*" select="$description-section/* except $description-section/db:title"/>
+      </xsl:call-template>
+    </xdoc:GROUP>
   </xsl:template>
 
   <!-- ================================================================== -->
@@ -386,9 +396,9 @@
     <xsl:param name="object-type" as="xs:string" required="yes"/>
 
     <xsl:for-each select="$objects">
-      <xsl:element name="sect{ $header-level + 1 }">
-        <xsl:attribute name="xml:id" select="local:xsl-object-id(.)"/>
-        <title>
+      <xsl:call-template name="output-section">
+        <xsl:with-param name="additional-level" select="true()"/>
+        <xsl:with-param name="title" as="node()*">
           <xsl:value-of select="xtlc:capitalize($object-type)"/>
           <xsl:text>: </xsl:text>
           <code>
@@ -398,13 +408,15 @@
               <xsl:value-of select="@as"/>
             </xsl:if>
           </code>
-        </title>
-        <xsl:call-template name="get-element-documentation"/>
-        <xsl:call-template name="xsl-output-parameters">
-          <xsl:with-param name="title-part-1" select="'Parameters for'"/>
-          <xsl:with-param name="title-part-2" select="local:xsl-object-name(.)"/>
-        </xsl:call-template>
-      </xsl:element>
+        </xsl:with-param>
+        <xsl:with-param name="contents" as="element()*">
+          <xsl:call-template name="get-element-documentation"/>
+          <xsl:call-template name="xsl-output-parameters">
+            <xsl:with-param name="title-part-1" select="'Parameters for'"/>
+            <xsl:with-param name="title-part-2" select="local:xsl-object-name(.)"/>
+          </xsl:call-template>
+        </xsl:with-param>
+      </xsl:call-template>
     </xsl:for-each>
 
   </xsl:template>
@@ -624,17 +636,22 @@
     <xsl:param name="step-declarations" as="element(p:declare-step)*" required="yes"/>
 
     <xsl:for-each select="$step-declarations">
-      <xsl:element name="sect{ $header-level + 1 }">
-        <xsl:attribute name="xml:id" select="local:xpl-object-id(.)"/>
-        <title>Step declaration: <code>{ @type }</code></title>
-        <xsl:call-template name="xpl-get-element-documentation"/>
-        <xsl:call-template name="xpl-output-ports">
-          <xsl:with-param name="object-name" select="@type"/>
-        </xsl:call-template>
-        <xsl:call-template name="xpl-output-options">
-          <xsl:with-param name="object-name" select="@type"/>
-        </xsl:call-template>
-      </xsl:element>
+      <xsl:call-template name="output-section">
+        <xsl:with-param name="additional-level" select="true()"/>
+        <xsl:with-param name="title" as="node()+">
+          <xsl:text>Step declaration: </xsl:text>
+          <code>{ @type }</code>
+        </xsl:with-param>
+        <xsl:with-param name="contents" as="element()*">
+          <xsl:call-template name="xpl-get-element-documentation"/>
+          <xsl:call-template name="xpl-output-ports">
+            <xsl:with-param name="object-name" select="@type"/>
+          </xsl:call-template>
+          <xsl:call-template name="xpl-output-options">
+            <xsl:with-param name="object-name" select="@type"/>
+          </xsl:call-template>
+        </xsl:with-param>
+      </xsl:call-template>
     </xsl:for-each>
 
   </xsl:template>
@@ -890,6 +907,39 @@
     <xsl:if test="$value">
       <emphasis role="bold">*</emphasis>
     </xsl:if>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template name="output-section">
+    <xsl:param name="title" as="node()+" required="yes"/>
+    <xsl:param name="contents" as="element()+" required="yes"/>
+    <xsl:param name="id" as="xs:string?" required="false" select="()"/>
+    <xsl:param name="additional-level" as="xs:boolean" required="false" select="false()"/>
+
+    <xsl:choose>
+      <xsl:when test="$header-level le 0">
+        <bridgehead>
+          <xsl:if test="exists($id)">
+            <xsl:attribute name="xml:id" select="$id"/>
+          </xsl:if>
+          <xsl:copy-of select="$title" copy-namespaces="false"/>
+        </bridgehead>
+        <xsl:copy-of select="$contents" copy-namespaces="false"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:variable name="level" as="xs:integer" select="if ($additional-level) then ($header-level + 1) else $header-level"/>
+        <xsl:element name="sect{$level}">
+          <xsl:if test="exists($id)">
+            <xsl:attribute name="xml:id" select="$id"/>
+          </xsl:if>
+          <title>
+            <xsl:copy-of select="$title" copy-namespaces="false"/>
+          </title>
+          <xsl:copy-of select="$contents" copy-namespaces="false"/>
+        </xsl:element>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

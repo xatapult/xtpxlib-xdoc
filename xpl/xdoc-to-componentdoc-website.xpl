@@ -125,7 +125,6 @@
     <p:with-param name="null" select="()"/>
   </p:xslt>
 
-
   <!-- Add internal linking between the pages (TOC, etc.): -->
   <p:xslt>
     <p:input port="stylesheet">

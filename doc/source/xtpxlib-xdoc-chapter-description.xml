@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<chapter xml:id="sect-description" xreflabel="Description" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns="http://docbook.org/ns/docbook">
+  <title>Description</title>
+
+  <sect1>
+    <title>Overview</title>
+
+    <para role="break-before keep-with-next"><emphasis role="bold"><code>{$component-name}</code></emphasis>'s main points:</para>
+    <itemizedlist>
+      <listitem>
+        <para><emphasis role="bold"><code>{$component-name}</code></emphasis>'s starting point is documentation written in <link
+            xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> plus extensions. This source format is called <emphasis
+            role="bold italic"><code>xdoc</code></emphasis>.</para>
+      </listitem>
+      <listitem>
+        <para><code>xdoc</code> has two kinds of extensions:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Parameters, coming from a parameter file, that are expanded. This useful for, for instance, status information, dates/times,
+              standard words and phrases, etc. [TBD LINK]</para>
+          </listitem>
+          <listitem>
+            <para>The so-called <link linkend="chapter-xdoc-transforms"><code>xdoc</code> transforms</link>. These transformations convert something
+              into DocBook and insert the result back in the main document. This is used for, for instance code documentation generation. There are
+              standard transformations but you can also write your own (in XSLT or XProc).</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+      <listitem>
+        <para>An <code>xdoc</code> document can be converted into pure DocBook by an XProc pipeline [TBD LINK]</para>
+      </listitem>
+      <listitem>
+        <para>Additional XProc pipelines [TBD LINK] convert this DocBook into PDF (through XSL-FO) or basic XHTML.</para>
+      </listitem>
+      <listitem>
+        <para>This mechanism also serves as a basis for documentation generation of complete software components [TBD LINK]. The result's are meant to
+          be used as GitHub pages.</para>
+      </listitem>
+      <listitem>
+        <para>Noteworthy additional functionality is an XProc module [TBD LINK] that converts (simple) Markdown into DocBook.</para>
+      </listitem>
+    </itemizedlist>
+
+  </sect1>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <sect1  xml:id="sect-main-toolchain">
+    <title>The {$component-name} main toolchain</title>
+
+    <para role="keep-with-next">The following figure illustrates <emphasis role="bold"><code>{$component-name}</code></emphasis>'s main
+      toolchain:</para>
+    <figure xml:id="figure-example">
+      <title><emphasis role="bold"><code>{$component-name}</code></emphasis>'s main toolchain</title>
+      <mediaobject>
+        <imageobject>
+          <imagedata fileref="resources/toolchain-1.jpg"/>
+        </imageobject>
+      </mediaobject>
+    </figure>
+
+    <orderedlist>
+      <listitem>
+        <!-- 1 -->
+        <para>The <emphasis role="bold"><code>{$component-name}</code></emphasis> module uses a format called <emphasis role="bold"
+            ><code>xdoc</code></emphasis> as its source format. The basis of <code>xdoc</code> is a limited version of <link
+            xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link>. On top of this <code>xdoc</code> adds several extensions for
+          parameter handling, generating text, etc. </para>
+        <para>The <link xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> standard is huge and therefore for practical reasons
+          only partly implemented in this component. A description of what is supported can be found in [TBD].</para>
+        <para/>
+      </listitem>
+
+      <listitem>
+        <!-- 2 -->
+        <para>The first processing step in the toolchain performs basic XInclude processing. This means that you can build your document from smaller
+          parts, for instance one file per chapter.</para>
+        <para>Another application of the XInclude processing is to get the data in for the <code>xdoc</code> extensions processing in step 5.</para>
+      </listitem>
+
+      <listitem>
+        <!-- 3 -->
+        <para>The next step is to expand any parameter references in the source document. A parameter is a name/value pair. To expand its value in the
+          document use either <code>${name}</code> or <code>{$name}</code> (both mean the same). Parameters are expanded both in text and in attribute
+          values.</para>
+      </listitem>
+
+      <listitem>
+        <!-- 4 -->
+        <para role="keep-with-next">Parameters come from two sources:</para>
+        <itemizedlist>
+          <listitem>
+            <para>An (optional) parameter file. This file must be in the parameters format as handled by the parameters module of
+                <code>{$core-component-name}</code>. For instance:</para>
+            <programlisting><xi:include href="includes/example-parameters.xml" parse="text"/></programlisting>
+            <para>This format has several additional features. See [TBD] for more information.</para>
+          </listitem>
+          <listitem>
+            <para>The toolchain adds several parameter of its own:</para>
+            <table>
+              <title>Parameters added by the <emphasis role="bold"><code>{$component-name}</code></emphasis> toolchain</title>
+              <tgroup cols="3">
+                <colspec colwidth="4cm"/>
+                <colspec/>
+                <colspec/>
+                <thead>
+                  <row>
+                    <entry>
+                      <para>Parameter</para>
+                    </entry>
+                    <entry>
+                      <para>Description</para>
+                    </entry>
+                    <entry>
+                      <para>Example value(s)</para>
+                    </entry>
+                  </row>
+                </thead>
+                <tbody>
+                  <row>
+                    <entry>
+                      <para>
+                        <code>DATETIME</code>
+                      </para>
+                    </entry>
+                    <entry>
+                      <para>The date and time the toolchain executed in <code>YYYY-MM-DD hh:mm:ss</code> format.</para>
+                    </entry>
+                    <entry>
+                      <code>2019-11-11 12:12:12</code>
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>
+                      <para>
+                        <code>DATE</code>
+                      </para>
+                    </entry>
+                    <entry>
+                      <para>The date part of the <code>DATETIME</code> parameter.</para>
+                    </entry>
+                    <entry>
+                      <code>2019-11-11</code>
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>
+                      <para>
+                        <code>TIME</code>
+                      </para>
+                    </entry>
+                    <entry>
+                      <para>The time part of the <code>DATETIME</code> parameter.</para>
+                    </entry>
+                    <entry>
+                      <code>12:12:12</code>
+                    </entry>
+                  </row>
+                  <row>
+                    <entry>
+                      <para>
+                        <code>HREF-SOURCE</code>
+                      </para>
+                    </entry>
+                    <entry>
+                      <para>The main source's filename.</para>
+                    </entry>
+                    <entry>
+                      <para>
+                        <code>C:/my/path/sourcedoc.xml</code>
+                      </para>
+                      <para>
+                        <code>/my/path/sourcedoc.xml</code>
+                      </para>
+                    </entry>
+                  </row>
+                </tbody>
+              </tgroup>
+            </table>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+
+      <listitem>
+        <!-- 5 -->
+        <para>Next the so-called <code>xdoc</code> extensions are processed. These extensions are specific elements in the <code>xdoc</code>
+            (<code>http://www.xtpxlib.nl/ns/xdoc</code>) namespace. Currently there are two:</para>
+        <variablelist>
+          <varlistentry>
+            <term>
+              <tag>xdoc:transform</tag>
+            </term>
+            <listitem>
+              <para>The <tag>xdoc:transform</tag> element triggers a transformation with this element (and its children) as input. Transformations can
+                be either XProc (1.0) or XSLT (2.0 or 3.0). The result5 of such a transformation must be valid DocBook and is inserted in the
+                document.</para>
+            </listitem>
+          </varlistentry>
+          <varlistentry>
+            <term>
+              <tag>xdoc:dump-parameters</tag>
+            </term>
+            <listitem>
+              <para>This extensions dumps all parameters in the document, either as a table or as an XML comment. Useful for debugging the parameter
+                expansion. See [TBD]</para>
+            </listitem>
+          </varlistentry>
+        </variablelist>
+      </listitem>
+
+      <listitem>
+        <!-- 6 -->
+        <para>The transformations triggered by <tag>xdoc:transform</tag> can come from two sources:</para>
+        <itemizedlist>
+          <listitem>
+            <para>Transformations that are built into the <emphasis role="bold"><code>{$component-name}</code></emphasis> module. These are generic
+              transformations for, for instance, documenting XML structures or code. An overview of these can be found in [TBD].</para>
+          </listitem>
+          <listitem>
+            <para>Your own transformations. Guidelines on how to write these can found in [TBD].</para>
+          </listitem>
+        </itemizedlist>
+      </listitem>
+
+      <listitem>
+        <!-- 7 -->
+        <para>The result of the toolchain so-far is a document in "pure" <link xlink:href="https://docbook.org/" role="newpage"
+            >DocBook&#160;5.1</link>.</para>
+      </listitem>
+
+      <listitem>
+        <para>From this you can transform to some target format. The <emphasis role="bold"><code>{$component-name}</code></emphasis> component
+          contains transformations to PDF and HTML (see [TBD]). These transformations are rather specific for the <emphasis role="bold"
+              ><code>{$component-name}</code></emphasis> component and might not be directly usable for other use-cases. You can of course
+          copy-and-adapt these or use some other DocBook conversion transformation .</para>
+      </listitem>
+
+      <listitem>
+        <!-- 8 -->
+        <para>The result of all this is a document in the desired target format.</para>
+      </listitem>
+
+    </orderedlist>
+
+    <para>Information about the pipelines that implement this toolchain can be found in [TBD]</para>
+
+  </sect1>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <sect1>
+    <title>Documentation website generation</title>
+
+    <para>[TBD]</para>
+  </sect1>
+
+</chapter>

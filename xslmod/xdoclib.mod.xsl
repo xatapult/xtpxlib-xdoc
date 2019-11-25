@@ -50,7 +50,7 @@
         <xsl:map-entry key="'DATETIME'" select="format-dateTime(current-dateTime(), '[Y]-[M01]-[D01] [H01]:[m01]:[s01]')"/>
         <xsl:map-entry key="'DATE'" select="format-dateTime(current-dateTime(), '[Y]-[M01]-[D01]')"/>
         <xsl:map-entry key="'TIME'" select="format-dateTime(current-dateTime(), '[H01]:[m01]:[s01]')"/>
-        <xsl:map-entry key="'HREF-SOURCE'" select="xtlc:href-canonical(base-uri($local:root-element))"/>
+        <xsl:map-entry key="'HREF-SOURCE'" select="xtlc:href-protocol-remove(xtlc:href-canonical(base-uri($local:root-element)))"/>
       </xsl:map>
     </xsl:variable>
 
