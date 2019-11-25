@@ -18,8 +18,8 @@
 
   <xsl:mode on-no-match="fail"/>
 
-  <xsl:include href="../../../../xtpxlib-common/xslmod/general.mod.xsl"/>
-  <xsl:include href="../../../../xtpxlib-common/xslmod/href.mod.xsl"/>
+  <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
+  <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->

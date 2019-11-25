@@ -458,9 +458,15 @@
   <xsl:template match="db:xref" mode="mode-inline">
 
     <xsl:variable name="id" as="xs:string" select="@linkend"/>
-    <xsl:variable name="referenced-element" as="element()?" select="key($id-index-name, $id, $original-document)"/>
+    <xsl:variable name="referenced-element" as="element()*" select="key($id-index-name, $id, $original-document)"/>
     <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(@role)"/>
     <xsl:variable name="do-capitalize" as="xs:boolean" select="'capitalize' = $roles"/>
+
+    <xsl:if test="count($referenced-element) gt 1">
+      <xsl:call-template name="xtlc:raise-error">
+        <xsl:with-param name="msg-parts" select="('Id occurs ', count($referenced-element), ' times: ', xtlc:q($id))"/>
+      </xsl:call-template>
+    </xsl:if>
 
     <xsl:choose>
       <xsl:when test="exists($referenced-element)">
@@ -553,7 +559,7 @@
           <xsl:sequence select="'#' || @linkend"/>
         </xsl:when>
         <xsl:otherwise>
-         <!-- Let it be -->
+          <!-- Let it be -->
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>

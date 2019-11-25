@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc ../../../xsd/element-description.xsd" name="xdoc:transform" id="xdoc-transform">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="href" required="true">
+    <description>
+      <para>Reference to the actual transformation. Relative names are resolved against the location of the source document.</para>
+      <para>This file's extension determines whether an XProc 1.0 (extension: <code>.xpl</code>) or an XSLT (extension: <code>.xsl</code>) is
+        done.</para>
+      <para>A value that starts with <code>$xdoc</code> is assumed to be an <code>xtpxlib-xdoc</code> built-in transformation (e.g.
+          <code>href="$xdoc/code-docgen.xpl"</code>). See also <xref linkend="sect-builtin-xdoc-transformations"/>.</para>
+    </description>
+    <type name="xs:anyURI"/>
+  </attribute>
+
+  <attribute name="(any)" required="false">
+    <description>
+      <para>Often transformations specify additional attributes on the <tag>xdoc:transform</tag> element to parametrize their functionality. Any
+        additional attribute is allowed here.</para>
+    </description>
+  </attribute>
+
+  <additional-text-coded-description as-comment="true">Usually an &lt;xi:include&gt; element to load the data for the transformation.</additional-text-coded-description>
+</element-description>

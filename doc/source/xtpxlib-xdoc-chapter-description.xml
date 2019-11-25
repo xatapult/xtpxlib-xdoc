@@ -7,7 +7,7 @@
   <sect1>
     <title>Overview</title>
 
-    <para role="break-before keep-with-next"><emphasis role="bold"><code>{$component-name}</code></emphasis>'s main points:</para>
+    <para role="keep-with-next"><emphasis role="bold"><code>{$component-name}</code></emphasis>'s main points:</para>
     <itemizedlist>
       <listitem>
         <para><emphasis role="bold"><code>{$component-name}</code></emphasis>'s starting point is documentation written in <link
@@ -47,12 +47,12 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <sect1  xml:id="sect-main-toolchain">
+  <sect1 xml:id="sect-main-toolchain">
     <title>The {$component-name} main toolchain</title>
 
     <para role="keep-with-next">The following figure illustrates <emphasis role="bold"><code>{$component-name}</code></emphasis>'s main
       toolchain:</para>
-    <figure xml:id="figure-example">
+    <figure>
       <title><emphasis role="bold"><code>{$component-name}</code></emphasis>'s main toolchain</title>
       <mediaobject>
         <imageobject>

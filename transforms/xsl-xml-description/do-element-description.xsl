@@ -12,8 +12,8 @@
 
   <xsl:output method="xml" indent="no" encoding="UTF-8"/>
 
-  <xsl:include href="../../../../xtpxlib-common/xslmod/general.mod.xsl"/>
-  <xsl:include href="../../../../xtpxlib-common/xslmod/href.mod.xsl"/>
+  <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
+  <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
 
   <xsl:mode on-no-match="shallow-copy"/>
 

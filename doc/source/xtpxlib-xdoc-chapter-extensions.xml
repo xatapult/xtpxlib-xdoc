@@ -4,38 +4,74 @@
   xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns="http://docbook.org/ns/docbook">
   <title><code>xdoc</code> extensions</title>
 
-  <para xml:id="first-para">The <emphasis role="bold"><code>{$component-name}</code></emphasis> component uses (a subset of) <link
-      xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> as its main vocabulary. Within this there can be so-called
-        <emphasis><code>xdoc</code> extensions</emphasis>).</para>
+  <para>The <emphasis role="bold"><code>{$component-name}</code></emphasis> component uses (a subset of) <link xlink:href="https://docbook.org/"
+      role="newpage">DocBook&#160;5.1</link> as its main vocabulary. Within this there can be so-called <emphasis><code>xdoc</code>
+      extensions</emphasis>. These are specific elements in the <code>xdoc</code> (<code>http://www.xtpxlib.nl/ns/xdoc</code>) namespace that trigger
+    special actions, like generating code documentation or describe some XML document.</para>
 
-  <itemizedlist>
-    <listitem>
-      <para><code>xdoc</code> extensions are specific elements in the <code>xdoc</code> (<code>http://www.xtpxlib.nl/ns/xdoc</code>) namespace. These
-        are described in <xref linkend="sect-available-xdoc-extension-elements"/>.</para>
-    </listitem>
-  </itemizedlist>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ================================================================== -->
 
   <sect1 xml:id="sect-available-xdoc-extension-elements">
     <title><code>xdoc</code> extension elements</title>
 
-    <para>[TBD]</para>
+    <para>The <code>xdoc</code> format recognizes the following extension elements. The <code>xdoc:</code> namespace prefix used here is bound to the
+        <code>http://www.xtpxlib.nl/ns/xdoc</code> namespace (<code>xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"</code>).</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Extension element <tag>xdoc:dump-parameters</tag></title>
+
+      <para>This extension element shows the parameters that are currently in use. It is mainly use for debugging purposes.</para>
+
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="xml-descriptions/description-dump-parameters.xml"/>
+      </xdoc:transform>
+    </sect2>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Extension element <tag>xdoc:transform</tag></title>
+
+      <para>This extension element runs an <code>xdoc</code> transformation (either XProc (1.0) or XSLT (2.0 or 3.0)). It is completely replaced by
+        the outcome of the transformation.</para>
+      <para>There are several <link linkend="sect-builtin-xdoc-transformations">built-in transformations</link>. You can also <link
+          linkend="sect-write-your-own-transformations">write your own transformations</link>.</para>
+
+      <xdoc:transform href="$xdoc/xml-description.xpl">
+        <xi:include href="xml-descriptions/description-transform.xml"/>
+      </xdoc:transform>
+    </sect2>
+
   </sect1>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  <!-- ================================================================== -->
 
   <sect1 xml:id="sect-builtin-xdoc-transformations">
     <title>Built-in <code>xdoc</code> transformations</title>
 
-    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="-1" header-level="2">
-      <xi:include href="../../transforms/code-docgen/code-docgen.xpl"/>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="-1" header-level="2">
+      <xi:include href="../../transforms/code-docgen.xpl"/>
     </xdoc:transform>
 
-    <xdoc:transform href="$xdoc/code-docgen/code-docgen.xpl" filecomponents="-1" header-level="2">
-      <xi:include href="../../transforms/xml-description/xml-description.xpl"/>
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="-1" header-level="2">
+      <xi:include href="../../transforms/xml-description.xpl"/>
     </xdoc:transform>
-   
+
+  </sect1>
+
+  <!-- ================================================================== -->
+
+  <sect1 xml:id="sect-write-your-own-transformations">
+    <title>Writing your own <code>xdoc</code> transformations</title>
+
+    <para>[TBD]</para>
   </sect1>
 
 </chapter>
