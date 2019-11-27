@@ -14,7 +14,67 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../doc/source/xtpxlib-chapter-docbook-dialect.xml</String>
+                                    <String>../xpl/xsl-docbook-to-xhtml/db5-to-xhtml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-xdoc-to-xhtml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xsl-xdoc-to-componentdoc-website/adapt-html.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xdoc-to-componentdoc-website.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xsl-xdoc-to-componentdoc-website/add-additional-links.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../xtpxlib-common/doc/data/componentdoc-website-template.html</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -30,6 +90,21 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../doc/source/xtpxlib-xdoc-componentdoc.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../doc/source/xtpxlib-chapter-docbook-dialect.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -64,21 +139,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>generate-componentdoc</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../xpl/xsl-docbook-to-xhtml/db5-to-xhtml.xsl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>test-xdoc-to-xhtml</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -154,21 +214,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>test-generate-moduledoc-website</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../xpl/xdoc-to-componentdoc-website.xpl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>generate-componentdoc</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -2382,5 +2427,6 @@
         <folder path="../../xtpxlib-common/"/>
         <folder path="../../xtpxlib-container/"/>
         <folder path="../"/>
+        <folder path="../../../xproc-3/TEST/"/>
     </projectTree>
 </project>

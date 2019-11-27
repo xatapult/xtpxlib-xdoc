@@ -117,6 +117,7 @@
     </p:input>
     <p:with-param name="href-target-path" select="$full-output-directory"/>
     <p:with-param name="href-componentdoc-website-template" select="$full-href-template"/>
+    <p:with-param name="component-name" select="$component-name"/>
   </p:xslt>
   <p:xslt>
     <p:input port="stylesheet">
@@ -124,13 +125,21 @@
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>
-
+  
   <!-- Add internal linking between the pages (TOC, etc.): -->
   <p:xslt>
     <p:input port="stylesheet">
       <p:document href="xsl-xdoc-to-componentdoc-website/add-additional-links.xsl"/>
     </p:input>
     <p:with-param name="pdf-href" select="$pdf-relative-href"/>
+  </p:xslt>
+  
+  <!-- Adapt things a little (more bootstrap style): -->
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-xdoc-to-componentdoc-website/adapt-html.xsl"/>
+    </p:input>
+    <p:with-param name="null" select="()"/>
   </p:xslt>
 
   <!-- Insert directory information for the resources and re-work this to the right container external document entries: -->

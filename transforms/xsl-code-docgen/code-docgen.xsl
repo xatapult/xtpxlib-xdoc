@@ -260,7 +260,7 @@
                 <xsl:if test="not($is-function)">
                   <entry>
                     <para>
-                      <xsl:call-template name="output-star-for-true">
+                      <xsl:call-template name="output-true-marker">
                         <xsl:with-param name="value" select="local:yes-no-to-boolean(@required, false())"/>
                       </xsl:call-template>
                     </para>
@@ -467,14 +467,14 @@
         </xsl:call-template>
         <tgroup cols="4">
           <colspec role="code-width-cm:1.5-4"/>
-          <colspec colwidth="0.7cm"/>
-          <colspec colwidth="0.7cm"/>
+          <colspec colwidth="1cm"/>
+          <colspec colwidth="1.5cm"/>
           <colspec/>
           <thead>
             <row>
               <entry>Port</entry>
-              <entry>Tp.</entry>
-              <entry>Pr?</entry>
+              <entry>Type</entry>
+              <entry>Primary?</entry>
               <entry>Description</entry>
             </row>
           </thead>
@@ -494,7 +494,7 @@
                 </entry>
                 <entry>{ substring-before($port-type, 'put') }</entry>
                 <entry>
-                  <xsl:call-template name="output-star-for-true">
+                  <xsl:call-template name="output-true-marker">
                     <xsl:with-param name="value" select="$is-primary"/>
                   </xsl:call-template>
                 </entry>
@@ -564,7 +564,7 @@
                 </xsl:if>
                 <entry>
                   <para>
-                    <xsl:call-template name="output-star-for-true">
+                    <xsl:call-template name="output-true-marker">
                       <xsl:with-param name="value" select="local:yes-no-to-boolean(@required, false())"/>
                     </xsl:call-template>
                   </para>
@@ -901,12 +901,17 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template name="output-star-for-true">
+  <xsl:template name="output-true-marker">
     <xsl:param name="value" as="xs:boolean" required="yes"/>
 
-    <xsl:if test="$value">
-      <emphasis role="bold">*</emphasis>
-    </xsl:if>
+    <xsl:choose>
+      <xsl:when test="$value">
+        <xsl:text>yes</xsl:text>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:text>&#160;</xsl:text>
+      </xsl:otherwise>  
+    </xsl:choose>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

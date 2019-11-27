@@ -21,6 +21,7 @@
 
   <xsl:param name="href-target-path" as="xs:string" required="yes"/>
   <xsl:param name="href-componentdoc-website-template" as="xs:string" required="yes"/>
+  <xsl:param name="component-name" as="xs:string" required="yes"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
@@ -32,8 +33,8 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="('Module documentation website template ', xtlc:q($href-componentdoc-website-template), ' not found')"
-          />
+          <xsl:with-param name="msg-parts"
+            select="('Module documentation website template ', xtlc:q($href-componentdoc-website-template), ' not found')"/>
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -42,15 +43,15 @@
   <!-- ================================================================== -->
 
   <xsl:template match="/">
-    
-   <!-- Generate a title for this site: -->
+
+    <!-- Generate a title for this site: -->
     <xsl:variable name="title" as="xs:string" select="(/*/xhtml:div[@class eq 'header']/xhtml:*[@class eq 'title'])[1]"/>
     <xsl:variable name="subtitle" as="xs:string?" select="(/*/xhtml:div[@class eq 'header']/xhtml:*[@class eq 'subtitle'])[1]"/>
     <xsl:variable name="full-title" as="xs:string" select="string-join(($title, $subtitle), ' - ')"/>
-    
+
     <!-- Create the container: -->
     <xtlcon:document-container timestamp="{current-dateTime()}" href-target-path="{$href-target-path}"
-      moduledoc-website-template="{$href-componentdoc-website-template}" title="{$full-title}">
+      moduledoc-website-template="{$href-componentdoc-website-template}" title="{$full-title}" component-name="{$component-name}">
       <xsl:for-each select="/*/xhtml:div[@class = ('preface', 'chapter', 'appendix')]">
         <xsl:variable name="is-preface" as="xs:boolean" select="@class eq 'preface'"/>
         <!-- Create a container document entry: -->
@@ -92,6 +93,8 @@
     <xsl:copy>
       <xsl:copy-of select="@*"/>
       <xsl:copy-of select="$body"/>
+      <!-- Also copy anything that was already in the body: -->
+      <xsl:copy-of select="node()"/>
     </xsl:copy>
   </xsl:template>
 

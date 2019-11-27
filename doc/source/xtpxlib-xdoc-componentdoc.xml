@@ -20,12 +20,24 @@
   <preface>
     <title>Documentation generation with {$component-name}</title>
 
-    <xdoc:dump-parameters type="table"/>
+    <!--<xdoc:dump-parameters type="table"/>-->
 
-    <para>Component <emphasis role="bold"><code>{$component-name}</code></emphasis> version {$current-release-version} -
-      {$current-release-date}</para>
-    <para>{$owner-company-name} - <link xlink:href="{$owner-company-website}"/> - {$owner-company-phone}</para>
-    <para>{$author-name} - <link xlink:href="mailto:{$author-email-address}">{$author-email-address}</link></para>
+    <sidebar>
+      <figure>
+        <title>Xatapult Content Engineering</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="resources/logo-xatapult.jpg" width="15%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+      <para role="halfbreak"/>
+      <para>Component <emphasis role="bold"><code>{$component-name}</code></emphasis> version {$current-release-version} -
+        {$current-release-date}</para>
+      <para>{$owner-company-name} - <link xlink:href="{$owner-company-website}"/> - {$owner-company-phone}</para>
+      <para>{$author-name} - <link xlink:href="mailto:{$author-email-address}">{$author-email-address}</link></para>
+    </sidebar>
+
     <para role="break"/>
 
     <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is a component for generating documentation. It uses <link
@@ -81,7 +93,7 @@
       <itemizedlist>
         <listitem>
           <para>To run the XProc pipelines use <link role="newpage" xlink:href="https://xmlcalabash.com/">XML&#160;Calabash</link> Xproc 1.0
-            processor. This library uses several of its non-standard extensions, another XProc processor is therefore probably not be usable.</para>
+            processor. This library uses several of its non-standard extensions, another XProc processor is therefore probably not usable.</para>
         </listitem>
         <listitem>
           <para>To run XSLT stylesheets the <link role="newpage" xlink:href="http://www.saxonica.com">Saxon</link> processor is preferred. In most
@@ -107,6 +119,6 @@
   <!-- ================================================================== -->
 
   <xi:include href="xtpxlib-chapter-docbook-dialect.xml"/>
-  
+
 </book>
 <!-- ================================================================== -->

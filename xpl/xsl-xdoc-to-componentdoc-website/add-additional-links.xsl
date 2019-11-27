@@ -33,9 +33,11 @@
   <xsl:template match="xtlcon:document//xhtml:body">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:copy-of select="node()"/>
-      <xsl:comment> == TOC == </xsl:comment>
+      <xsl:comment> == START TOC == </xsl:comment>
       <xsl:copy-of select="$toc"/>
+      <xsl:comment> == END TOC == </xsl:comment>
+      <xsl:copy-of select="node()"/>
+
     </xsl:copy>
   </xsl:template>
 

@@ -40,6 +40,8 @@
 
   <xsl:variable name="all-linkend-references" as="xs:string*" select="distinct-values(//db:xref/@linkend/string())"/>
 
+  <xsl:variable name="ignore-object-titles" as="xs:boolean" select="true()"/>
+
   <!-- ================================================================== -->
   <!-- MAIN TEMPLATES: -->
 
@@ -182,6 +184,9 @@
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
+      <xsl:if test="$is-halfbreak">
+        <xsl:attribute name="style" select="'font-size: 50%;'"/>
+      </xsl:if>
       <xsl:choose>
         <xsl:when test="$is-break or $is-halfbreak">
           <!-- Ignore any contents, just emit a hard-space: -->
@@ -237,7 +242,7 @@
   <xsl:template match="db:figure | db:informalfigure">
     <xsl:variable name="imagedata" as="element(db:imagedata)" select="(.//db:imagedata)[1]"/>
 
-    <div class="{local-name(.)}">
+    <p class="{local-name(.)}">
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
@@ -250,7 +255,7 @@
           <xsl:with-param name="object-name" select="'Figure'"/>
         </xsl:call-template>
       </xsl:if>
-    </div>
+    </p>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -305,7 +310,8 @@
             </xsl:call-template>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="upper-case(local-name(.)) || ':'"/>
+            <!-- For now generate nothing -->
+            <!--<xsl:value-of select="upper-case(local-name(.)) || ':'"/>-->
           </xsl:otherwise>
         </xsl:choose>
       </p>
@@ -334,20 +340,22 @@
     <xsl:param name="object" as="element()" required="no" select="."/>
     <xsl:param name="object-name" as="xs:string?" required="no" select="()"/>
 
-    <xsl:if test="(normalize-space($object/db:title) ne '') or exists($object/@number)">
-      <p class="{local-name($object)}-title">
-        <xsl:if test="exists($object-name) and exists($object/@number)">
-          <xsl:value-of select="$object-name"/>
-          <xsl:text>&#160;</xsl:text>
-          <xsl:value-of select="$object/@number"/>
-          <xsl:if test="normalize-space(db:title) ne ''">
-            <xsl:text>&#160;-&#160;</xsl:text>
+    <xsl:if test="not($ignore-object-titles)">
+      <xsl:if test="(normalize-space($object/db:title) ne '') or exists($object/@number)">
+        <p class="{local-name($object)}-title">
+          <xsl:if test="exists($object-name) and exists($object/@number)">
+            <xsl:value-of select="$object-name"/>
+            <xsl:text>&#160;</xsl:text>
+            <xsl:value-of select="$object/@number"/>
+            <xsl:if test="normalize-space(db:title) ne ''">
+              <xsl:text>&#160;-&#160;</xsl:text>
+            </xsl:if>
           </xsl:if>
-        </xsl:if>
-        <xsl:call-template name="handle-inline-contents">
-          <xsl:with-param name="contents" select="db:title/node()"/>
-        </xsl:call-template>
-      </p>
+          <xsl:call-template name="handle-inline-contents">
+            <xsl:with-param name="contents" select="db:title/node()"/>
+          </xsl:call-template>
+        </p>
+      </xsl:if>
     </xsl:if>
   </xsl:template>
 
@@ -797,7 +805,10 @@
     <xsl:if test="exists($id) and ($force or ($id = $all-linkend-references))">
       <xsl:attribute name="id" select="$id"/>
       <xsl:if test="$create-anchor">
-        <a name="{$id}"/>
+        <a name="{$id}">
+          <!-- Add some bogus comment contents to avoid annoying browser behavior: -->
+          <xsl:comment/>
+        </a>
       </xsl:if>
     </xsl:if>
   </xsl:template>

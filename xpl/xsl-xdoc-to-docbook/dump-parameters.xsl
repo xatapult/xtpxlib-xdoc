@@ -54,10 +54,14 @@
                 <xsl:sort select="."/>
                 <row>
                   <entry>
-                    <para>{.}</para>
+                    <para>
+                      <code>{.}</code>
+                    </para>
                   </entry>
                   <entry>
-                    <para>{ $parameters(.) }</para>
+                    <para>
+                      <code>{ $parameters(.) }</code>
+                    </para>
                   </entry>
                 </row>
               </xsl:for-each>
