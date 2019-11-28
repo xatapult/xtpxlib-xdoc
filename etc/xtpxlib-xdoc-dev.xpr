@@ -14,6 +14,21 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../doc/source/xtpxlib-xdoc-componentdoc.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../xpl/xsl-docbook-to-xhtml/db5-to-xhtml.xsl</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -75,21 +90,6 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../../xtpxlib-common/doc/data/componentdoc-website-template.html</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>generate-componentdoc</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../doc/source/xtpxlib-xdoc-componentdoc.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -2426,6 +2426,7 @@
     <projectTree name="xtpxlib-xdoc-dev.xpr">
         <folder path="../../xtpxlib-common/"/>
         <folder path="../../xtpxlib-container/"/>
+        <folder path="../../xtpxlib-webdoc/"/>
         <folder path="../"/>
         <folder path="../../../xproc-3/TEST/"/>
     </projectTree>

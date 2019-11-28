@@ -147,4 +147,13 @@
   <!--  Remove grouping with <xdoc:GROUP> elements: -->
   <p:unwrap match="xdoc:GROUP"/>
 
+  <!-- Substitute all parameter references again (in case the transforms generated something that included a parameter reference): -->
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-xdoc-to-docbook/substitute-parameters.xsl"/>
+    </p:input>
+    <p:with-param name="href-parameters" select="$href-parameters"/>
+    <p:with-param name="parameter-filters" select="$parameter-filters"/>
+  </p:xslt>
+  
 </p:declare-step>

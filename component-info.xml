@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-info xmlns="http://www.xtpxlib.nl/ns/webdoc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace" xsi:schemaLocation="http://www.xtpxlib.nl/ns/webdoc ../xtpxlib-webdoc/xsd/component-info.xsd" name="xtpxlib-xdoc">
+
+  <releases>
+    <release version="0.0" date="2019-11-28">
+      TBD
+    </release>
+  </releases>
+
+  <dependencies>
+    <component name="xtpxlib-common"/>
+  </dependencies>
+
+  <title>Xatapult XML Library - xdoc component</title>
+  <summary xml:space="preserve">
+`xtpxlib-xdoc` TBD
+  </summary>
+  <!--<documentation-uri>http://www.xatapult.nl</documentation-uri>
+-->
+  <git-uri>git@github.com:xatapult/xtpxlib-xdoc.git</git-uri>
+  <git-site-uri>https://github.com/xatapult/xtpxlib-xdoc</git-site-uri>
+
+</component-info>

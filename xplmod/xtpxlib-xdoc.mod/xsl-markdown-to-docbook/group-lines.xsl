@@ -21,6 +21,8 @@
   <xsl:variable name="code-block-marker" as="xs:string" select="'```'"/>
   <xsl:variable name="horizontal-rule-marker" as="xs:string" select="'==='"/>
   <xsl:variable name="header-marker" as="xs:string" select="'#'"/>
+  <xsl:variable name="regexp-list-entry" as="xs:string" select="'^[0-9]\.\s+|^[\-*]\s+'"/>
+  
 
   <!-- ================================================================== -->
 
@@ -52,7 +54,7 @@
           <xsl:variable name="line-is-code-block-marker" as="xs:boolean" select="starts-with($line-text, $code-block-marker)"/>
           <xsl:variable name="line-is-horizontal-rule-marker" as="xs:boolean" select="starts-with($line-text, $horizontal-rule-marker)"/>
           <xsl:variable name="line-is-header" as="xs:boolean" select="starts-with($line-text, $header-marker)"/>
-          <xsl:variable name="line-starts-list-entry" as="xs:boolean" select="matches($line-text, '^[0-9]\.\s+|-\s+')"/>
+          <xsl:variable name="line-starts-list-entry" as="xs:boolean" select="matches($line-text, $regexp-list-entry)"/>
 
           <xsl:choose>
             <!-- When we find a horizontal rule marker or header, this ends the current group and is output on its own: -->
@@ -200,11 +202,10 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:variable name="regexp-list-entry" as="xs:string" select="'^-\s+|^[0-9]\.\s+'"/>
   <xsl:template match="db:para[matches(., $regexp-list-entry)]" mode="mode-handle-paras">
     <xsl:variable name="indent" as="xs:integer" select="xs:integer(@indent)"/>
     <xsl:variable name="listlevel" as="xs:integer" select="floor($indent div 2)"/>
-    <xsl:variable name="listtype" as="xs:string" select="if (starts-with(., '-')) then 'itemizedlist' else 'orderedlist'"/>
+    <xsl:variable name="listtype" as="xs:string" select="if (starts-with(., '-') or starts-with(., '*')) then 'itemizedlist' else 'orderedlist'"/>
     <para listlevel="{$listlevel}" listtype="{$listtype}">{ replace(., $regexp-list-entry, '') }</para>
   </xsl:template>
 
