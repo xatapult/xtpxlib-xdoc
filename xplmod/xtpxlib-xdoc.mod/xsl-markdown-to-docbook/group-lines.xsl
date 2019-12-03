@@ -204,7 +204,7 @@
 
   <xsl:template match="db:para[matches(., $regexp-list-entry)]" mode="mode-handle-paras">
     <xsl:variable name="indent" as="xs:integer" select="xs:integer(@indent)"/>
-    <xsl:variable name="listlevel" as="xs:integer" select="floor($indent div 2)"/>
+    <xsl:variable name="listlevel" as="xs:integer" select="xs:integer(floor($indent div 2))"/>
     <xsl:variable name="listtype" as="xs:string" select="if (starts-with(., '-') or starts-with(., '*')) then 'itemizedlist' else 'orderedlist'"/>
     <para listlevel="{$listlevel}" listtype="{$listtype}">{ replace(., $regexp-list-entry, '') }</para>
   </xsl:template>

@@ -38,7 +38,7 @@
   <xsl:variable name="phase-description-main" as="xs:string" select="'main'"/>
   <xsl:variable name="phase-description-inline" as="xs:string" select="'inline'"/>
 
-  <xsl:variable name="all-linkend-references" as="xs:string*" select="distinct-values(//db:xref/@linkend/string())"/>
+  <xsl:variable name="all-linkend-references" as="xs:string*" select="distinct-values((//db:xref/@linkend/string(), //db:link/@linkend/string()))"/>
 
   <xsl:variable name="ignore-object-titles" as="xs:boolean" select="true()"/>
 
@@ -785,7 +785,6 @@
   <xsl:template match="comment() | processing-instruction()" mode="#all" priority="-1000">
     <!-- Ignore... -->
   </xsl:template>
-  
   
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 

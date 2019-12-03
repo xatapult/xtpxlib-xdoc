@@ -117,15 +117,24 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template name="process-text-3" as="node()*">
-    <!-- Processes links [link-text](http://...) constructions -->
+    <!-- Processes links [link-text](http://...) constructions. If the link starts with a * it is assumed to be an internal link. -->
     <xsl:param name="text" as="xs:string" required="yes"/>
+    
+    <xsl:variable name="internal-link-marker" as="xs:string" select="'*'"/>
 
     <xsl:analyze-string select="$text" regex="\[(.+?)\]\((.+?)\)">
 
       <xsl:matching-substring>
         <xsl:variable name="link-text" as="xs:string" select="regex-group(1)"/>
         <xsl:variable name="link-href" as="xs:string" select="regex-group(2)"/>
-        <link xlink:href="{$link-href}">{$link-text}</link>
+        <xsl:choose>
+          <xsl:when test="starts-with($link-href, $internal-link-marker)">
+            <link linkend="{substring-after($link-href, $internal-link-marker)}">{$link-text}</link>
+          </xsl:when>
+          <xsl:otherwise>
+            <link xlink:href="{$link-href}">{$link-text}</link>
+          </xsl:otherwise>  
+        </xsl:choose>
       </xsl:matching-substring>
 
       <xsl:non-matching-substring>

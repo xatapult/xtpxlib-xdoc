@@ -40,6 +40,7 @@
   <xsl:variable name="filecomponents" as="xs:integer" select="(xs:integer(/xdoc:transform/@filecomponents), 0)[1]"/>
   <xsl:variable name="header-level" as="xs:integer" select="(xs:integer(/xdoc:transform/@header-level), -1)[1]"/>
   <xsl:variable name="add-table-titles" as="xs:boolean" select="xtlc:str2bln(/xdoc:transform/@add-table-titles, false())"/>
+  <xsl:variable name="sublevels" as="xs:boolean" select="xtlc:str2bln(/xdoc:transform/@sublevels, true())"/>
 
   <!-- Identifier information. The base id is either as @id on the xdoc:transform or is generated from the filename. -->
   <xsl:variable name="base-id" as="xs:string" select="xtlc:str2id((/xdoc:transform/@id, $document-filename)[1])"/>
@@ -59,6 +60,8 @@
       <xsl:call-template name="output-section">
         <xsl:with-param name="title" as="node()+" select="$description-section/db:title/node()"/>
         <xsl:with-param name="contents" as="element()*" select="$description-section/* except $description-section/db:title"/>
+        <xsl:with-param name="id" select="$description-section/@xml:id"/>
+        <xsl:with-param name="force-bridgehead" select="false()"/>
       </xsl:call-template>
     </xdoc:GROUP>
   </xsl:template>
@@ -68,7 +71,7 @@
 
   <xsl:template match="xsl:stylesheet">
     <xsl:call-template name="add-section-title-and-filename">
-      <xsl:with-param name="base-title" select="'XSLT ' || @version || ' stylesheet'"/>
+      <xsl:with-param name="base-title" select="'XSLT (' || @version || ')'"/>
     </xsl:call-template>
 
     <!-- Global information: -->
@@ -119,7 +122,7 @@
   <xsl:template match="p:declare-step">
     <xsl:variable name="object-name" as="xs:string" select="$document-filename || (if (exists(@type)) then ' (' || @type || ')' else ())"/>
     <xsl:call-template name="add-section-title-and-filename">
-      <xsl:with-param name="base-title" select="'XProc ' || @version || ' pipeline'"/>
+      <xsl:with-param name="base-title" select="'XProc (' || @version || ') pipeline'"/>
       <xsl:with-param name="object-name" select="$object-name"/>
     </xsl:call-template>
     <xsl:call-template name="xpl-get-element-documentation"/>
@@ -140,7 +143,7 @@
 
   <xsl:template match="p:library">
     <xsl:call-template name="add-section-title-and-filename">
-      <xsl:with-param name="base-title" select="'XProc ' || @version || ' library'"/>
+      <xsl:with-param name="base-title" select="'XProc (' || @version || ') library'"/>
     </xsl:call-template>
     <xsl:call-template name="xpl-get-element-documentation"/>
     <xsl:call-template name="output-important-namespaces">
@@ -396,7 +399,10 @@
     <xsl:param name="object-type" as="xs:string" required="yes"/>
 
     <xsl:for-each select="$objects">
+      <xsl:sort select="@name"/>
       <xsl:call-template name="output-section">
+        <xsl:with-param name="id" select="local:xsl-object-id(.)"/>
+        <xsl:with-param name="force-bridgehead" select="not($sublevels)"/>
         <xsl:with-param name="additional-level" select="true()"/>
         <xsl:with-param name="title" as="node()*">
           <xsl:value-of select="xtlc:capitalize($object-type)"/>
@@ -636,10 +642,13 @@
     <xsl:param name="step-declarations" as="element(p:declare-step)*" required="yes"/>
 
     <xsl:for-each select="$step-declarations">
+      <xsl:sort select="@type"/>
       <xsl:call-template name="output-section">
+        <xsl:with-param name="force-bridgehead" select="not($sublevels)"/>
+        <xsl:with-param name="id" select="local:xpl-object-id(.)"/>
         <xsl:with-param name="additional-level" select="true()"/>
         <xsl:with-param name="title" as="node()+">
-          <xsl:text>Step declaration: </xsl:text>
+          <xsl:text>Step: </xsl:text>
           <code>{ @type }</code>
         </xsl:with-param>
         <xsl:with-param name="contents" as="element()*">
@@ -910,7 +919,7 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:text>&#160;</xsl:text>
-      </xsl:otherwise>  
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
 
@@ -921,9 +930,10 @@
     <xsl:param name="contents" as="element()+" required="yes"/>
     <xsl:param name="id" as="xs:string?" required="false" select="()"/>
     <xsl:param name="additional-level" as="xs:boolean" required="false" select="false()"/>
+    <xsl:param name="force-bridgehead" as="xs:boolean" required="false" select="false()"/>
 
     <xsl:choose>
-      <xsl:when test="$header-level le 0">
+      <xsl:when test="$force-bridgehead or ($header-level le 0)">
         <bridgehead>
           <xsl:if test="exists($id)">
             <xsl:attribute name="xml:id" select="$id"/>

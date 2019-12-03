@@ -9,7 +9,12 @@
       Typical usage (within an `xdoc` source document): 
       
       ```
-      &lt;xdoc:transform href="$xdoc/code-docgen.xpl filecomponents="…" header-level=…"" &gt;
+      &lt;xdoc:transform href="$xdoc/code-docgen.xpl 
+         filecomponents="…" 
+         header-level="…" 
+         add-table-titles="…"
+         sublevels="…"
+         id="…" &gt;
         &lt;xi:include href="path/to/document/to/generate/documentation/for"/&gt;
       &lt;/xdoc:transform&gt;
       ```
@@ -19,8 +24,11 @@
         - When eq 0, the full filename (with full path) is displayed
         - When gt 0, this number of filename components is displayed. So 1 means filename only, 2 means filename and direct foldername, etc.
       - `@header-level`: Determines what kind of DocBook section is created:
-        - When le 0, no seperate section is created, all titles will be output as `bridgehead` elements.
+        - When le 0, no separate section is created, all titles will be output as `bridgehead` elements.
         - Otherwise a title with this level is created (e.g. `header-level="1"` means a `sect1` element).
+      - `@add-table-titles`: (boolean, default `false`) Whether to add titles to generated tables.
+      - `@sublevels`: (boolean, default `true`) If true only the main section will be a "real" section. All sublevels will become bridgeheads.
+      - `@id`: Optional identifier of this section. If absent the id will become the document's filename.
         
       When the format to document has  means to add documentation of itself (like XProc (`p:documentation`) or XML Schema (`xs:annotation`)), this is used.
       When there is no such thing (like for XSLT and straight XML), comments starting with a tilde (`~`) are used. 
