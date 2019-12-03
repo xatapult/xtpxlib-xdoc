@@ -3,8 +3,10 @@
  xsi:noNamespaceSchemaLocation="../../../xtpxlib-common/xsd/parameters.xsd">
   <!-- ================================================================== -->
   <!--~
-    TBD
+    Parameters to be used for generating the documentation website for this particular component.
   -->
   <!-- ================================================================== -->
+  
+  <!-- None yet. -->
   
 </parameters>
