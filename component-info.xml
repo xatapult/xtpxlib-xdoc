@@ -12,7 +12,7 @@
     <component name="xtpxlib-common"/>
   </dependencies>
 
-  <title>Xatapult XML Library - xdoc component</title>
+  <title>xdoc component</title>
   <summary xml:space="preserve">
 `xtpxlib-xdoc` TBD
   </summary>

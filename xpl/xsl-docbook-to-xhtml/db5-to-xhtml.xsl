@@ -779,7 +779,14 @@
       <xsl:with-param name="msg-parts" select="('Unrecognized element: ', .)"/>
     </xsl:call-template>
   </xsl:template>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="comment() | processing-instruction()" mode="#all" priority="-1000">
+    <!-- Ignore... -->
+  </xsl:template>
+  
+  
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template name="insert-error">
