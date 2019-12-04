@@ -10,9 +10,9 @@
     <subtitle>An xtpxlib component for generating documentation</subtitle>
     <pubdate>{$DATE}</pubdate>
     <author>
-      <personname>Erik&#160;Siegel</personname>
+      <personname>{$author-name}</personname>
     </author>
-    <orgname>Xatapult</orgname>
+    <orgname>{$owner-company-name}</orgname>
   </info>
 
   <!-- ================================================================== -->
@@ -20,105 +20,28 @@
   <preface>
     <title>Documentation generation with {$component-name}</title>
 
+    <xdoc:transform href="../../../xtpxlib-webdoc/transforms/generate-basic-component-information-header.xpl" component-name="{$component-name}" />
+    
     <!--<xdoc:dump-parameters type="table"/>-->
-
-    <sidebar>
-      <figure>
-        <title>Xatapult Content Engineering</title>
-        <mediaobject>
-          <imageobject>
-            <imagedata fileref="resources/logo-xatapult.jpg" width="15%"/>
-          </imageobject>
-        </mediaobject>
-      </figure>
-      <para role="halfbreak"/>
-      <para>Component <emphasis role="bold"><code>{$component-name}</code></emphasis> version {$current-release-version} -
-        {$current-release-date}</para>
-      <para>{$owner-company-name} - <link xlink:href="{$owner-company-website}"/> - {$owner-company-phone}</para>
-      <para>{$author-name} - <link xlink:href="mailto:{$author-email-address}">{$author-email-address}</link></para>
-    </sidebar>
-
-    <para role="break"/>
-
-    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is a component for generating documentation. It uses <link
-        xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link> + additional markup as its base format and can (currently) generate
-      PDF and XHTML as output. It can also generate component documentation (like the one you're looking at now), as a simple website and PDF. See
-        <xref linkend="sect-description"/> for an overview.</para>
-
-    <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is part of the <emphasis role="bold"><code>{$library-name}</code></emphasis>
-      library. <emphasis role="bold"><code>{$library-name}</code></emphasis> contains software for processing XML, using languages like XSLT and
-      XProc. It consists of several separate components, named <code>{$library-name}-*</code>. Everything can be found on GitHub (<link
-        xlink:href="{$owner-company-github}"/>). The core component of <code>{$library-name}</code> is <link
-        xlink:href="{$owner-company-github}/{$core-component-name}"><code>{$core-component-name}</code></link>. Most components will be accompanied by
-      a GitHub pages documentation site (<link xlink:href="TBD"/>).</para>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <sect1>
-      <title>Installing {$component-name}</title>
-
-      <para>To install <emphasis role="bold"><code>{$component-name}</code></emphasis> you can do one of the following:</para>
-      <itemizedlist>
-        <listitem>
-          <para>Clone its GitHub repository ({$git-uri}) to some appropriate location on disk. The <code>master</code> branch will always contain the
-            latest stable version (currently {$current-release-version} {$current-release-date}).</para>
-        </listitem>
-        <listitem>
-          <para>Or download the latest release from <link xlink:href="{$owner-company-github}/{$component-name}/releases"/> and unpack it
-            somewhere.</para>
-        </listitem>
-      </itemizedlist>
-
-      <para><emphasis role="bold"><code>{$component-name}</code></emphasis> is dependent on the following other <code>{$library-name}</code>
-        components. <emphasis role="bold">Important:</emphasis> These must be installed in the <emphasis>same base directory</emphasis> as <emphasis
-          role="bold"><code>{$component-name}</code></emphasis>:</para>
-      <itemizedlist>
-        <listitem>
-          <para><code><link role="newpage" xlink:href="{$owner-company-github}/xtpxlib-common">xtpxlib-common</link></code></para>
-        </listitem>
-        <listitem>
-          <para><code><link role="newpage" xlink:href="{$owner-company-github}/xtpxlib-container">xtpxlib-container</link></code></para>
-        </listitem>
-      </itemizedlist>
-    </sect1>
-
-    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-    <sect1>
-      <title>Running {$component-name}</title>
-
-      <para><emphasis role="bold"><code>{$component-name}</code></emphasis> consists of XProc (1.0) pipelines and XSLT (2.0 and 3.0) stylesheets. To
-        run these you'll need:</para>
-
-      <itemizedlist>
-        <listitem>
-          <para>To run the XProc pipelines use <link role="newpage" xlink:href="https://xmlcalabash.com/">XML&#160;Calabash</link> Xproc 1.0
-            processor. This library uses several of its non-standard extensions, another XProc processor is therefore probably not usable.</para>
-        </listitem>
-        <listitem>
-          <para>To run XSLT stylesheets the <link role="newpage" xlink:href="http://www.saxonica.com">Saxon</link> processor is preferred. In most
-            cases the (open source) HE (Home Edition) version will be sufficient. If not a PE (Professional Edition) license is necessary.</para>
-        </listitem>
-        <listitem>
-          <para>As an alternative run the software from within the <link role="newpage" xlink:href="https://www.oxygenxml.com">oXygen XML</link>
-            IDE.</para>
-        </listitem>
-      </itemizedlist>
-    </sect1>
-
+    
+    <bridgehead>TEST</bridgehead>
+    
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../../xtpxlib-common/xslmod/" filter="\.mod\.xsl$" toc-only="true" header-level="1" filecomponents="2"/>
+<!--    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../../xtpxlib-common/xplmod/" filter="\.mod\.xpl$"/>-->
+    
   </preface>
 
-  <!-- ================================================================== -->
+  <!--<!-\- ================================================================== -\->
 
   <xi:include href="xtpxlib-xdoc-chapter-description.xml"/>
 
-  <!-- ================================================================== -->
+  <!-\- ================================================================== -\->
 
   <xi:include href="xtpxlib-xdoc-chapter-extensions.xml"/>
 
-  <!-- ================================================================== -->
+  <!-\- ================================================================== -\->
 
-  <xi:include href="xtpxlib-chapter-docbook-dialect.xml"/>
+  <xi:include href="xtpxlib-chapter-docbook-dialect.xml"/>-->
 
 </book>
 <!-- ================================================================== -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
-  version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all">
+  version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:code-docgen">
 
   <p:documentation>
       Takes some XML document (XSL, XSD, XProc, ordinary XML, etc.) and tries to generate some documentation out of it. 

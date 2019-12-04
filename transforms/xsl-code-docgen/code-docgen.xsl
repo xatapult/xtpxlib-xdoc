@@ -20,14 +20,11 @@
 
   <xsl:include href="../../../xtpxlib-common/xslmod/general.mod.xsl"/>
   <xsl:include href="../../../xtpxlib-common/xslmod/href.mod.xsl"/>
+  <xsl:include href="code-docgen-shared.xsl"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
-
-  <xsl:variable name="element-documentation-start" as="xs:string" select="'~'">
-    <!-- A comment that starts with this string is considered the description for its parent element. -->
-  </xsl:variable>
-
+ 
   <xsl:variable name="local-namespace-prefixes" as="xs:string+" select="('local')">
     <!-- Anything in namespaces that uses one of these prefixes are considered local and ignored. -->
   </xsl:variable>
@@ -69,7 +66,7 @@
   <!-- ================================================================== -->
   <!-- SELECT ON TYPE OF DOCUMENT BY ROOT ELEMENT: -->
 
-  <xsl:template match="xsl:stylesheet">
+  <xsl:template match="xsl:stylesheet | xsl:transform">
     <xsl:call-template name="add-section-title-and-filename">
       <xsl:with-param name="base-title" select="'XSLT (' || @version || ')'"/>
     </xsl:call-template>
@@ -445,18 +442,6 @@
   <!-- ================================================================== -->
   <!-- XPROC SUPPORT: -->
 
-  <xsl:template name="xpl-get-element-documentation">
-    <xsl:param name="parent-elm" as="element()" required="no" select="."/>
-    <xsl:param name="header-only" as="xs:boolean" required="no" select="false()"/>
-
-    <xsl:variable name="elm-documentation" as="element(p:documentation)?" select="($parent-elm/p:documentation[normalize-space(.) ne ''])[1]"/>
-    <xsl:if test="exists($elm-documentation)">
-      <xdoc:MARKDOWN header-only="{$header-only}">{ string($elm-documentation) }</xdoc:MARKDOWN>
-    </xsl:if>
-  </xsl:template>
-
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
   <xsl:template name="xpl-output-ports">
     <xsl:param name="parent-elm" as="element(p:declare-step)" required="no" select="."/>
     <xsl:param name="object-name" as="xs:string" required="yes"/>
@@ -722,19 +707,6 @@
 
   </xsl:template>
 
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <xsl:template name="xsd-get-element-documentation">
-    <xsl:param name="parent-elm" as="element()" required="no" select="."/>
-    <xsl:param name="header-only" as="xs:boolean" required="no" select="false()"/>
-
-    <xsl:variable name="elm-documentation" as="element(xs:documentation)?"
-      select="($parent-elm/xs:annotation/xs:documentation[normalize-space(.) ne ''])[1]"/>
-    <xsl:if test="exists($elm-documentation)">
-      <xdoc:MARKDOWN header-only="{$header-only}">{ string($elm-documentation) }</xdoc:MARKDOWN>
-    </xsl:if>
-  </xsl:template>
-
   <!-- ================================================================== -->
   <!-- GENERIC SUPPORT: -->
 
@@ -817,22 +789,6 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <xsl:template name="get-element-documentation">
-    <!-- Tries to find the documentation comment for this element (a documentation comment starts with the string $element-documentation-start)
-      and extracts this into an <xdoc:MARKDOWN> element. -->
-    <xsl:param name="parent-elm" as="element()" required="no" select="."/>
-    <xsl:param name="header-only" as="xs:boolean" required="false" select="false()"/>
-
-    <xsl:variable name="documentation-comment" as="comment()?"
-      select="$parent-elm/comment()[starts-with(., $element-documentation-start)]
-      [normalize-space(substring-after(., $element-documentation-start)) ne '']"/>
-    <xsl:if test="exists($documentation-comment)">
-      <xdoc:MARKDOWN header-only="{$header-only}">{ substring-after($documentation-comment, $element-documentation-start) }</xdoc:MARKDOWN>
-    </xsl:if>
-  </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
