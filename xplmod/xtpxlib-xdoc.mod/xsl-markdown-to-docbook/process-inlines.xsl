@@ -117,10 +117,10 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template name="process-text-3" as="node()*">
-    <!-- Processes links [link-text](http://...) constructions. If the link starts with a * it is assumed to be an internal link. -->
+    <!-- Processes links [link-text](http://...) constructions. If the link starts with a % it is assumed to be an internal link. -->
     <xsl:param name="text" as="xs:string" required="yes"/>
     
-    <xsl:variable name="internal-link-marker" as="xs:string" select="'*'"/>
+    <xsl:variable name="internal-link-marker" as="xs:string" select="'%'"/>
 
     <xsl:analyze-string select="$text" regex="\[(.+?)\]\((.+?)\)">
 
