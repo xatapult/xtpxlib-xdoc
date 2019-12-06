@@ -24,7 +24,7 @@
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
- 
+
   <xsl:variable name="local-namespace-prefixes" as="xs:string+" select="('local')">
     <!-- Anything in namespaces that uses one of these prefixes are considered local and ignored. -->
   </xsl:variable>
@@ -192,13 +192,12 @@
     <para>
       <xsl:text>Root element: </xsl:text>
       <tag>{ name(.) }</tag>
-    </para>
-    <xsl:if test="$namespace-uri ne ''">
-      <para>
-        <xsl:text>Root namespace: </xsl:text>
+      <xsl:if test="$namespace-uri ne ''">
+        <xsl:text> (namespace: </xsl:text>
         <code>{ $namespace-uri }</code>
-      </para>
-    </xsl:if>
+        <xsl:text>)</xsl:text>
+      </xsl:if>
+    </para>
     <xsl:call-template name="get-element-documentation"/>
   </xsl:template>
 

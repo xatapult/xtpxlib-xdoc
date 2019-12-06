@@ -126,7 +126,6 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="*" priority="-1">
-    <para>{name(.)}</para>
     <xsl:call-template name="get-element-documentation">
       <xsl:with-param name="header-only" select="true()"/>
     </xsl:call-template>
