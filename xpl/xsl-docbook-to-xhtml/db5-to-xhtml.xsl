@@ -518,6 +518,56 @@
     </xsl:choose>
   </xsl:template>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:link" mode="mode-inline">
+
+    <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
+    <xsl:variable name="href" as="xs:string?">
+      <xsl:choose>
+        <xsl:when test="exists(@xlink:href)">
+          <xsl:sequence select="@xlink:href"/>
+        </xsl:when>
+        <xsl:when test="exists(@linkend)">
+          <xsl:variable name="id" as="xs:string" select="@linkend"/>
+          <xsl:variable name="referenced-element" as="element()*" select="key($id-index-name, $id, $original-document)"/>
+          <xsl:choose>
+            <xsl:when test="count($referenced-element) eq 1">
+              <xsl:sequence select="'#' || @linkend"/>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:sequence select="()"/>
+            </xsl:otherwise>
+          </xsl:choose>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:sequence select="()"/>
+        </xsl:otherwise>
+      </xsl:choose>
+    </xsl:variable>
+
+
+    <xsl:choose>
+      <xsl:when test="exists($href)">
+        <a href="{$href}">
+          <xsl:if test="'newpage' = $roles">
+            <xsl:attribute name="target" select="'_blank'"/>
+          </xsl:if>
+          <xsl:call-template name="handle-inline-text">
+            <xsl:with-param name="text" select="if ((normalize-space(.) eq '') and empty(*)) then (@xlink:href, @linkend)[1] else ()"/>
+          </xsl:call-template>
+        </a>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:call-template name="insert-error">
+          <xsl:with-param name="msg-parts" select="('Referenced linkend id ', xtlc:q(@linkend), ' not found or multiple')"/>
+          <xsl:with-param name="block" select="false()"/>
+        </xsl:call-template>
+      </xsl:otherwise>
+    </xsl:choose>
+
+  </xsl:template>
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:function name="local:xref-capitalize" as="xs:string">
@@ -552,34 +602,6 @@
     <xsl:call-template name="handle-inline-text">
       <xsl:with-param name="fixed-width" select="true()"/>
     </xsl:call-template>
-  </xsl:template>
-
-  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
-  <xsl:template match="db:link" mode="mode-inline">
-    <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
-    <xsl:variable name="href" as="xs:string?">
-      <xsl:choose>
-        <xsl:when test="exists(@xlink:href)">
-          <xsl:sequence select="@xlink:href"/>
-        </xsl:when>
-        <xsl:when test="exists(@linkend)">
-          <xsl:sequence select="'#' || @linkend"/>
-        </xsl:when>
-        <xsl:otherwise>
-          <!-- Let it be -->
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-
-    <a href="{$href}">
-      <xsl:if test="'newpage' = $roles">
-        <xsl:attribute name="target" select="'_blank'"/>
-      </xsl:if>
-      <xsl:call-template name="handle-inline-text">
-        <xsl:with-param name="text" select="if ((normalize-space(.) eq '') and empty(*)) then @xlink:href else ()"/>
-      </xsl:call-template>
-    </a>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -779,13 +801,13 @@
       <xsl:with-param name="msg-parts" select="('Unrecognized element: ', .)"/>
     </xsl:call-template>
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:template match="comment() | processing-instruction()" mode="#all" priority="-1000">
     <!-- Ignore... -->
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template name="insert-error">
