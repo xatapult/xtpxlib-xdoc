@@ -27,21 +27,21 @@
     <bridgehead>TEST</bridgehead>
     
     <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../../xtpxlib-common/xslmod/" filter="\.mod\.xsl$" toc-only="true" header-level="1" filecomponents="2"/>
-<!--    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../../xtpxlib-common/xplmod/" filter="\.mod\.xpl$"/>-->
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../../xtpxlib-common/xplmod/" filter="\.mod\.xpl$"/>
     
   </preface>
 
-  <!--<!-\- ================================================================== -\->
+  <!-- ================================================================== -->
 
   <xi:include href="xtpxlib-xdoc-chapter-description.xml"/>
 
-  <!-\- ================================================================== -\->
+  <!-- ================================================================== -->
 
   <xi:include href="xtpxlib-xdoc-chapter-extensions.xml"/>
 
-  <!-\- ================================================================== -\->
+  <!-- ================================================================== -->
 
-  <xi:include href="xtpxlib-chapter-docbook-dialect.xml"/>-->
+  <xi:include href="xtpxlib-chapter-docbook-dialect.xml"/>
 
 </book>
 <!-- ================================================================== -->

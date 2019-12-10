@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:xtlcon="http://www.xtpxlib.nl/ns/container" lang="en" xml:lang="en">
+  
+  
+  
+  
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="resources/bootstrap.min.css"/>
+    <link rel="stylesheet" href="resources/xtpxlib-moduledoc.css"/>
+    <link rel="shortcut icon" href="resources/favicon.ico"/>
+    <title>3 DocBook dialect</title>
+  </head>
+  <body style="padding-top: 65px;"><nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark"><a class="navbar-brand" href="index.html" title="home">xtpxlib-xdoc</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"/></button><div id="navbarSupportedContent" class="collapse navbar-collapse"><ul class="navbar-nav mr-auto"><li class="nav-item dropdown"><a href="1_Description.html" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Description <span class="caret"/></a><div class="dropdown-menu"><a href="1_Description.html" class="dropdown-item">Description</a><div class="dropdown-divider"><!----></div><a class="dropdown-item" href="1_Description.html#d1796e1252">Overview</a><a class="dropdown-item" href="1_Description.html#sect-main-toolchain">The xtpxlib-xdoc main toolchain</a><a class="dropdown-item" href="1_Description.html#d1796e1750">Documentation website generation</a></div></li><li class="nav-item dropdown"><a href="2_xdoc_extensions.html" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">xdoc extensions <span class="caret"/></a><div class="dropdown-menu"><a href="2_xdoc_extensions.html" class="dropdown-item">xdoc extensions</a><div class="dropdown-divider"><!----></div><a class="dropdown-item" href="2_xdoc_extensions.html#sect-available-xdoc-extension-elements">xdoc extension elements</a><a class="dropdown-item" href="2_xdoc_extensions.html#sect-builtin-xdoc-transformations">Built-in xdoc transformations</a><a class="dropdown-item" href="2_xdoc_extensions.html#sect-write-your-own-transformations">Writing your own xdoc transformations</a></div></li><li class="nav-item dropdown"><a href="3_DocBook_dialect.html" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DocBook dialect <span class="caret"/></a><div class="dropdown-menu"><a href="3_DocBook_dialect.html" class="dropdown-item">DocBook dialect</a><div class="dropdown-divider"><!----></div><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2260">Supported root elements</a><a class="dropdown-item" href="3_DocBook_dialect.html#sect-docbook5">Document information</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2303">Chapter/Section structure</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2347">Block constructions</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2871">Inline elements</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e3475">Other constructs</a><a class="dropdown-item" href="3_DocBook_dialect.html#sect-fixed-width-column-mechanism">Fixed-width column mechanism</a></div></li><li class="nav-item"><a class="nav-link" href="resources/xtpxlib-xdoc-documentation.pdf" title="PDF version of this documentation site">PDF</a></li></ul></div></nav><div class="container"><a name="d1796e2244"><!----></a><div class="page-header" style="padding-top: 65px; margin-top: -65px;"><h1 class="chapter"><span class="chapter-number">3 </span>DocBook dialect</h1></div><p class="para" id="first-para"><a name="first-para"><!----></a>The <code class="code">xtpxlib-xdoc</code> component uses <a href="https://docbook.org/" target="_blank"><span class="link">DocBook 5.1</span></a> as its source and target vocabulary. However, it does not implement the full standard (which is huge!) but only those
+    elements/attributes that were deemed necessary. This document will explain what is in and what's not.</p><div class="sect1" id="d1796e2260"><a name="d1796e2260"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">3.1</span> Supported root elements</h2><p class="para">Both the <code class="tag">&lt;book&gt;</code> and the <code class="tag">&lt;article&gt;</code> root element are supported. <span class="tbd-marker">[TBD rephrase]</span> A <code class="tag">&lt;book&gt;</code> root results in paged output (for, as the
+      name implies, a book. The <code class="tag">&lt;article&gt;</code> root results in something more memo style (like this).</p></div><div class="sect1" id="sect-docbook5"><a name="sect-docbook5"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">3.2</span> Document information</h2><p class="para"><b>Document information</b>: The only document information elements recognized are (any others are
+      ignored):</p><div class="programlisting"><pre class="programlisting">&lt;info&gt;
+  
+  &lt;title&gt; ... main title ... &lt;/title&gt;
+  &lt;subtitle&gt; ... subtitle ...&lt;/subtitle&gt;
+  &lt;pubdate&gt; ... publication date ... &lt;/pubdate&gt;
+  &lt;author&gt;
+    &lt;personname&gt; ... author name ...&lt;/personname&gt;
+  &lt;/author&gt;
+  
+  &lt;orgname&gt; ... organization ... &lt;/orgname&gt;
+  
+  &lt;mediaobject role="top-logo"&gt;
+    &lt;!-- Use either role="top-logo" or no role attribute. --&gt;
+    &lt;imageobject&gt;
+      &lt;imagedata fileref="..." width="...(opt)" height="...(opt)"/&gt;
+    &lt;/imageobject&gt;
+  &lt;/mediaobject&gt;
+  
+  &lt;mediaobject role="center-page"&gt;
+    &lt;imageobject&gt;
+      &lt;imagedata fileref="..." width="...(opt)" height="...(opt)"/&gt;
+    &lt;/imageobject&gt;
+  &lt;/mediaobject&gt;
+  
+&lt;/info&gt;</pre></div><p class="para" id="para-with-xreflabel"><a name="para-with-xreflabel"><!----></a>All elements are optional.</p></div><div class="sect1" id="d1796e2303"><a name="d1796e2303"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">3.3</span> Chapter/Section structure</h2><ul class="itemizedlist"><li><p class="para">For books, <code class="literal">&lt;preface&gt;</code>, <code class="literal">&lt;chapter&gt;</code>, <code class="tag">&lt;appendix&gt;</code> and <code class="literal">&lt;sect1&gt;</code> to
+            <code class="literal">&lt;sect3&gt;</code> are recognized and handled.</p></li><li><p class="para">In articles only <code class="tag">&lt;sect1&gt;</code> to <code class="tag">&lt;sect3&gt;</code> are allowed.</p></li></ul></div><div class="sect1" id="d1796e2347"><a name="d1796e2347"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">3.4</span> Block constructions</h2><p class="para">the following block level constructions are recognized and handled:</p><p class="para"> </p><ul class="itemizedlist"><li><p class="para"><b>Paragraphs</b>: Normal <code class="literal">&lt;para&gt;</code> elements recognize the following role attribute values
+          (multiple, whitespace separated, values allowed):</p><div class="table"><table class="table table-sm table-bordered"><thead class="thead-light"><tr>
+                <th><code class="literal">@role</code> value</th>
+                <th>Description</th>
+              </tr></thead><tbody>
+              <tr>
+                <td><code class="literal">break</code>, <code class="literal">smallbreak</code></td>
+                <td>Inserts an empty line, either full or small height. The contents of the <code class="literal">&lt;para&gt;</code> element is
+                    ignored.</td>
+              </tr>
+              <tr>
+                <td><code class="literal">break-before</code><br/><code class="literal">break-after</code></td>
+                <td>Adds extra whitespace before or after the paragraph</td>
+              </tr>
+              <tr>
+                <td><code class="literal">header</code><br/><code class="literal">keep-with-next</code></td>
+                <td>Keeps this paragraph with the next one together on a page.</td>
+              </tr>
+              <tr>
+                <td><code class="literal">keep-with-previous</code></td>
+                <td>Keeps this paragraph with the previous one together on a page.</td>
+              </tr>
+            </tbody></table></div><p class="para"> </p></li><li><p class="para"><b>Lists</b>: Both <code class="literal">&lt;itemizedlist&gt;</code> and <code class="literal">&lt;orderedlist&gt;</code> are
+          allowed.</p><p class="para"> </p></li><li><p class="para"><b>Tables</b>: Both <code class="literal">&lt;table&gt;</code> and <code class="literal">&lt;informaltable&gt;</code> are allowed. An
+          example of a formal table above. An informal table below.</p><div class="informaltable"><table class="table table-sm table-bordered"><tbody>
+              <tr>
+                <td>Example</td>
+                <td>of</td>
+              </tr>
+              <tr>
+                <td>an</td>
+                <td>informal table</td>
+              </tr>
+            </tbody></table></div><p class="para">Add <code class="code">role="nonumber"</code> to a table to stop it from getting a number:</p><div class="table" id="unnumbered-table"><a name="unnumbered-table"><!----></a><table class="table table-sm table-bordered"><thead class="thead-light"><tr>
+                <th>Blurp</th>
+                <th>Blorb</th>
+              </tr></thead><tbody>
+              <tr>
+                <td>Example</td>
+                <td>of</td>
+              </tr>
+              <tr>
+                <td>an</td>
+                <td>unnumbered table</td>
+              </tr>
+            </tbody></table></div><p class="para">Tables are notoriously difficult in that FOP cannot compute column widths automatically. To amand this (a little bit) add
+            <code class="code">colspec/@colwidth</code> information. There is also a mechanism for columns with code (set in a fixed-width font), see <a href="#sect-fixed-width-column-mechanism" class="xref">3.7 Fixed-width column mechanism</a>.</p><p class="para"> </p></li><li><p class="para"><b>Program listings</b>: For program listings use the
+            <code class="literal">&lt;programlisting&gt;</code> element</p><p class="para">The easiest way to handle this turned out to put longer program listings in external files and use an <code class="literal">&lt;xi:include
+            parse="text"&gt;</code> construction:</p><p class="para"><code class="literal">&lt;programlisting&gt;&lt;xi:include href="ref" parse="text"/&gt;&lt;/programlisting&gt;</code></p><p class="para">Or use a <code class="literal">&lt;![CDATA[</code> construction around the piece of code.</p><p class="para"> </p></li><li><p class="para"><b>Figures</b>: Both <code class="literal">&lt;figure&gt;</code> and
+            <code class="literal">&lt;informalfigure&gt;</code> are allowed. Width and height can be set on the image data.</p><p class="figure" id="figure-example"><a name="figure-example"><!----></a><img src="resources/logo-xatapult.jpg" class="figure" width="10%"/><br/></p><p class="para">Add <code class="code">role="nonumber"</code> to a figure to stop it from getting a number.</p><p class="para"> </p></li><li><p class="para"><b>Bridgeheads</b>: The <code class="literal">&lt;bridgehead&gt;</code> element inserts a bridgehead
+          paragraph (bold, underlined and with an empty line before):</p><p class="bridgehead">This is a bridgehead...</p><p class="para"> </p></li><li><p class="para"><b>Simple lists</b>: The <code class="literal">&lt;simplelist&gt;</code> element inserts a simple
+          list:</p><ul class="simplelist"><li>An entry</li><li>Another entry...</li></ul><p class="para"> </p></li><li><p class="para"><b>Variable lists</b>: The <code class="literal">&lt;variablelist&gt;</code> element inserts a
+          variable list list (also very useful for explaining terms, definitons, etc.):</p><dl class="variablelist"><dt>The first entry</dt><dd><p class="para">The explanation of the first entry!</p></dd><dt>The second entry</dt><dd><p class="para">The explanation of the second entry!</p></dd></dl><p class="para"> </p></li><li><p class="para"><b>Notes and warnings</b>: The <code class="literal">&lt;note&gt;</code> element inserts a note and
+            <code class="literal">&lt;warning&gt;</code> a warning:</p><div class="note"><p class="note-title"/><p class="para">This is a note! Nulla ac ex urna. Ut auctor odio quis nulla porta bibendum. Proin hendrerit molestie velit sit amet tristique. Vivamus
+            laoreet ligula leo, vitae placerat ipsum porta sed. Morbi blandit ex mauris, eu volutpat tortor mattis eu. Nam et molestie mi. Aliquam
+            erat volutpat. Aenean a imperdiet lectus. Phasellus condimentum dignissim laoreet.</p></div><div class="warning"><p class="warning-title"/><p class="para">This is a warning! Nulla ac ex urna. Ut auctor odio quis nulla porta bibendum. Proin hendrerit molestie velit sit amet tristique.
+            Vivamus laoreet ligula leo, vitae placerat ipsum porta sed. Morbi blandit ex mauris, eu volutpat tortor mattis eu. Nam et molestie mi.
+            Aliquam erat volutpat. Aenean a imperdiet lectus. Phasellus condimentum dignissim laoreet.</p></div><p class="para">If you add a <code class="tag">&lt;title&gt;</code> element, the standard title (NOTE/WARNING) will be replaced by its contents.</p><p class="para"> </p></li><li><p class="para"><b>Sidebars</b>: The <code class="literal">&lt;sidebar&gt;</code> element inserts sidebar
+          section:</p><div class="sidebar"><p class="sidebar-title"><span class="sidebar">Title of the sidebar</span></p><p class="para">Contents of the sidebar. Nulla ac ex urna. Ut auctor odio quis nulla porta bibendum. Proin hendrerit molestie velit sit amet
+            tristique. Vivamus laoreet ligula leo, vitae placerat ipsum porta sed. Morbi blandit ex mauris, eu volutpat tortor mattis eu. Nam et
+            molestie mi. Aliquam erat volutpat. Aenean a imperdiet lectus. Phasellus condimentum dignissim laoreet.</p><p class="informalfigure"><img src="resources/logo-xatapult.jpg" class="informalfigure" width="10%"/></p></div><p class="para"> </p></li><li><p class="para"><b>Examples</b>: The <code class="literal">&lt;example&gt;</code> element inserts an example:</p><div class="example" id="example-example"><a name="example-example"><!----></a><p class="para">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum diam nec nunc elementum, eget dapibus dui malesuada. Aenean
+            facilisis consequat odio, vitae euismod eros tempor nec. Vestibulum cursus tortor tortor, semper euismod sapien sagittis et. </p></div><p class="para">Add <code class="code">role="nonumber"</code> to an example to stop it from getting a number.</p><p class="para"> </p></li></ul></div><div class="sect1" id="d1796e2871"><a name="d1796e2871"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">3.5</span> Inline elements</h2><p class="para">the following inline elements are recognized and handled:</p><p class="para"> </p><ul class="itemizedlist"><li><p class="para"><b><code class="literal">&lt;emphasis&gt;</code></b>: Sets <span class="emphasis italic">emphasis</span>.</p><p class="para">Use <b><code class="literal">role="bold"</code></b> or <span class="emphasis underline"><code class="literal">role="underline"</code></span> to set a specific type of emphasis.</p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;literal&gt;</code></b> or <b><code class="literal">&lt;code&gt;</code></b>:
+          Creates a piece of literal, <code class="code">mono-spaced</code> text.</p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;link&gt;</code></b>: Outputs some link (e.g. a web address). This is either the contents of
+          the element or, if not available, the contents of the <code class="literal">xlink:href</code> attribute.</p><p class="para">Like <a href="http://www.xatapult.nl"><span class="link">this</span></a> or like this <a href="http://www.xatapult.nl"><span class="link">http://www.xatapult.nl</span></a>.</p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;inlinemediaobject&gt;</code></b>: Inserts an inline image <img src="resources/Xatapult%20X.jpg" class="inlinemediaobject" width="20%"/>, like this.</p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;citation&gt;</code></b>: Inserts a citation between square brackets like this:
+            [CITATION].</p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;command&gt;</code></b>: Use to indicate an exetuble program or a user provided command, like
+          this: <span class="command italic">git checkout origin</span></p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;email&gt;</code></b>: Use to indicate an an email address, like this:
+            <a href="mailto:info@xatapult.com"><span class="email italic">info@xatapult.com</span></a></p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;filename&gt;</code></b>: Use to indicate an a filename, like this:
+            <span class="filename italic">blabla.xml</span></p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;replaceable&gt;</code></b>: Use to indicate text to be replaced with user or context supplied
+          values, like this: <code class="replaceable italic">add your own stuff here</code></p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;keycap&gt;</code></b>: Use to indicate a keyboard physical key, like this:
+            <code class="keycap bold">Return</code></p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;superscript&gt;</code>, <code class="literal">&lt;subcript&gt;</code></b>: For super- and subscripts, like
+          this: XX<sup>super</sup> YY<sub>sub</sub></p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;userinput&gt;</code></b>: Use to indicate data entered by the user, like this: <code class="userinput bold">data
+            entered here</code></p><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;tag&gt;</code></b>: Indicates an object from the XML vocabulary. The
+            <code class="code">class</code> attribute signifies what:</p><div class="table"><table class="table table-sm table-bordered"><thead class="thead-light"><tr>
+                <th><code class="tag">@class</code> value</th>
+                <th>Result example(s)</th>
+              </tr></thead><tbody>
+              <tr>
+                <td><code class="code">attribute</code></td>
+                <td><code class="tag">@attribute</code><br/><code class="tag">@class</code></td>
+              </tr>
+              <tr>
+                <td><code class="code">attvalue</code></td>
+                <td><code class="tag">"attribute value"</code><br/><code class="tag">"some value for an attribute"</code></td>
+              </tr>
+              <tr>
+                <td><code class="code">emptytag</code></td>
+                <td><code class="tag">&lt;element/&gt;</code><br/><code class="tag">&lt;docbook/&gt;</code></td>
+              </tr>
+              <tr>
+                <td><code class="code">endtag</code></td>
+                <td><code class="tag">&lt;/element&gt;</code><br/><code class="tag">&lt;/docbook&gt;</code></td>
+              </tr>
+              <tr>
+                <td><code class="code">pi</code></td>
+                <td><code class="tag">&lt;?processing-instruction x="y"?&gt;</code></td>
+              </tr>
+              <tr>
+                <td><code class="code">comment</code></td>
+                <td><code class="tag">&lt;!-- Some comment line... --&gt;</code></td>
+              </tr>
+              <tr>
+                <td>Anything else defaults to <code class="code">element</code></td>
+                <td><code class="tag">&lt;element&gt;</code><br/><code class="tag">&lt;docbook&gt;</code></td>
+              </tr>
+            </tbody></table></div><p class="para"> </p></li><li><p class="para"><b><code class="literal">&lt;xref&gt;</code></b>: Inserts a cross-reference to the id referenced by
+            <code class="literal">@linkend</code></p><ul class="itemizedlist"><li><p class="para">Use <code class="code">role="page-number-only"</code> to get just a page number.</p></li><li><p class="para">Use <code class="code">role="simple"</code> to always get: page #</p></li><li><p class="para">Use <code class="code">role="text"</code> to only get the (unquoted) text only in cases where a "…" on page … would normally appear.</p></li><li><p class="para">Use <code class="code">role="capitalize"</code> to force the reference string (for chapters/appendices/pages/figures/tables/…) to start with an
+              upper-case character (so you can be sure a sentence that starts with an <code class="tag">&lt;xref&gt;</code> always starts with a capital).</p></li></ul><p class="para">Otherwise it depends on what is pointed to:</p><div class="table" id="table-xref"><a name="table-xref"><!----></a><table class="table table-sm table-bordered"><thead class="thead-light"><tr>
+                <th>Target</th>
+                <th>Result/Examples</th>
+              </tr></thead><tbody>
+              <tr>
+                <td>To anything that holds an <code class="code">xreflabel</code> attribute</td>
+                <td><a href="#para-with-xreflabel" class="xref">paragraph with xreflabel attribute</a></td>
+              </tr>
+              <tr>
+                <td>To a chapter or appendix</td>
+                <td>chapter # or appendix #</td>
+              </tr>
+              <tr>
+                <td>To a section</td>
+                <td><a href="#sect-docbook5" class="xref">3.2 Document information</a></td>
+              </tr>
+              <tr>
+                <td>To a table (with a number), like this one</td>
+                <td><a href="#table-xref" class="xref">table 3-4</a></td>
+              </tr>
+              <tr>
+                <td>To a figure (with a number)</td>
+                <td><a href="#figure-example" class="xref">figure 3-1</a></td>
+              </tr>
+              <tr>
+                <td>To an example (with a number)</td>
+                <td><a href="#example-example" class="xref">example 3-1</a></td>
+              </tr>
+              <tr>
+                <td>To anything else</td>
+                <td>First paragraph: <a href="#first-para" class="xref">para</a><br/>Unnumbered table: <a href="#unnumbered-table" class="xref">table</a></td>
+              </tr>
+            </tbody></table></div></li></ul></div><div class="sect1" id="d1796e3475"><a name="d1796e3475"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">3.6</span> Other constructs</h2><ul class="itemizedlist"><li><p class="para"><b>To-be-done marker</b>: Start a to-be-done marker with <b><code class="code">[TBD</code></b>
+          and end it with <b><code class="code">]</code></b>. For instance: <span class="tbd-marker">[TBD this needs to be done...]</span></p></li></ul></div><div class="sect1" id="sect-fixed-width-column-mechanism"><a name="sect-fixed-width-column-mechanism"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">3.7</span> Fixed-width column mechanism</h2><p class="para">FOP (in the current version, 3Q19) cannot compute the column-widths automatically. It divides the space and you can set a fixed column-width
+      (with <code class="code">colspec/@colwidth</code>). For the case that a column contains code stuff (text in a fixed-width font) <span class="emphasis italic">and</span> you
+      want the column-width to be dependent on the text in such a column, there is a (unfortunately a bit complicated) mechanism for this.</p><p class="para">The fixed-width column mechanism consists of two parts:</p><dl class="variablelist"><dt>Dynamically compute the column width</dt><dd><p class="para">This part is optional.</p><p class="para">Add a <code class="code">role</code> attribute to the <code class="tag">&lt;colspec&gt;</code> element with, as one of the roles, <code class="code">code-width-cm:min-max</code>,
+            where <code class="code">min</code> and <code class="code">max</code> are (positive) doubles. For instance <code class="tag">&lt;colspec role="code-width-cm:1.2-4"&gt;</code>.
+              <code class="code">min</code> and <code class="code">max</code> are the minimum and maximum column-widths, expressed in cm.</p><p class="para">The PDF conversion will now look in all the contents of this particular column for entries <code class="tag">&lt;code role="code-width-limited"&gt;</code>.
+            Based on the length of these entries it computes an optimal column-width, but always between <code class="code">min</code> and <code class="code">max</code>.</p></dd><dt>Output code width-limited</dt><dd><p class="para">If a table entry contains contents in a <code class="tag">&lt;code role="code-width-limited"&gt;</code> element, it tries to make it fit within the
+            available column-width. If necessary the line is split to prevent overflowing of table cell contents.</p><p class="para">This is (currently) not completely fool-proof: if the contents contains whitespace or hyphens, it is assumed to line-break correctly
+            by itself. That, of course, does not guarantee correct results. So it may need a little experimenting before things look right.</p><p class="para">A column that contains <code class="tag">&lt;code role="code-width-limited"&gt;</code> contents <span class="emphasis italic">must</span> have a column width set
+              <span class="emphasis italic">in cm</span> (either directly with <code class="tag">&lt;colspec colwidth="…cm"&gt;</code> or by the dynamic mechanism described above).</p></dd></dl></div></div><script src="resources/jquery-3.4.1.slim.min.js"><!--  --></script><script src="resources/popper.min.js"><!--  --></script><script src="resources/bootstrap.min.js"><!--  --></script></body>
+</html>

@@ -2458,6 +2458,5 @@
         <folder path="../../xtpxlib-container/"/>
         <folder path="../../xtpxlib-webdoc/"/>
         <folder path="../"/>
-        <folder path="../../../xproc-3/TEST/"/>
     </projectTree>
 </project>

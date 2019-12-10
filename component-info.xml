@@ -10,14 +10,16 @@
 
   <dependencies>
     <component name="xtpxlib-common"/>
+    <component name="xtpxlib-container"/>
   </dependencies>
 
   <title>xdoc component</title>
-  <summary xml:space="preserve">
+  <summary>
 `xtpxlib-xdoc` TBD
   </summary>
-  <!--<documentation-uri>http://www.xatapult.nl</documentation-uri>
--->
+  
+  <documentation-uri>https://xdoc.xtpxlib.org</documentation-uri>
+
   <git-uri>git@github.com:xatapult/xtpxlib-xdoc.git</git-uri>
   <git-site-uri>https://github.com/xatapult/xtpxlib-xdoc</git-site-uri>
 

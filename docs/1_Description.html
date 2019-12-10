@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml" xmlns:xtlcon="http://www.xtpxlib.nl/ns/container" lang="en" xml:lang="en">
+  
+  
+  
+  
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" href="resources/bootstrap.min.css"/>
+    <link rel="stylesheet" href="resources/xtpxlib-moduledoc.css"/>
+    <link rel="shortcut icon" href="resources/favicon.ico"/>
+    <title>1 Description</title>
+  </head>
+  <body style="padding-top: 65px;"><nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark"><a class="navbar-brand" href="index.html" title="home">xtpxlib-xdoc</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"/></button><div id="navbarSupportedContent" class="collapse navbar-collapse"><ul class="navbar-nav mr-auto"><li class="nav-item dropdown"><a href="1_Description.html" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Description <span class="caret"/></a><div class="dropdown-menu"><a href="1_Description.html" class="dropdown-item">Description</a><div class="dropdown-divider"><!----></div><a class="dropdown-item" href="1_Description.html#d1796e1252">Overview</a><a class="dropdown-item" href="1_Description.html#sect-main-toolchain">The xtpxlib-xdoc main toolchain</a><a class="dropdown-item" href="1_Description.html#d1796e1750">Documentation website generation</a></div></li><li class="nav-item dropdown"><a href="2_xdoc_extensions.html" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">xdoc extensions <span class="caret"/></a><div class="dropdown-menu"><a href="2_xdoc_extensions.html" class="dropdown-item">xdoc extensions</a><div class="dropdown-divider"><!----></div><a class="dropdown-item" href="2_xdoc_extensions.html#sect-available-xdoc-extension-elements">xdoc extension elements</a><a class="dropdown-item" href="2_xdoc_extensions.html#sect-builtin-xdoc-transformations">Built-in xdoc transformations</a><a class="dropdown-item" href="2_xdoc_extensions.html#sect-write-your-own-transformations">Writing your own xdoc transformations</a></div></li><li class="nav-item dropdown"><a href="3_DocBook_dialect.html" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">DocBook dialect <span class="caret"/></a><div class="dropdown-menu"><a href="3_DocBook_dialect.html" class="dropdown-item">DocBook dialect</a><div class="dropdown-divider"><!----></div><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2260">Supported root elements</a><a class="dropdown-item" href="3_DocBook_dialect.html#sect-docbook5">Document information</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2303">Chapter/Section structure</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2347">Block constructions</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e2871">Inline elements</a><a class="dropdown-item" href="3_DocBook_dialect.html#d1796e3475">Other constructs</a><a class="dropdown-item" href="3_DocBook_dialect.html#sect-fixed-width-column-mechanism">Fixed-width column mechanism</a></div></li><li class="nav-item"><a class="nav-link" href="resources/xtpxlib-xdoc-documentation.pdf" title="PDF version of this documentation site">PDF</a></li></ul></div></nav><div class="container"><a name="sect-description"><!----></a><div class="page-header" style="padding-top: 65px; margin-top: -65px;"><h1 class="chapter"><span class="chapter-number">1 </span>Description</h1></div><div class="sect1" id="d1796e1252"><a name="d1796e1252"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">1.1</span> Overview</h2><p class="para"><b><code class="code">xtpxlib-xdoc</code></b>'s main points:</p><ul class="itemizedlist"><li><p class="para"><b><code class="code">xtpxlib-xdoc</code></b>'s starting point is documentation written in <a href="https://docbook.org/" target="_blank"><span class="link">DocBook 5.1</span></a> plus extensions. This source format is called <b><code class="code">xdoc</code></b>.</p></li><li><p class="para"><code class="code">xdoc</code> has two kinds of extensions:</p><ul class="itemizedlist"><li><p class="para">Parameters, coming from a parameter file, that are expanded. This useful for, for instance, status information, dates/times,
+              standard words and phrases, etc. <span class="tbd-marker">[TBD LINK]</span></p></li><li><p class="para">The so-called <a href="#chapter-xdoc-transforms"><span class="link"><code class="code">xdoc</code> transforms</span></a>. These transformations convert something
+              into DocBook and insert the result back in the main document. This is used for, for instance code documentation generation. There are
+              standard transformations but you can also write your own (in XSLT or XProc).</p></li></ul></li><li><p class="para">An <code class="code">xdoc</code> document can be converted into pure DocBook by an XProc pipeline <span class="tbd-marker">[TBD LINK]</span></p></li><li><p class="para">Additional XProc pipelines <span class="tbd-marker">[TBD LINK]</span> convert this DocBook into PDF (through XSL-FO) or basic XHTML.</p></li><li><p class="para">This mechanism also serves as a basis for documentation generation of complete software components <span class="tbd-marker">[TBD LINK]</span>. The result's are meant to
+          be used as GitHub pages.</p></li><li><p class="para">Noteworthy additional functionality is an XProc module <span class="tbd-marker">[TBD LINK]</span> that converts (simple) Markdown into DocBook.</p></li></ul></div><div class="sect1" id="sect-main-toolchain"><a name="sect-main-toolchain"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">1.2</span> The xtpxlib-xdoc main toolchain</h2><p class="para">The following figure illustrates <b><code class="code">xtpxlib-xdoc</code></b>'s main
+      toolchain:</p><p class="figure"><img src="resources/toolchain-1.jpg" class="figure"/><br/></p><ol class="orderedlist"><li><p class="para">The <b><code class="code">xtpxlib-xdoc</code></b> module uses a format called <b><code class="code">xdoc</code></b> as its source format. The basis of <code class="code">xdoc</code> is a limited version of <a href="https://docbook.org/" target="_blank"><span class="link">DocBook 5.1</span></a>. On top of this <code class="code">xdoc</code> adds several extensions for
+          parameter handling, generating text, etc. </p><p class="para">The <a href="https://docbook.org/" target="_blank"><span class="link">DocBook 5.1</span></a> standard is huge and therefore for practical reasons
+          only partly implemented in this component. A description of what is supported can be found in <span class="tbd-marker">[TBD]</span>.</p><p class="para"/></li><li><p class="para">The first processing step in the toolchain performs basic XInclude processing. This means that you can build your document from smaller
+          parts, for instance one file per chapter.</p><p class="para">Another application of the XInclude processing is to get the data in for the <code class="code">xdoc</code> extensions processing in step 5.</p></li><li><p class="para">The next step is to expand any parameter references in the source document. A parameter is a name/value pair. To expand its value in the
+          document use either <code class="code">${name}</code> or <code class="code">{$name}</code> (both mean the same). Parameters are expanded both in text and in attribute
+          values.</p></li><li><p class="para">Parameters come from two sources:</p><ul class="itemizedlist"><li><p class="para">An (optional) parameter file. This file must be in the parameters format as handled by the parameters module of
+                <code class="code">{$core-component-name}</code>. For instance:</p><div class="programlisting"><pre class="programlisting">&lt;parameters&gt;
+  &lt;parameter name="my-parameter"&gt;
+    &lt;value&gt;Some value…&lt;/value&gt;
+  &lt;/parameter&gt;
+&lt;/parameters&gt;</pre></div><p class="para">This format has several additional features. See <span class="tbd-marker">[TBD]</span> for more information.</p></li><li><p class="para">The toolchain adds several parameter of its own:</p><div class="table"><table class="table table-sm table-bordered"><thead class="thead-light"><tr>
+                    <th>Parameter</th>
+                    <th>Description</th>
+                    <th>Example value(s)</th>
+                  </tr></thead><tbody>
+                  <tr>
+                    <td>
+                        <code class="code">DATETIME</code>
+                      </td>
+                    <td>The date and time the toolchain executed in <code class="code">YYYY-MM-DD hh:mm:ss</code> format.</td>
+                    <td>
+                      <code class="code">2019-11-11 12:12:12</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <code class="code">DATE</code>
+                      </td>
+                    <td>The date part of the <code class="code">DATETIME</code> parameter.</td>
+                    <td>
+                      <code class="code">2019-11-11</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <code class="code">TIME</code>
+                      </td>
+                    <td>The time part of the <code class="code">DATETIME</code> parameter.</td>
+                    <td>
+                      <code class="code">12:12:12</code>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                        <code class="code">HREF-SOURCE</code>
+                      </td>
+                    <td>The main source's filename.</td>
+                    <td>
+                        <code class="code">C:/my/path/sourcedoc.xml</code>
+                      <br/>
+                        <code class="code">/my/path/sourcedoc.xml</code>
+                      </td>
+                  </tr>
+                </tbody></table></div></li></ul></li><li><p class="para">Next the so-called <code class="code">xdoc</code> extensions are processed. These extensions are specific elements in the <code class="code">xdoc</code>
+            (<code class="code">http://www.xtpxlib.nl/ns/xdoc</code>) namespace. Currently there are two:</p><dl class="variablelist"><dt>
+              <code class="tag">&lt;xdoc:transform&gt;</code>
+            </dt><dd><p class="para">The <code class="tag">&lt;xdoc:transform&gt;</code> element triggers a transformation with this element (and its children) as input. Transformations can
+                be either XProc (1.0) or XSLT (2.0 or 3.0). The result5 of such a transformation must be valid DocBook and is inserted in the
+                document.</p></dd><dt>
+              <code class="tag">&lt;xdoc:dump-parameters&gt;</code>
+            </dt><dd><p class="para">This extensions dumps all parameters in the document, either as a table or as an XML comment. Useful for debugging the parameter
+                expansion. See <span class="tbd-marker">[TBD]</span></p></dd></dl></li><li><p class="para">The transformations triggered by <code class="tag">&lt;xdoc:transform&gt;</code> can come from two sources:</p><ul class="itemizedlist"><li><p class="para">Transformations that are built into the <b><code class="code">xtpxlib-xdoc</code></b> module. These are generic
+              transformations for, for instance, documenting XML structures or code. An overview of these can be found in <span class="tbd-marker">[TBD]</span>.</p></li><li><p class="para">Your own transformations. Guidelines on how to write these can found in <span class="tbd-marker">[TBD]</span>.</p></li></ul></li><li><p class="para">The result of the toolchain so-far is a document in "pure" <a href="https://docbook.org/" target="_blank"><span class="link">DocBook 5.1</span></a>.</p></li><li><p class="para">From this you can transform to some target format. The <b><code class="code">xtpxlib-xdoc</code></b> component
+          contains transformations to PDF and HTML (see <span class="tbd-marker">[TBD]</span>). These transformations are rather specific for the <b><code class="code">xtpxlib-xdoc</code></b> component and might not be directly usable for other use-cases. You can of course
+          copy-and-adapt these or use some other DocBook conversion transformation .</p></li><li><p class="para">The result of all this is a document in the desired target format.</p></li></ol><p class="para">Information about the pipelines that implement this toolchain can be found in <span class="tbd-marker">[TBD]</span></p></div><div class="sect1" id="d1796e1750"><a name="d1796e1750"><!----></a><h2 class="sect1" style="padding-top: 65px; margin-top: -65px;"><span class="sect1-number">1.3</span> Documentation website generation</h2><p class="para"><span class="tbd-marker">[TBD]</span></p></div></div><script src="resources/jquery-3.4.1.slim.min.js"><!--  --></script><script src="resources/popper.min.js"><!--  --></script><script src="resources/bootstrap.min.js"><!--  --></script></body>
+</html>
