@@ -581,7 +581,7 @@
   <xsl:template name="xpl-output-steps-overview">
     <xsl:param name="step-declarations" as="element(p:declare-step)*" required="yes"/>
 
-    <xsl:if test="exists($step-declarations)">
+    <xsl:if test="count($step-declarations) gt 1">
       <table>
         <xsl:call-template name="add-table-title">
           <xsl:with-param name="title-part-1" select="'Global step declarations for'"/>
