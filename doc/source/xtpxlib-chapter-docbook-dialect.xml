@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
-<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
-<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude">
+<?xml-model href="../../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<chapter xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xml:id="xdoc-docbook-dialect">
   <title>DocBook dialect</title>
 
 
   <para xml:id="first-para">The <code>{$component-name}</code> component uses <link xlink:href="https://docbook.org/" role="newpage"
-      >DocBook&#160;5.1</link> as its source and target vocabulary. However, it does not implement the full standard (which is huge!) but only those
-    elements/attributes that were deemed necessary. This document will explain what is in and what's not.</para>
+      >DocBook&#160;5.1</link> as its source and target vocabulary. However, <emphasis>for generating output</emphasis> it does not implement the full
+    standard (which is huge!) but only those elements/attributes that were deemed necessary. This document will explain what is in and what's
+    not.</para>
 
   <!-- ================================================================== -->
 
   <sect1>
     <title>Supported root elements</title>
 
-    <para>Both the <tag>book</tag> and the <tag>article</tag> root element are supported. [TBD rephrase] A <tag>book</tag> root results in paged output (for, as the
-      name implies, a book. The <tag>article</tag> root results in something more memo style (like this).</para>
+    <para>Both the <tag>book</tag> and the <tag>article</tag> root element are supported. [TBD rephrase] A <tag>book</tag> root results in paged
+      output (for, as the name implies, a book. The <tag>article</tag> root results in something more memo style (like this).</para>
   </sect1>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

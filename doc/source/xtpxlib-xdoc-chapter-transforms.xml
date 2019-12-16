@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-model href="../../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
-<chapter xml:id="sect-xdoc-extensions" xreflabel="xdoc extensions" xmlns:xlink="http://www.w3.org/1999/xlink"
+<chapter xml:id="chapter-xdoc-transforms" xreflabel="xdoc extensions" xmlns:xlink="http://www.w3.org/1999/xlink"
   xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns="http://docbook.org/ns/docbook">
-  <title><code>xdoc</code> extensions</title>
+  <title><code>xdoc</code> transforms</title>
 
   <para>The <emphasis role="bold"><code>{$component-name}</code></emphasis> component uses (a subset of) <link xlink:href="https://docbook.org/"
       role="newpage">DocBook&#160;5.1</link> as its main vocabulary. Within this there can be so-called <emphasis><code>xdoc</code>

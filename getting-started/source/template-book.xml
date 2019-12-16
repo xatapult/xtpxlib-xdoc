@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <info>
+    <title>xdoc book template</title>
+    <subtitle>A DocBook book template file that demonstrates the <code>xtpxlib-xdoc</code> functionality</subtitle>
+    <pubdate>{$DATE}</pubdate>
+  </info>
+
+  <chapter>
+    <title>Introduction</title>
+    
+    <para>This <code>xdoc</code> template demonstrates how a DocBook book file could look like.</para>
+    <para>When you run this file through the <code>xdoc</code> <code>docbook-to-pdf</code> pipeline, you'll get as PDF with a (boring) front-page and a table of contents.</para>
+    
+    <xdoc:dump-parameters type="table"/>
+    
+  </chapter>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <chapter>
+    <title>Contents</title>
+    
+    <xi:include href="include/sect-dump-parameters.xml"/>
+    
+  </chapter>  
+  
+</book>
