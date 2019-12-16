@@ -21,7 +21,11 @@
     <namespace ns="http://www.xtpxlib.nl/ns/xdoc">
       <validate schema="../xdoc.xsd"/>
     </namespace>
-    <!-- END ADJUSTMENT -->
+    
+    <!-- ADJUSTMENT FOR XINCLUDES: Simply allow: -->
+    <namespace ns="http://www.w3.org/2001/XInclude">
+      <allow/>
+    </namespace>
 
     <anyNamespace>
       <attach/>
