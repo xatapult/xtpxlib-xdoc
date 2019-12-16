@@ -36,18 +36,7 @@
     <p:with-option name="attribute-value" select="base-uri(/*)"/>
   </p:add-attribute>
 
-  <!-- Process any <xdoc:dump-parameters>: -->
-  <p:viewport match="xdoc:dump-parameters">
-    <p:xslt>
-      <p:input port="stylesheet">
-        <p:document href="xsl-xdoc-to-docbook/dump-parameters.xsl"/>
-      </p:input>
-      <p:with-param name="href-parameters" select="$href-parameters"/>
-      <p:with-param name="parameter-filters" select="$parameter-filters"/>
-    </p:xslt>
-  </p:viewport>
-
-  <!-- Now process the XIncludes. But before that, check for parameter references in the xi:include/@href attributes first. -->
+  <!-- Process the XIncludes. But before that, check for parameter references in the xi:include/@href attributes first. -->
   <p:xslt>
     <p:input port="stylesheet">
       <p:document href="xsl-xdoc-to-docbook/substitute-parameters-xinclude-href.xsl"/>
@@ -58,6 +47,17 @@
   <p:xinclude>
     <p:with-option name="fixup-xml-base" select="true()"/>
   </p:xinclude>
+  
+  <!-- Process any <xdoc:dump-parameters>: -->
+  <p:viewport match="xdoc:dump-parameters">
+    <p:xslt>
+      <p:input port="stylesheet">
+        <p:document href="xsl-xdoc-to-docbook/dump-parameters.xsl"/>
+      </p:input>
+      <p:with-param name="href-parameters" select="$href-parameters"/>
+      <p:with-param name="parameter-filters" select="$parameter-filters"/>
+    </p:xslt>
+  </p:viewport>
 
   <!-- Substitute all parameter references: -->
   <p:xslt>

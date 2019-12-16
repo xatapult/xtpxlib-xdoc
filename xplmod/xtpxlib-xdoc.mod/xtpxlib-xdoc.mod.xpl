@@ -23,8 +23,6 @@
       <p:documentation> </p:documentation>
     </p:input>
 
-    <p:option name="debug" required="false" select="false()"/>
-
     <p:output port="result" primary="true" sequence="false">
       <p:documentation> </p:documentation>
     </p:output>
