@@ -5,19 +5,21 @@
   <p:documentation>
       This turns Docbook (5.1) into a PDF using FOP.
       
-      All necessary pre-processing (resolving xincludes, expanding variables, examples, etc.) must have been done before this.
-      To make sure we can find the images and other stuff, add appropriate xml:base attributes.
+      All necessary `xdoc` pre-processing (usually with [xdoc-to-docbook.xpl](%xdoc-to-docbook.xpl)) must have been done.
       
-      It will only convert a partial DocBook tagset. See TBD.
+      It will only convert a [partial DocBook tagset](%xdoc-docbook-dialect).
       
-      This is the code you would usually want to run before running this step, to get all the xml:base stuff right:
-      
-      <p:xinclude>
+      If you don't use [xdoc-to-docbook.xpl](%xdoc-to-docbook.xpl), you have to make sure to get correct `xml:base` attributes in, so
+      the pipeline can find includes and images. The following XProc (1.0) code takes care of that:
+
+      ```
+      <![CDATA[<p:xinclude>
         <p:with-option name="fixup-xml-base" select="true()"/> 
       </p:xinclude>
       <p:add-attribute attribute-name="xml:base" match="/*">
-        <p:with-option name="attribute-value" select="$dref-source"/>
-      </p:add-attribute>
+        <p:with-option name="attribute-value" select="/reference/to/source/document.xml"/>
+      </p:add-attribute>]]>
+      ```
       
     </p:documentation>
 
@@ -25,20 +27,20 @@
   <!-- SETUP: -->
 
   <p:input port="source" primary="true" sequence="false">
-    <p:documentation>The docbook source document, fully expanded (with appropriate xml:base attributes)</p:documentation>
+    <p:documentation>The docbook source document, fully expanded (with appropriate `xml:base` attributes)</p:documentation>
   </p:input>
 
-  <p:option name="dref-pdf" required="true">
-    <p:documentation>The name of the resulting PDF file</p:documentation>
+  <p:option name="href-pdf" required="true">
+    <p:documentation>The name of the resulting PDF file (must have `file://` in front).</p:documentation>
   </p:option>
 
   <p:option name="preliminary-version" required="false" select="false()">
-    <p:documentation>If true, adds a preliminary version marker and output any db:remark elements. 
-        If this is set to false, db:remark elements will be suppressed.</p:documentation>
+    <p:documentation>If `true`, adds a preliminary version marker and output any `db:remark` elements. 
+        If `false`, output of `db:remark` elements will be suppressed.</p:documentation>
   </p:option>
 
   <p:option name="chapter-id" required="false" select="''">
-    <p:documentation>Specific chapter identifier to output (for debugging purposes)</p:documentation>
+    <p:documentation>Specific chapter identifier to output.</p:documentation>
   </p:option>
 
   <p:option name="fop-config" required="false" select="resolve-uri('../../xtpxlib-common/data/fop-default-config.xml', static-base-uri())">
@@ -46,7 +48,7 @@
   </p:option>
 
   <p:option name="output-type" required="false" select="'a4'">
-    <p:documentation>Output type. Use either a4 or sb (= standard book)</p:documentation>
+    <p:documentation>Output type. Use either `a4` or `sb` (= standard book size)</p:documentation>
   </p:option>
 
   <p:option name="main-font-size" required="false" select="10">
@@ -58,7 +60,7 @@
   </p:option>
   
   <p:output port="result" primary="true" sequence="false">
-    <p:documentation>The resulting XSL-FO that was transformed into the PDF</p:documentation>
+    <p:documentation>The resulting XSL-FO (that was transformed into the PDF).</p:documentation>
     <p:pipe port="result" step="final-output"/>
   </p:output>
 
@@ -108,7 +110,7 @@
   <p:identity name="final-output"/>
 
   <p:xsl-formatter name="step-create-pdf" content-type="application/pdf">
-    <p:with-option name="href" select="$dref-pdf"/>
+    <p:with-option name="href" select="$href-pdf"/>
     <p:with-param name="UserConfig" select="$fop-config"/>
   </p:xsl-formatter>
 

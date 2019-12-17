@@ -4,22 +4,25 @@
   exclude-inline-prefixes="#all" type="xdoc:xdoc-to-docbook">
 
   <p:documentation>
-    Pipeline that transforms a DocBook source containing xdoc extensions into true DocBook format.
+    Pipeline that transforms a DocBook source containing `xdoc` extensions into "pure" DocBook format.
   </p:documentation>
 
   <!-- ================================================================== -->
   <!-- SETUP: -->
 
   <p:input port="source" primary="true" sequence="false">
-    <p:documentation>The DocBook source with xdoc extensions</p:documentation>
+    <p:documentation>The DocBook source with `xdoc` extensions</p:documentation>
   </p:input>
 
   <p:option name="href-parameters" required="false" select="()">
-    <p:documentation>Reference to an optional document with parameter settings. See the xtpxlib-common parameters.mod.xsl module for details.</p:documentation>
+    <p:documentation>
+      Optional reference to a document with parameter settings. 
+      See [here](https://common.xtpxlib.org/1_Description.html#parameters-explanation) for details.
+    </p:documentation>
   </p:option>
 
   <p:option name="parameter-filters" required="false" select="()">
-    <p:documentation>Filter settings for processing the parameters. Format: "name=value|name=value|..."</p:documentation>
+    <p:documentation>Optional filter settings for processing the parameters. Format: `name=value|name=value|…`.</p:documentation>
   </p:option>
 
   <p:output port="result" primary="true" sequence="false">

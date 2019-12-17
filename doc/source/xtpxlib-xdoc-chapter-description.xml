@@ -40,9 +40,7 @@
     </varlistentry>
   </variablelist>
 
-  <para>Curious to see it in action. Want to know more? Checkout the <xref linkend="chapter-getting-started"/> section. This contains some
-    ready-to-run examples that are drafted so you can use them as template for your own developments.</para>
-
+  <para>Curious to see it in action. Want to know more? Checkout the <xref linkend="chapter-instructions"/> section.</para>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -90,100 +88,18 @@
           <listitem>
             <para>An (optional) parameter document. This document must use the format as handled by the <link
                 xlink:href="https://common.xtpxlib.org/1_Description.html#parameters-explanation">parameter mechanism</link> of <code>xtpxlib</code>'s
-                <link xlink:href="https://common.xtpxlib.org">common component</link>. For instance:</para>
-            <programlisting><xi:include href="includes/example-parameters.xml" parse="text"/></programlisting>
-            <para>This format has several additional features, like filtering and grouping values. See the format's <link
-                xlink:href="https://common.xtpxlib.org/1_Description.html#parameters-explanation">description</link> for more information.</para>
+                <link xlink:href="https://common.xtpxlib.org">common component</link>. </para>
           </listitem>
           <listitem>
-            <para>The toolchain adds a number of parameter of its own:</para>
-            <table>
-              <title>Parameters added by the <emphasis role="bold"><code>{$component-name}</code></emphasis> toolchain</title>
-              <tgroup cols="3">
-                <colspec colwidth="4cm"/>
-                <colspec/>
-                <colspec/>
-                <thead>
-                  <row>
-                    <entry>
-                      <para>Parameter</para>
-                    </entry>
-                    <entry>
-                      <para>Description</para>
-                    </entry>
-                    <entry>
-                      <para>Example value(s)</para>
-                    </entry>
-                  </row>
-                </thead>
-                <tbody>
-                  <row>
-                    <entry>
-                      <para>
-                        <code>DATETIME</code>
-                      </para>
-                    </entry>
-                    <entry>
-                      <para>The date and time the toolchain executed in <code>YYYY-MM-DD hh:mm:ss</code> format.</para>
-                    </entry>
-                    <entry>
-                      <code>2019-11-11 12:12:12</code>
-                    </entry>
-                  </row>
-                  <row>
-                    <entry>
-                      <para>
-                        <code>DATE</code>
-                      </para>
-                    </entry>
-                    <entry>
-                      <para>The date part of the <code>DATETIME</code> parameter.</para>
-                    </entry>
-                    <entry>
-                      <code>2019-11-11</code>
-                    </entry>
-                  </row>
-                  <row>
-                    <entry>
-                      <para>
-                        <code>TIME</code>
-                      </para>
-                    </entry>
-                    <entry>
-                      <para>The time part of the <code>DATETIME</code> parameter.</para>
-                    </entry>
-                    <entry>
-                      <code>12:12:12</code>
-                    </entry>
-                  </row>
-                  <row>
-                    <entry>
-                      <para>
-                        <code>HREF-SOURCE</code>
-                      </para>
-                    </entry>
-                    <entry>
-                      <para>The main source's filename.</para>
-                    </entry>
-                    <entry>
-                      <para>
-                        <code>C:/my/path/sourcedoc.xml</code>
-                      </para>
-                      <para>
-                        <code>/my/path/sourcedoc.xml</code>
-                      </para>
-                    </entry>
-                  </row>
-                </tbody>
-              </tgroup>
-            </table>
+            <para>The toolchain automatically creates some parameters.</para>
           </listitem>
         </itemizedlist>
+        <para>See <link linkend="sect-parameter-substitution">here</link> for details and usage instructions</para>
       </listitem>
 
       <listitem>
         <!-- 5 -->
-        <para>Next the so-called <code>xdoc</code> transforms are processed. A transform consists of an <tag>xdoc:transform</tag> element (the
+        <para>Next the so-called <code>xdoc</code> <emphasis>transforms</emphasis> are processed. A transform consists of an <tag>xdoc:transform</tag> element (the
           namespace prefix <code>xdoc:</code> must be bound to <code>http://www.xtpxlib.nl/ns/xdoc</code>). An XSLT stylesheet or XProc (1.0) pipeline
           is triggered that gets this <tag>xdoc:transform</tag> element (with all attributes and child elements) as input and results in the injection
           of generated DocBook.</para>

@@ -23,7 +23,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   <!-- Parameters for docbook-to-pdf -->
 
-  <p:option name="dref-pdf" required="false" select="resolve-uri('../tmp/test-xdoc-to-pdf.pdf', static-base-uri())"/>
+  <p:option name="href-pdf" required="false" select="resolve-uri('../tmp/test-xdoc-to-pdf.pdf', static-base-uri())"/>
 
   <p:option name="preliminary-version" required="false" select="true()"/>
 
@@ -52,7 +52,7 @@
   </xdoc:xdoc-to-docbook>
 
   <xdoc:docbook-to-pdf>
-    <p:with-option name="dref-pdf" select="$dref-pdf"/> 
+    <p:with-option name="href-pdf" select="$href-pdf"/> 
     <p:with-option name="preliminary-version" select="$preliminary-version"/> 
     <p:with-option name="chapter-id" select="$chapter-id"/> 
     <p:with-option name="fop-config" select="$fop-config"/> 

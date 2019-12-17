@@ -1,0 +1,4 @@
+<weather-data>
+  <data city="Amsterdam" temp="20"/>
+  <data city="Stavanger" temp="-5"/>
+</weather-data>

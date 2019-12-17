@@ -5,23 +5,20 @@
   <p:documentation>
       This turns Docbook (5.1) into XHTML.
       
-      All necessary pre-processing (resolving xincludes, expanding variables, examples, etc.) must have been done before this.
-      To make sure we can find the images and other stuff, add appropriate xml:base attributes.
+      All necessary `xdoc` pre-processing (usually with [xdoc-to-docbook.xpl](%xdoc-to-docbook.xpl)) must have been done.
       
-      It will only convert a partial DocBook tagset. See TBD.
+      It will only convert a [partial DocBook tagset](%xdoc-docbook-dialect).
       
+      The resulting XHTML will not be directly useable, post-processing the result into a complete and correct HTML page is necessary. 
+      The result of this pipeline consists of nested `div` elements. There is no surrounding `html` or `body` element.
     </p:documentation>
 
   <!-- ================================================================== -->
   <!-- SETUP: -->
 
   <p:input port="source" primary="true" sequence="false">
-    <p:documentation>The docbook source document, fully expanded (with appropriate xml:base attributes)</p:documentation>
+    <p:documentation>The docbook source document.</p:documentation>
   </p:input>
-
-  <p:option name="create-header" required="false" select="true()">
-    <p:documentation>Whether to create header (title, etc.) information</p:documentation>
-  </p:option>
 
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting XHTML</p:documentation>
@@ -46,7 +43,7 @@
     <p:input port="stylesheet">
       <p:document href="xsl-docbook-to-xhtml/db5-to-xhtml.xsl"/>
     </p:input>
-    <p:with-param name="create-header" select="$create-header"/>
+    <p:with-param name="null" select="()"/>
   </p:xslt>
 
 </p:declare-step>

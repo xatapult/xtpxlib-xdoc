@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<chapter xml:id="chapter-instructions" xreflabel="Instructions" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns="http://docbook.org/ns/docbook">
+  <title>Instructions</title>
+
+  <sect1>
+    <title>Getting started</title>
+
+    <para>The <code>template/</code> sub-directory of <code>{$component-name}</code> contains several template files that can be used a starting
+      point. These templates also declare the necessary namespace <code>http://www.xtpxlib.nl/ns/xdoc</code>, bound to the prefix
+      <code>xdoc:</code>.</para>
+
+    <para>Use one of the XProc (1.0) <link linkend="chapter-xproc-pipelines">processing pipelines</link> to process an <code>xdoc</code> source into
+      DocBook, PDF or HTML. For instance <link linkend="xdoc-to-docbook.xpl"><code>xdoc-to-docbook</code></link> will turn your <code>xdoc</code>
+      source into "pure" DocBook.</para>
+  </sect1>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <sect1>
+    <title>Validation</title>
+
+    <para>The <code>{$component-name}</code> component contains an enhanced DocBook NVDL schema, <code>xsd/docbook/docbook.nvdl</code>, that allows
+      the <code>xdoc</code> extensions.</para>
+    <para>The template files in the <code>template/</code> sub-directory reference this schema. Don't forget to change this reference and keep it
+      valid if you copy such a template to a directory of your own!</para>
+  </sect1>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <sect1 xml:id="sect-parameter-substitution">
+
+    <title>Parameter substitution</title>
+
+    <para>The <code>xdoc</code> framework performs parameter substitution. <code>${{parameter-name}</code> and <code>{{$parameter-name}</code> (both
+      mean the same) are substituted with the parameter's value (if it exists). Substitution takes place in attribute and text values. To stop such a
+        <code>${{…}</code> construction from being substituted, <emphasis>double</emphasis> the opening curly brace (<code>{{</code>).</para>
+
+    <para>The <code>xdoc</code> toolchain automatically creates a number of parameters:</para>
+    <table>
+      <title>Parameters added by the <emphasis role="bold"><code>{$component-name}</code></emphasis> toolchain</title>
+      <tgroup cols="3">
+        <colspec colwidth="4cm"/>
+        <colspec/>
+        <colspec/>
+        <thead>
+          <row>
+            <entry>
+              <para>Parameter</para>
+            </entry>
+            <entry>
+              <para>Description</para>
+            </entry>
+            <entry>
+              <para>Example value(s)</para>
+            </entry>
+          </row>
+        </thead>
+        <tbody>
+          <row>
+            <entry>
+              <para>
+                <code>DATETIME</code>
+              </para>
+            </entry>
+            <entry>
+              <para>The date and time the toolchain executed in <code>YYYY-MM-DD hh:mm:ss</code> format.</para>
+            </entry>
+            <entry>
+              <code>2019-11-11 12:12:12</code>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <code>DATE</code>
+              </para>
+            </entry>
+            <entry>
+              <para>The date part of the <code>DATETIME</code> parameter.</para>
+            </entry>
+            <entry>
+              <code>2019-11-11</code>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <code>TIME</code>
+              </para>
+            </entry>
+            <entry>
+              <para>The time part of the <code>DATETIME</code> parameter.</para>
+            </entry>
+            <entry>
+              <code>12:12:12</code>
+            </entry>
+          </row>
+          <row>
+            <entry>
+              <para>
+                <code>HREF-SOURCE</code>
+              </para>
+            </entry>
+            <entry>
+              <para>The main source's filename.</para>
+            </entry>
+            <entry>
+              <para>
+                <code>C:/my/path/sourcedoc.xml</code>
+              </para>
+              <para>
+                <code>/my/path/sourcedoc.xml</code>
+              </para>
+            </entry>
+          </row>
+        </tbody>
+      </tgroup>
+    </table>
+
+    <para role="keep-with-next">To specify your own parameters, create an XML document that looks like this:</para>
+    <programlisting><xi:include href="includes/example-parameters.xml" parse="text"/></programlisting>
+    <para>The parameter XML format has several additional features, like filtering and grouping values. It's also namespace independent and might be
+      embedded in a bigger document. See the format's <link xlink:href="https://common.xtpxlib.org/1_Description.html#parameters-explanation"
+        >description</link> for more information.</para>
+    <para>A reference to such a parameter document must be passed as option <code>href-parameters</code> to one of the <link
+        linkend="chapter-xproc-pipelines">processing pipelines</link>.</para>
+
+    <para>To see which parameters are available in your <code>xdoc</code> pipelines, add the following to your document:</para>
+    <programlisting><![CDATA[<xdoc:dump-parameters type="table"/>]]></programlisting>
+    <para>The documentation you're looking at is also produced with the <code>xdoc</code> mechanism. The result of a parameter dump during its build
+      process is:</para>
+    <xdoc:dump-parameters type="table"/>
+    <para>You can also specify <code>type="comment"</code>. As the name implies, the parameters will be added as an XML comment so you'll have to dive
+      into the produced DocBook to see them.</para>
+
+  </sect1>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <sect1>
+    <title><code>xdoc</code> transforms</title>
+
+    <para>An <code>xdoc</code> transform is an XSLT stylesheet or XProc (1.0) pipeline that is triggered from your source document and inserts
+      generated DocBook contents. There are several of these transforms built into the <code>{$component-name}</code> component but its also easy to
+      write one of your own. Detailed information can be found <link linkend="chapter-xdoc-transforms">here</link>.</para>
+
+    <para role="keep-with-next">As an example: <code>{$component-name}</code> contains transforms to extract documentation from XML documents and
+      programs. Among others, the documentation sections for the <link linkend="chapter-xproc-pipelines">pipelines</link> and <link
+        linkend="chapter-xproc-libraries">libraries</link> are generated with this. Now assume you want to insert the documentation of the <link
+        linkend="xdoc-to-docbook.xpl"><code>xdoc-to-docbook</code></link> pipeline somewhere in a document of your own. You could do this by adding a
+      reference to the [TBD] transform to your <code>xdoc</code> source:</para>
+
+    <programlisting xml:space="preserve"><![CDATA[<xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="2">
+  <xi:include href="../../xpl/xdoc-to-docbook.xpl"/>
+</xdoc:transform>
+]]></programlisting>
+
+    <para role="keep-with-next">The result will be:</para>
+    <xdoc:transform href="$xdoc/code-docgen.xpl" id="example-xdoc-to-docbook" filecomponents="2">
+      <xi:include href="../../xpl/xdoc-to-docbook.xpl"/>
+    </xdoc:transform>
+
+  </sect1>
+
+</chapter>

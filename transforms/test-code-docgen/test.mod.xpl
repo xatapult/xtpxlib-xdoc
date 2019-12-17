@@ -532,7 +532,7 @@
           <p:otherwise>
             <pxp:unzip content-type="application/octet-stream">
               <p:with-option name="href" select="$href-source-zip"/>
-              <!-- The dref for the file in the must be without any leading slashes/backslashes, and it must be a uri: -->
+              <!-- The href for the file in the must be without any leading slashes/backslashes, and it must be a uri: -->
               <p:with-option name="file" select="replace($href-source, '^[/\\]+', '')"/>
             </pxp:unzip>
             <p:store cx:decode="true">

@@ -3,8 +3,9 @@
   version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all">
 
   <p:documentation>
-      Turns an XML element description into the appropriate DocBook. An annotated schema for the element's description markup can be 
-      found in `xsd/element-description.xml`.
+      Takes a document that *describes* an XML document, using special markup for this, and turns this into DocBook.
+      
+      A schema for this markup format can be found in `xsd/element-description.xml`.
 
       Typical usage (within an `xdoc` source document): 
       
@@ -29,7 +30,7 @@
   </p:input>
 
   <p:output port="result" primary="true" sequence="false">
-    <p:documentation>The resulting DocBook output, containing the element's description.</p:documentation>
+    <p:documentation>The resulting DocBook output.</p:documentation>
   </p:output>
 
   <!-- ================================================================== -->

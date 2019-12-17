@@ -22,5 +22,6 @@
     </description>
   </attribute>
 
-  <additional-text-coded-description as-comment="true">Usually an &lt;xi:include&gt; element to load the data for the transformation.</additional-text-coded-description>
+  <additional-text-coded-description as-comment="true">(Optional) XML to transform and/or an &lt;xi:include&gt; element to load this from an external source.</additional-text-coded-description>
+  
 </element-description>

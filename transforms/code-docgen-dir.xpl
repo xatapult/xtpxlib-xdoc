@@ -3,11 +3,27 @@
   xmlns:xtlc="http://www.xtpxlib.nl/ns/common" version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all">
 
   <p:documentation>
-     TBD
-     
-     @dir
-     @filter
-     @toc-only
+      Runs the `[$xdoc/code-docgen.xpl](%code-docgen.xpl)` transform over multiple files in a directory. 
+      
+      Typical usage (within an `xdoc` source document): 
+      
+      ```
+      &lt;xdoc:transform href="$xdoc/code-docgen-dir.xpl"
+         dir="…" 
+         depth="…"
+         filter="…" 
+         toc-only="…" /&gt;
+      ```
+      
+      - `@dir`: Directory to process
+      - `@depth`: (integer, default -1) The depth in traversing the directory tree.
+        - When le 0, `@dir` and all its subdirectories are processed.
+        - When eq 1, only `@dir` is processed.
+        - When gt 1, the sub-directories up to this depth are processed.
+      - `@filter`: optional regexp filter (e.g. get only XProc files with `filter="\.xpl$"`)
+      - `@toc-only`: (boolean, default `false`) Whether to produce a ToC table only.
+        
+      All (other) attributes are passed to `code-docgen.xpl`.        
   </p:documentation>
 
   <!-- ================================================================== -->
@@ -32,12 +48,14 @@
   <p:variable name="full-dir" select="resolve-uri(/*/@dir, $original-base-uri)"/>
   <p:variable name="filter" select="string(/*/@filter)"/>
   <p:variable name="toc-only" select="(/*/@toc-only, false())[1]"/>
+  <p:variable name="depth" select="(xs:integer(/*/@depth), -1)[1]"/>
 
   <p:identity name="original-source"/>
 
   <!-- Create a list of all files to process (filtering by this step is *weird*. We do our own filtering... -->
   <xtlc:recursive-directory-list flatten="true">
     <p:with-option name="path" select="$full-dir"/>
+    <p:with-option name="depth" select="$depth"/> 
   </xtlc:recursive-directory-list>
   <p:identity name="directory-overview"/>
 
@@ -67,7 +85,7 @@
     </p:load>
     <p:identity name="document-to-process"/>
     <p:sink/>
-    
+
     <!-- Create a correct <xdoc:transform> element and process this: -->
     <p:identity>
       <p:input port="source">
@@ -100,5 +118,5 @@
       <p:pipe port="result" step="toc"/>
     </p:input>
   </p:insert>
-  
+
 </p:declare-step>

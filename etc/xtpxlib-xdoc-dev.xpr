@@ -14,6 +14,21 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
+                                    <String>../example/source/example.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>xdoc-to-pdf</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
                                     <String>../getting-started/source/include/sect-dump-parameters.xml</String>
                                 </field>
                                 <field name="scenarioIds">
@@ -1040,7 +1055,7 @@
                                                 <String></String>
                                             </field>
                                             <field name="localName">
-                                                <String>dref-pdf</String>
+                                                <String>href-pdf</String>
                                             </field>
                                             <field name="value">
                                                 <String>${TMP}/${cfn}.pdf</String>
@@ -1394,7 +1409,7 @@
                                                 <String></String>
                                             </field>
                                             <field name="localName">
-                                                <String>dref-pdf</String>
+                                                <String>href-pdf</String>
                                             </field>
                                             <field name="value">
                                                 <String>${TMP}/test-docgen-to-pdf-result.pdf</String>
@@ -1610,7 +1625,7 @@
                                                 <String></String>
                                             </field>
                                             <field name="localName">
-                                                <String>dref-pdf</String>
+                                                <String>href-pdf</String>
                                             </field>
                                             <field name="value">
                                                 <String>${TMP}/test-docgen-to-pdf-result.pdf</String>
@@ -2189,7 +2204,7 @@
                                                 <String></String>
                                             </field>
                                             <field name="localName">
-                                                <String>dref-pdf</String>
+                                                <String>href-pdf</String>
                                             </field>
                                             <field name="value">
                                                 <String>${ROOT}/doc/${cfn}.pdf</String>
@@ -2577,7 +2592,7 @@
                                                 <String></String>
                                             </field>
                                             <field name="localName">
-                                                <String>dref-pdf</String>
+                                                <String>href-pdf</String>
                                             </field>
                                             <field name="value">
                                                 <String>${BUILD}/${cfn}.pdf</String>
