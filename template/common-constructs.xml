@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <info>
+    <title>Common Constructs</title>
+  </info>
+
+  <!-- ================================================================== -->
+
+  <sect1>
+    <title>Common Constructs</title>
+
+    <para>Some common DocBook constructs, meant for copy/pasting into other documents:</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Tables</title>
+
+      <table>
+        <title>…</title>
+        <tgroup cols="2">
+          <colspec colwidth="…"/>
+          <colspec/>
+          <thead>
+            <row>
+              <entry>…</entry>
+              <entry>…</entry>
+            </row>
+          </thead>
+          <tbody>
+            <row>
+              <entry>
+                <para>…</para>
+              </entry>
+              <entry>
+                <para>…</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </table>
+
+      <informaltable>
+        <tgroup cols="2">
+          <colspec colwidth="…"/>
+          <colspec/>
+          <tbody>
+            <row>
+              <entry>
+                <para>…</para>
+              </entry>
+              <entry>
+                <para>…</para>
+              </entry>
+            </row>
+          </tbody>
+        </tgroup>
+      </informaltable>
+
+      <sect3>
+        <title>Table using xdoc specific fixed-width column mechanism</title>
+
+        <table>
+          <title>…</title>
+          <tgroup cols="2">
+            <colspec role="code-width-cm:2-4"/>
+            <colspec/>
+            <thead>
+              <row>
+                <entry>…</entry>
+                <entry>…</entry>
+              </row>
+            </thead>
+            <tbody>
+              <row>
+                <entry>
+                  <para><code role="code-width-limited">…</code></para>
+                </entry>
+                <entry>
+                  <para>…</para>
+                </entry>
+              </row>
+            </tbody>
+          </tgroup>
+        </table>
+
+      </sect3>
+
+    </sect2>
+    
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+    
+    <sect2>
+      <title>Lists</title>
+      
+      <itemizedlist>
+        <listitem>
+          <para>…</para>
+        </listitem>
+      </itemizedlist>
+      
+      <orderedlist>
+        <listitem>
+          <para>…</para>
+        </listitem>
+      </orderedlist>
+      
+      <variablelist>
+        <varlistentry>
+          <term>…</term>
+          <listitem>
+            <para>…</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+      
+    </sect2>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Figures</title>
+
+      <figure>
+        <title>…</title>
+        <mediaobject>
+          <imageobject>
+            <imagedata fileref="…" width="…%"/>
+          </imageobject>
+        </mediaobject>
+      </figure>
+
+      <para>… <inlinemediaobject role="global">
+          <imageobject>
+            <imagedata fileref="…" width="…%"/>
+          </imageobject>
+        </inlinemediaobject> …</para>
+
+    </sect2>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Program listings</title>
+
+      <programlisting xml:space="preserve"><![CDATA[…]]></programlisting>
+
+      <programlisting xml:space="preserve"><xi:include href="…" parse="text"/></programlisting>
+
+    </sect2>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect2>
+      <title>Examples</title>
+
+      <example>
+        <title>…</title>
+        <para>…</para>
+      </example>
+
+    </sect2>
+
+  </sect1>
+
+</article>
