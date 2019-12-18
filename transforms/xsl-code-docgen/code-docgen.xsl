@@ -117,11 +117,14 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="p:declare-step">
-    <xsl:variable name="object-name" as="xs:string" select="$document-filename || (if (exists(@type)) then ' (' || @type || ')' else ())"/>
+    <xsl:variable name="object-name" as="xs:string" select="$document-filename"/>
     <xsl:call-template name="add-section-title-and-filename">
       <xsl:with-param name="base-title" select="'XProc (' || @version || ') pipeline'"/>
       <xsl:with-param name="object-name" select="$object-name"/>
     </xsl:call-template>
+    <xsl:if test="exists(@type)">
+      <para>Type: <code>{@type}</code></para>
+    </xsl:if>
     <xsl:call-template name="xpl-get-element-documentation"/>
     <xsl:call-template name="output-important-namespaces">
       <xsl:with-param name="probable-names" select="p:option/@name/string()"/>

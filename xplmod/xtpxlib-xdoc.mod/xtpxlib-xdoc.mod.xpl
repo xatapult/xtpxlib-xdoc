@@ -25,6 +25,8 @@
         * Code blocks (using three consecutive back-ticks)
         * Headers (these are all converted into the same DocBook `bridgehead` elements)
       * Specifically not supported (yet?) are tables.
+      
+      If you add an `header-only="true"` attribute to the `xdoc:MARKDOWN` element, only the first paragraph will be output. 
     </p:documentation>
 
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

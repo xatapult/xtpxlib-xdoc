@@ -477,6 +477,9 @@
     <xsl:choose>
       <xsl:when test="exists($referenced-element)">
         <a href="#{$id}" class="{local-name(.)}">
+          <xsl:if test="'newpage' = $roles">
+            <xsl:attribute name="target" select="'_blank'"/>
+          </xsl:if>
           <xsl:choose>
             <xsl:when test="exists($referenced-element/@xreflabel)">
               <xsl:value-of select="$referenced-element/@xreflabel"/>

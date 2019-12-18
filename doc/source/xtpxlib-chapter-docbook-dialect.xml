@@ -17,8 +17,8 @@
     <title>Supported root elements</title>
 
     <para>Both the <tag>book</tag> and the <tag>article</tag> root element are supported.</para>
-    <para>For <code><link linkend="docbook-to-pdf.xpl">docbook-to-pdf</link></code> conversion: A <tag>book</tag> root results in a book-like output (with a front
-      page, ToC, etc.). The <tag>article</tag> root results in something more memo style.</para>
+    <para>For <code><link linkend="docbook-to-pdf.xpl">docbook-to-pdf</link></code> conversion: A <tag>book</tag> root results in a book-like output
+      (with a front page, ToC, etc.). The <tag>article</tag> root results in something more memo style.</para>
   </sect1>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -201,6 +201,9 @@
           </mediaobject>
         </figure>
         <para>Add <code>role="nonumber"</code> to a <tag>figure</tag> to stop it from getting a number.</para>
+        <para>In running the conversion pipelines, you can specify (as an option) a special "global" directory that contains global images (and other
+          resources). When an image is located in this global directory add a <code>role="global"</code> to the <tag>figure</tag> element. Any
+          directory information in <code>@fileref</code> is ignored.</para>
       </listitem>
 
       <listitem>
@@ -309,9 +312,19 @@
       </listitem>
 
       <listitem>
-        <para><emphasis role="bold"><literal>&lt;link></literal></emphasis>: Outputs some link (e.g. a web address). This is either the contents of
-          the element or, if not available, the contents of the <literal>xlink:href</literal> attribute.</para>
-        <para>Like <link xlink:href="http://www.xatapult.nl">this</link> or like this <link xlink:href="http://www.xatapult.nl"/>.</para>
+        <para><emphasis role="bold"><literal>&lt;link></literal></emphasis>: Outputs some link (e.g. a web address). Use one of:</para>
+        <itemizedlist>
+          <listitem>
+            <para><literal>@xlink:href</literal> for an external web address.</para>
+          </listitem>
+          <listitem>
+            <para><code>@linkend</code> for an internal id.</para>
+          </listitem>
+        </itemizedlist>
+        <para>The visible contents will consist of either the contents of the <tag>link</tag> element or (if empty) the contents of
+            <literal>@xlink:href</literal> or <code>@linkend</code>. Like <link xlink:href="http://www.xatapult.nl" role="newpage">this</link> or like
+          this <link xlink:href="http://www.xatapult.nl" role="newpage"/>.</para>
+        <para>For HTML, add <code>role="newpage"</code> to get a new page/tab when clicking on the link.</para>
       </listitem>
 
       <listitem>
@@ -320,7 +333,9 @@
               <imagedata fileref="resources/x-xatapult.jpg" width="3%"/>
             </imageobject>
           </inlinemediaobject>, like this.</para>
-
+        <para>In running the conversion pipelines, you can specify (as an option) a special "global" directory that contains global images (and other
+          resources). When an image is located in this global directory add a <code>role="global"</code> to the <tag>inlinemediaobject</tag> element.
+          Any directory information in <code>@fileref</code> is ignored.</para>
       </listitem>
 
       <listitem>
@@ -446,6 +461,7 @@
             </tbody>
           </tgroup>
         </table>
+        <para>For HTML, add <code>role="newpage"</code> to get a new page/tab when clicking on the link.</para>
       </listitem>
 
       <listitem>
