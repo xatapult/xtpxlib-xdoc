@@ -13,7 +13,7 @@ The `xtpxlib-xdoc` component contains an XProc (1.0) based DocBook publication t
 
 ## Technical information
 
-Component version: V0.9 - 2019-12-18
+Component version: V1.0 - 2019-12-18
 
 Documentation: [`https://xdoc.xtpxlib.org`](https://xdoc.xtpxlib.org)
 
@@ -27,7 +27,11 @@ This component depends on:
 
 ## Version history
 
-**V0.9 - 2019-12-18 (current)**
+**V1.0 - 2019-12-18 (current)**
+
+Initial release
+
+**V0.9 - 2019-12-18**
 
 Pre-release to test GitHub pages functionality.
 
