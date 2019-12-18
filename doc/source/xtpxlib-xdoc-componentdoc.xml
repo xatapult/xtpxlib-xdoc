@@ -41,7 +41,7 @@
   
   <!-- ================================================================== -->
   
-  <chapter xml:id="chapter-xproc-pipelines" xreflabel="XProc Libraries">
+  <chapter xml:id="chapter-xproc-pipelines" xreflabel="XProc Pipelines">
     <title>XProc Pipelines</title>
     
     <para>The {$component-name} component contains the following XProc (1.0) pipelines:</para>

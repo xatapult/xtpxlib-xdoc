@@ -201,7 +201,7 @@
   </xs:simpleType>
   <xs:simpleType name="t-xmlname">
     <xs:annotation>
-      <xs:documentation>XML name with/without prefix. TBD</xs:documentation>
+      <xs:documentation>XML name with/without prefix. </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string"/>
   </xs:simpleType>

@@ -6,7 +6,7 @@
   xmlns="http://docbook.org/ns/docbook">
   <!-- ================================================================== -->
   <!--~
-    TBD
+    Creates a directory overview.
     
     Input to this stylesheet is an XProc style recursive directory listing, for instance:
     

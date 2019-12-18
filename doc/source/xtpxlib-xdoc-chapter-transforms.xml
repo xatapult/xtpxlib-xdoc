@@ -11,7 +11,7 @@
 
   <!-- ================================================================== -->
 
-  <sect1 xml:id="sect-available-xdoc-extension-elements">
+  <sect1 >
     <title>Running an <code>xdoc</code> transform</title>
 
     <para>The <tag>xdoc:transform</tag>extension element runs an <code>xdoc</code> transformation (either XProc (1.0) or XSLT (2.0 or 3.0)). It is

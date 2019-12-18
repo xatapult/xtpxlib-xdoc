@@ -3,14 +3,14 @@
   exclude-inline-prefixes="#all">
 
   <p:documentation>
-    TBD
+    Pipeline to create the documentation for this component.
   </p:documentation>
 
   <!-- ================================================================== -->
   <!-- SETUP: -->
 
   <p:output port="result" primary="true" sequence="false">
-    <p:documentation>TBD</p:documentation>
+    <p:documentation>A report XML about the component documentation generation</p:documentation>
   </p:output>
   <p:serialization port="result" method="xml" encoding="UTF-8" indent="true" omit-xml-declaration="false"/>
 

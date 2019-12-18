@@ -35,7 +35,8 @@
 
     <para>The <code>xdoc</code> framework performs parameter substitution. <code>${{parameter-name}</code> and <code>{{$parameter-name}</code> (both
       mean the same) are substituted with the parameter's value (if it exists). Substitution takes place in attribute and text values. To stop such a
-        <code>${{…}</code> construction from being substituted, <emphasis>double</emphasis> the opening curly brace (<code>{{</code>).</para>
+        <code>${{…}</code> or <code>{{$…}</code> construction from being substituted, <emphasis>double</emphasis> the opening curly brace
+        (<code>{{</code>).</para>
 
     <para>The <code>xdoc</code> toolchain automatically creates a number of parameters:</para>
     <table>
@@ -150,7 +151,7 @@
       programs. Among others, the documentation sections for the <link linkend="chapter-xproc-pipelines">pipelines</link> and <link
         linkend="chapter-xproc-libraries">libraries</link> are generated with this. Now assume you want to insert the documentation of the <link
         linkend="xdoc-to-docbook.xpl"><code>xdoc-to-docbook</code></link> pipeline somewhere in a document of your own. You could do this by adding a
-      reference to the [TBD] transform to your <code>xdoc</code> source:</para>
+      reference to the <code><link linkend="xdoc-to-docbook.xpl">xdoc-to-docbook</link></code> transform to your <code>xdoc</code> source:</para>
 
     <programlisting xml:space="preserve"><![CDATA[<xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="2">
   <xi:include href="../../xpl/xdoc-to-docbook.xpl"/>

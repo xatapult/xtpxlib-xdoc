@@ -99,10 +99,11 @@
 
       <listitem>
         <!-- 5 -->
-        <para>Next the so-called <code>xdoc</code> <emphasis>transforms</emphasis> are processed. A transform consists of an <tag>xdoc:transform</tag> element (the
-          namespace prefix <code>xdoc:</code> must be bound to <code>http://www.xtpxlib.nl/ns/xdoc</code>). An XSLT stylesheet or XProc (1.0) pipeline
-          is triggered that gets this <tag>xdoc:transform</tag> element (with all attributes and child elements) as input and results in the injection
-          of generated DocBook.</para>
+        <para>Next the so-called <code>xdoc</code>
+          <emphasis>transforms</emphasis> are processed. A transform consists of an <tag>xdoc:transform</tag> element (the namespace prefix
+            <code>xdoc:</code> must be bound to <code>http://www.xtpxlib.nl/ns/xdoc</code>). An XSLT stylesheet or XProc (1.0) pipeline is triggered
+          that gets this <tag>xdoc:transform</tag> element (with all attributes and child elements) as input and results in the injection of generated
+          DocBook.</para>
       </listitem>
 
       <listitem>
@@ -112,10 +113,11 @@
           <listitem>
             <para>Transformations that are built into the <emphasis role="bold"><code>{$component-name}</code></emphasis> component. These are generic
               transformations for, for instance, documenting XML structures or generating code documentation. An overview of these can be found in
-              [TBD].</para>
+                <xref linkend="sect-builtin-xdoc-transformations"/>.</para>
           </listitem>
           <listitem>
-            <para>Your own transformations. Guidelines on how to write these can found in [TBD].</para>
+            <para>Your own transformations. Guidelines on how to write these can found in <xref linkend="sect-write-your-own-transformations"
+              />.</para>
           </listitem>
         </itemizedlist>
       </listitem>
@@ -128,7 +130,8 @@
 
       <listitem>
         <para>From this you can transform to some target format. </para>
-        <para>The <emphasis role="bold"><code>{$component-name}</code></emphasis> component contains transformations to both PDF and HTML (see [TBD]).
+        <para>The <emphasis role="bold"><code>{$component-name}</code></emphasis> component contains transformations to both PDF and HTML (see the
+            <link linkend="docbook-to-pdf.xpl">docbook-to-pdf</link> and <link linkend="docbook-to-xhtml.xpl">docbook-to-xhtml</link> pipelines).
           These transformations can only handle a <link linkend="xdoc-docbook-dialect">subset</link> of the full DocBook standard. The result will be
           rather specific for the <emphasis role="bold"><code>{$component-name}</code></emphasis> component and might not be directly usable for other
           use-cases. To amend this you can copy-and-adapt these transformations or use some other DocBook conversion.</para>
@@ -141,7 +144,7 @@
 
     </orderedlist>
 
-    <para>Information about the pipelines that implement this toolchain can be found in [TBD]</para>
+    <para>Information about the pipelines that implement this toolchain can be found <link linkend="chapter-xproc-pipelines">here</link>.</para>
 
   </sect1>
 

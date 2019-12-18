@@ -1,10 +1,15 @@
-# `xtpxlib-xdoc`: Xatapult XML Library - xdoc component
+# `xtpxlib-xdoc`: Xatapult XML Library - DocBook publication toolchain
 
 **Xatapult Content Engineering - [`http://www.xatapult.com`](http://www.xatapult.com)**
 
 ---------- 
 
-`xtpxlib-xdoc` TBD
+The `xtpxlib-xdoc` component contains an XProc (1.0) based DocBook publication toolchain. 
+* Starting point is some narrative written in DocBook, with the following extensions:
+  * Parameter references that are expanded (for dates, times, phrases, names, etc.)
+  * Special elements that trigger conversions. These conversions can insert generated DocBook into the source. For instance complex tables, documentation, etc.
+* The resulting "pure" DocBook can be used for further processing. 
+* The component contains specific pipelines for converting the DocBook to PDF and XHTML  
 
 ## Technical information
 
