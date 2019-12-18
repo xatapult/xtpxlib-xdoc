@@ -1,0 +1,5 @@
+<parameters>
+  <parameter name="my-parameter">
+    <value>Some value…</value>
+  </parameter>
+</parameters>

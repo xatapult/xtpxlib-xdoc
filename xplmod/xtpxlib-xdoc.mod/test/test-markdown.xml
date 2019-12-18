@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<?xml-model href="http://docbook.org/xml/5.0/rng/docbook.rng" type="application/xml" schematypens="http://purl.oclc.org/dsdl/schematron"?>
+<article xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <info>
+    <title>xtpxlib/xdocbook module</title>
+    <author>
+      <personname>Erik&#160;Siegel</personname>
+    </author>
+    <orgname>Xatapult</orgname>
+  </info>
+
+  <!-- ================================================================== -->
+
+  <para>This document is for testing the markdown-to-docbook pipeline.</para>
+
+  <xdoc:MARKDOWN>
+    
+  </xdoc:MARKDOWN>
+
+  <xdoc:MARKDOWN>
+    # Title with *italic* stuff
+    
+    This is a line of text.
+    And this is a second one of this para.
+    =======
+    This is **bold** this is *italic* What about ***both***? And inline `code`!
+    And some *****weird** patterns with stars... 
+    And **`bold code`** 
+    
+    ``` 
+    Lines of code
+       Indented line of code
+    Lines of code
+    ```
+    
+    - Item
+      - Indented item
+      - One more on this level...
+        - More indentation
+    more lines in the indented para
+        - xxxxx
+      - Back one level    
+    - Item itemized
+    - Item itemized
+    
+    
+    1. Item 1
+    1. Item 1b
+    1. Item 2
+    1. Item 3
+    - Itemized inbetween
+    1. More ordered
+    
+    Link to [xatapult](http:/www.xatapult.nl)
+    
+    # Heading 1
+    Bla bla bla
+    ## Heading 2
+    Bla bla bla
+    ### Heading 3
+    Bla bla bla
+    
+    One more line
+  </xdoc:MARKDOWN>
+
+</article>

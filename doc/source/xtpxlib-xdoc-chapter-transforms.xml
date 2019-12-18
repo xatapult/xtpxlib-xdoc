@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<chapter xml:id="chapter-xdoc-transforms" xreflabel="xdoc transforms" xmlns:xlink="http://www.w3.org/1999/xlink"
+  xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns="http://docbook.org/ns/docbook">
+  <title><code>xdoc</code> transforms</title>
+
+  <para>An <code>xdoc</code> transform is an XSLT stylesheet or XProc (1.0) pipeline that is triggered from your source document and inserts generated
+    DocBook contents. There are several of these <link linkend="sect-builtin-xdoc-transformations">transforms built into the
+        <code>{$component-name}</code> component</link> but its also easy to <link linkend="sect-write-your-own-transformations">write one of your
+      own</link>.</para>
+
+  <!-- ================================================================== -->
+
+  <sect1 >
+    <title>Running an <code>xdoc</code> transform</title>
+
+    <para>The <tag>xdoc:transform</tag>extension element runs an <code>xdoc</code> transformation (either XProc (1.0) or XSLT (2.0 or 3.0)). It is
+      completely replaced by the outcome of the transformation.</para>
+
+    <xdoc:transform href="$xdoc/xml-description.xpl">
+      <xi:include href="xml-descriptions/description-transform.xml"/>
+    </xdoc:transform>
+
+  </sect1>
+
+  <!-- ================================================================== -->
+
+  <sect1 xml:id="sect-builtin-xdoc-transformations">
+    <title>Built-in <code>xdoc</code> transformations</title>
+
+    <para>The <code>{$component-name}</code> has several transforms built in. You can easily reference these by prefixing their name with
+        <code>$xdoc</code>, for instance <code>$xdoc/code-docgen.xpl</code>.</para>
+
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../transforms/" filter=".xpl$" depth="1" header-level="2" filecomponents="2"
+      sublevels="true"/>
+
+  </sect1>
+
+  <!-- ================================================================== -->
+
+  <sect1 xml:id="sect-write-your-own-transformations">
+    <title>Writing your own <code>xdoc</code> transformations</title>
+
+    <itemizedlist>
+      <listitem>
+        <para>To add an <code>xdoc</code> transform of your own you need to write an XSLT stylesheet or an XProc pipeline.</para>
+      </listitem>
+      <listitem>
+        <para>Such a stylesheet or transformation gets the *full* <tag>xdoc:transform</tag> element as its input. It can inspect the
+            <tag>xdoc:transform</tag> root element itself for its attributes.</para>
+      </listitem>
+      <listitem>
+        <para>The output of the stylesheet/pipeline must be the resulting (valid!) DocBook.</para>
+      </listitem>
+      <listitem>
+        <para>If the resulting DocBook contains multiple elements you can wrap them all in an <tag>xdoc:GROUP</tag> element to make the result a
+          single well-formed document. The <tag>xdoc:GROUP</tag> wrapper is removed later on by the <code>xdoc</code> processing.</para>
+      </listitem>
+      <listitem>
+        <para>You must reference your stylesheet or pipeline using <tag>xdoc:transform</tag>'s <code>href</code> attribute.</para>
+      </listitem>
+    </itemizedlist>
+
+    <para>Here is a simple example of something that is actually quite useful. Tables in DocBook are complex things. When you to have format the same
+      kind of data over and over again in a table, it becomes very boring and hard to keep consistent and maintainable. Using <code>xdoc</code>
+      transforms you can automate the data to DocBook part.</para>
+    <para>Assume we have, all over the document, weather data, that comes in this source format:</para>
+    <programlisting><xi:include href="includes/example-data.xml" parse="text"/></programlisting>
+
+    <para role="keep-with-next">You want to show this as tables. The following XSLT stylesheet (called <code>transform-weather-data.xsl</code>) will
+      do the <code>xdoc</code> transform trick. As its input it gets the weather data wrapped in the <tag>xdoc:transform</tag> element (see below).</para>
+    <programlisting><xi:include href="transforms/transform-weather-data.xsl" parse="text"/></programlisting>
+
+    <para role="keep-with-next">In your document you add:</para>
+    <programlisting xml:space="preserve"><![CDATA[<xdoc:transform href="path/to/transform-weather-data.xsl">
+  <xi:include href="path/to/your/weather/data.xml"/>
+</xdoc:transform>]]>
+</programlisting>
+
+    <para role="keep-with-next">And the result for this example is:</para>
+    <xdoc:transform href="transforms/transform-weather-data.xsl">
+      <xi:include href="includes/example-data.xml"/>
+    </xdoc:transform>
+
+  </sect1>
+
+</chapter>

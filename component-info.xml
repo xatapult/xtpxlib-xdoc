@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component-info xmlns="http://www.xtpxlib.nl/ns/webdoc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace" xsi:schemaLocation="http://www.xtpxlib.nl/ns/webdoc ../xtpxlib-webdoc/xsd/component-info.xsd" name="xtpxlib-xdoc">
+
+  <releases>
+    <release version="0.9" date="2019-12-18">
+      Pre-release to test GitHub pages functionality.
+    </release>
+  </releases>
+
+  <dependencies>
+    <component name="xtpxlib-common"/>
+    <component name="xtpxlib-container"/>
+  </dependencies>
+
+  <title>DocBook publication toolchain</title>
+  <summary>
+    The `xtpxlib-xdoc` component contains an XProc (1.0) based DocBook publication toolchain. 
+    * Starting point is some narrative written in DocBook, with the following extensions:
+      * Parameter references that are expanded (for dates, times, phrases, names, etc.)
+      * Special elements that trigger conversions. These conversions can insert generated DocBook into the source. For instance complex tables, documentation, etc.
+    * The resulting "pure" DocBook can be used for further processing. 
+    * The component contains specific pipelines for converting the DocBook to PDF and XHTML  
+  </summary>
+  
+  <documentation-uri>https://xdoc.xtpxlib.org</documentation-uri>
+
+  <git-uri>git@github.com:xatapult/xtpxlib-xdoc.git</git-uri>
+  <git-site-uri>https://github.com/xatapult/xtpxlib-xdoc</git-site-uri>
+
+</component-info>

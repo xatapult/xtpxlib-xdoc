@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<element-description xmlns="http://www.xtpxlib.nl/ns/xdoc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.xtpxlib.nl/ns/xdoc ../../../xsd/element-description.xsd" name="xdoc:dump-parameters" id="xdoc-dump-parameters">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <attribute name="type" required="false" default="comment">
+    <description>
+      <para>Whether to dump the parameters as a comment or table.</para>
+    </description>
+    <type name="xs:string">
+      <enum value="comment">
+        <description>
+          <para>Dump the parameters as an XML comment</para>
+        </description>
+      </enum>
+      <enum value="table">
+        <description>
+          <para>Dump the parameters as a table</para>
+        </description>
+      </enum>
+    </type>
+  </attribute>
+
+</element-description>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <info>
+    <title>…</title>
+    <subtitle>…</subtitle>
+
+    <pubdate>…</pubdate>
+
+    <author>
+      <personname>…</personname>
+    </author>
+    <orgname>…</orgname>
+
+    <mediaobject role="top-logo">
+      <imageobject>
+        <imagedata fileref="…" width="…"/>
+      </imageobject>
+    </mediaobject>
+
+    <mediaobject role="center-page">
+      <imageobject>
+        <imagedata fileref="…" width="…"/>
+      </imageobject>
+    </mediaobject>
+
+  </info>
+
+  <!-- ================================================================== -->
+
+  <preface>
+    <title>…</title>
+
+    <para>…</para>
+
+  </preface>
+
+  <!-- ================================================================== -->
+
+  <chapter>
+    <title>…</title>
+
+    <para>…</para>
+
+  </chapter>
+
+  <!-- ================================================================== -->
+
+  <appendix>
+    <title>…</title>
+
+    <para>…</para>
+
+  </appendix>
+
+</book>

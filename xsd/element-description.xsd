@@ -1,84 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.xtpxlib.nl/ns/xdocbook"
-  xmlns:xtlxdb="http://www.xtpxlib.nl/ns/xdocbook">
-
-  <xs:element name="insert-global-descriptions">
-    <xs:annotation>
-      <xs:documentation>Use this element in the db5 contents to insert global descriptions. Add either a @href to an external file with global-description or add the global-descriptions inline.</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="xtlxdb:global-descriptions">
-          <xs:annotation>
-            <xs:documentation>Inline element description. This has precedence over the @href attribute.</xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-      <xs:attribute name="href" type="xtlxdb:t-href">
-        <xs:annotation>
-          <xs:documentation>Reference to an external global-descriptions document</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="global-descriptions">
-    <xs:complexType>
-      <xs:choice maxOccurs="unbounded" minOccurs="0">
-        <xs:group ref="xtlxdb:g-element"/>
-        <xs:group ref="xtlxdb:g-attribute"/>
-        <xs:group ref="xtlxdb:g-type"/>
-        <xs:group ref="xtlxdb:g-enum"/>
-      </xs:choice>
-    </xs:complexType>
-  </xs:element>
-  <xs:element name="insert-element-description">
-    <xs:annotation>
-      <xs:documentation>Use this element in the db5 contents to trigger the generation of an element description. Add either a @href to an external file with an element-description or add the element-description inline.</xs:documentation>
-    </xs:annotation>
-    <xs:complexType>
-      <xs:sequence>
-        <xs:element minOccurs="0" ref="xtlxdb:element-description">
-          <xs:annotation>
-            <xs:documentation>Inline element description. This has precedence over the @href attribute.</xs:documentation>
-          </xs:annotation>
-        </xs:element>
-      </xs:sequence>
-      <xs:attribute name="href" type="xtlxdb:t-href">
-        <xs:annotation>
-          <xs:documentation>Reference to an external element-description document</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-      <xs:attribute default="false" name="simple" type="xs:boolean">
-        <xs:annotation>
-          <xs:documentation>When true only a simple description will be added. No attribute/element tables.</xs:documentation>
-        </xs:annotation>
-      </xs:attribute>
-    </xs:complexType>
-  </xs:element>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
   <xs:element name="element-description">
     <xs:complexType>
       <xs:sequence>
-        <xs:group ref="xtlxdb:g-description" minOccurs="0">
+        <xs:group ref="xdoc:g-description" minOccurs="0">
           <xs:annotation>
             <xs:documentation>General description of this element</xs:documentation>
           </xs:annotation>
         </xs:group>
-        <xs:element minOccurs="0" name="attribute-table-header" type="xtlxdb:ct-docbook-contents"/>
-        <xs:group maxOccurs="unbounded" minOccurs="0" ref="xtlxdb:g-attribute">
+        <xs:element minOccurs="0" name="attribute-table-header" type="xdoc:ct-docbook-contents"/>
+        <xs:group maxOccurs="unbounded" minOccurs="0" ref="xdoc:g-attribute">
           <xs:annotation>
             <xs:documentation>Attributes on the element</xs:documentation>
           </xs:annotation>
         </xs:group>
-        <xs:element minOccurs="0" name="element-table-header" type="xtlxdb:ct-docbook-contents"/>
+        <xs:element minOccurs="0" name="element-table-header" type="xdoc:ct-docbook-contents"/>
         <xs:choice maxOccurs="unbounded" minOccurs="0">
           <xs:annotation>
             <xs:documentation>Either straight elements or a choice of elements</xs:documentation>
           </xs:annotation>
-          <xs:group ref="xtlxdb:g-element"/>
+          <xs:group ref="xdoc:g-element"/>
           <xs:element name="choice">
             <xs:complexType>
-              <xs:group ref="xtlxdb:g-element" maxOccurs="unbounded"/>
-              <xs:attributeGroup ref="xtlxdb:ag-occurrences"/>
+              <xs:group ref="xdoc:g-element" maxOccurs="unbounded"/>
+              <xs:attributeGroup ref="xdoc:ag-occurrences"/>
             </xs:complexType>
           </xs:element>
         </xs:choice>
@@ -99,12 +45,12 @@
           </xs:complexType>
         </xs:element>
       </xs:sequence>
-      <xs:attribute name="name" type="xtlxdb:t-xmlname" use="required">
+      <xs:attribute name="name" type="xdoc:t-xmlname" use="required">
         <xs:annotation>
           <xs:documentation>The name of the element to describe</xs:documentation>
         </xs:annotation>
       </xs:attribute>
-      <xs:attribute name="id" type="xtlxdb:t-identifier">
+      <xs:attribute name="id" type="xdoc:t-identifier">
         <xs:annotation>
           <xs:documentation>If not given the id will become: element-{@name} (with invalid characters replaced by underscores)</xs:documentation>
         </xs:annotation>
@@ -113,7 +59,7 @@
   </xs:element>
   <xs:group name="g-description">
     <xs:sequence>
-      <xs:element name="description" type="xtlxdb:ct-docbook-contents"> </xs:element>
+      <xs:element name="description" type="xdoc:ct-docbook-contents"> </xs:element>
     </xs:sequence>
   </xs:group>
   <xs:group name="g-type">
@@ -121,24 +67,23 @@
       <xs:element name="type">
         <xs:complexType>
           <xs:sequence>
-            <xs:group minOccurs="0" ref="xtlxdb:g-description">
+            <xs:group minOccurs="0" ref="xdoc:g-description">
               <xs:annotation>
                 <xs:documentation>Additional description for this type</xs:documentation>
               </xs:annotation>
             </xs:group>
-            <xs:group maxOccurs="unbounded" minOccurs="0" ref="xtlxdb:g-enum"/>
+            <xs:group maxOccurs="unbounded" minOccurs="0" ref="xdoc:g-enum"/>
           </xs:sequence>
-          <xs:attribute name="name" type="xtlxdb:t-typename" use="required">
+          <xs:attribute name="name" type="xdoc:t-typename" use="required">
             <xs:annotation>
               <xs:documentation>Type name</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attribute name="base" type="xtlxdb:t-typename">
+          <xs:attribute name="base" type="xdoc:t-typename">
             <xs:annotation>
               <xs:documentation>Optional base name for this type (e.g. xs:string). If not present the name will be used</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attributeGroup ref="xtlxdb:ag-use-global"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -150,10 +95,9 @@
           <xs:documentation>Enumeration of allowed values</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-          <xs:group ref="xtlxdb:g-description" minOccurs="0"/>
+          <xs:group ref="xdoc:g-description" minOccurs="0"/>
           <xs:attribute name="value" type="xs:string" use="required"/>
-          <xs:attributeGroup ref="xtlxdb:ag-describe"/>
-          <xs:attributeGroup ref="xtlxdb:ag-use-global"/>
+          <xs:attributeGroup ref="xdoc:ag-describe"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
@@ -163,17 +107,16 @@
       <xs:element name="element">
         <xs:complexType>
           <xs:sequence>
-            <xs:group ref="xtlxdb:g-description" minOccurs="0"/>
-            <xs:group ref="xtlxdb:g-type" minOccurs="0"/>
+            <xs:group ref="xdoc:g-description" minOccurs="0"/>
+            <xs:group ref="xdoc:g-type" minOccurs="0"/>
           </xs:sequence>
-          <xs:attribute name="name" type="xtlxdb:t-xmlname" use="required">
+          <xs:attribute name="name" type="xdoc:t-xmlname" use="required">
             <xs:annotation>
               <xs:documentation>Name of the element</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attributeGroup ref="xtlxdb:ag-occurrences"/>
-          <xs:attributeGroup ref="xtlxdb:ag-describe"/>
-          <xs:attributeGroup ref="xtlxdb:ag-use-global"/>
+          <xs:attributeGroup ref="xdoc:ag-occurrences"/>
+          <xs:attributeGroup ref="xdoc:ag-describe"/>
         </xs:complexType>
       </xs:element>
       <xs:element name="element-placeholder">
@@ -196,18 +139,18 @@
       <xs:element name="attribute">
         <xs:complexType>
           <xs:sequence>
-            <xs:group ref="xtlxdb:g-description" minOccurs="0">
+            <xs:group ref="xdoc:g-description" minOccurs="0">
               <xs:annotation>
                 <xs:documentation>Description of the attribute</xs:documentation>
               </xs:annotation>
             </xs:group>
-            <xs:group ref="xtlxdb:g-type" minOccurs="0">
+            <xs:group ref="xdoc:g-type" minOccurs="0">
               <xs:annotation>
                 <xs:documentation>Type information for the attribute. </xs:documentation>
               </xs:annotation>
             </xs:group>
           </xs:sequence>
-          <xs:attribute name="name" type="xtlxdb:t-xmlname" use="required">
+          <xs:attribute name="name" type="xdoc:t-xmlname" use="required">
             <xs:annotation>
               <xs:documentation>Name of the attribute</xs:documentation>
             </xs:annotation>
@@ -218,15 +161,14 @@
               <xs:documentation>Optional default value for the attribute</xs:documentation>
             </xs:annotation>
           </xs:attribute>
-          <xs:attributeGroup ref="xtlxdb:ag-describe"/>
-          <xs:attributeGroup ref="xtlxdb:ag-use-global"/>
+          <xs:attributeGroup ref="xdoc:ag-describe"/>
         </xs:complexType>
       </xs:element>
     </xs:sequence>
   </xs:group>
   <xs:complexType name="ct-docbook-contents">
     <xs:annotation>
-      <xs:documentation>Any contents here in the empty or the xtlxdb namespace is converted into docbook contents</xs:documentation>
+      <xs:documentation>Any contents here in the empty or the xdoc namespace is converted into docbook contents</xs:documentation>
     </xs:annotation>
     <xs:sequence>
       <xs:any maxOccurs="unbounded" namespace="##any" processContents="skip"/>
@@ -247,13 +189,6 @@
       </xs:simpleType>
     </xs:attribute>
   </xs:attributeGroup>
-  <xs:attributeGroup name="ag-use-global">
-    <xs:attribute default="false" name="use-global" type="xs:boolean">
-      <xs:annotation>
-        <xs:documentation>If true search for a global description/definition and use this</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-  </xs:attributeGroup>
   <xs:attributeGroup name="ag-describe">
     <xs:attribute default="true" name="describe" type="xs:boolean">
       <xs:annotation>
@@ -266,7 +201,7 @@
   </xs:simpleType>
   <xs:simpleType name="t-xmlname">
     <xs:annotation>
-      <xs:documentation>XML name with/without prefix. TBD</xs:documentation>
+      <xs:documentation>XML name with/without prefix. </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
