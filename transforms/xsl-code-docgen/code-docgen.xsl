@@ -158,7 +158,8 @@
     </xsl:call-template>
 
     <!-- Output steps: -->
-    <xsl:variable name="step-declarations" as="element(p:declare-step)*" select="p:declare-step[local:xpl-object-is-visible(.)][exists(@type)]"/>
+    <xsl:variable name="step-declarations" as="element(p:declare-step)*"
+      select="p:declare-step[local:xpl-object-is-visible(.)][local:object-name-is-relevant(@type)][exists(@type)]"/>
     <xsl:call-template name="xpl-output-steps-overview">
       <xsl:with-param name="step-declarations" select="$step-declarations"/>
     </xsl:call-template>
