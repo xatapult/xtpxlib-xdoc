@@ -287,7 +287,7 @@
             </block-container>
           </xsl:if>
         </xsl:for-each>
-       
+
         <!-- Some more information at the bottom: -->
         <block-container absolute-position="fixed" top="{local:dimcm($page-height - 3)}" left="{local:dimcm($standard-page-margin-left)}">
           <xsl:variable name="publication-date" as="xs:string?" select="/*/db:info/db:pubdate"/>
@@ -934,7 +934,7 @@
         <xsl:with-param name="msg-parts" select="('Id occurs ', count($referenced-element), ' times: ', xtlc:q($id))"/>
       </xsl:call-template>
     </xsl:if>
-    
+
     <xsl:choose>
       <xsl:when test="exists($referenced-element)">
         <basic-link internal-destination="{$id}">
@@ -1067,7 +1067,9 @@
         <xsl:choose>
           <xsl:when test="exists($referenced-element)">
             <basic-link internal-destination="{$id}">
-              <xsl:apply-templates mode="#current"/>
+              <inline color="{$link-color}">
+                <xsl:apply-templates mode="#current"/>
+              </inline>
             </basic-link>
           </xsl:when>
           <xsl:otherwise>
