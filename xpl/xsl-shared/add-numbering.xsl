@@ -37,11 +37,10 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:chapter |db:preface" mode="mode-book">
+  <xsl:template match="db:chapter | db:preface" mode="mode-book">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:variable name="chapter-number" as="xs:string"
-        select="if (self::db:preface) then '0' else string(count(preceding-sibling::db:chapter) + 1)"/>
+      <xsl:variable name="chapter-number" as="xs:string" select="if (self::db:preface) then '0' else string(count(preceding-sibling::db:chapter) + 1)"/>
       <xsl:attribute name="number" select="$chapter-number"/>
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$chapter-number" tunnel="true"/>
@@ -68,7 +67,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:sect1 | db:sect2 | db:sect3" mode="#all">
+  <xsl:template match="db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:sect7 | db:sect8 | db:sect9" mode="#all">
     <xsl:param name="chapter-number" as="xs:string" required="yes" tunnel="true"/>
     <xsl:param name="section-number-prefix" as="xs:string?" required="no" select="()" tunnel="true"/>
 
