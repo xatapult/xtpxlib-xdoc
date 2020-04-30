@@ -45,6 +45,7 @@
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$chapter-number" tunnel="true"/>
         <xsl:with-param name="chapter" as="element()" select="." tunnel="true"/>
+        <xsl:with-param name="root-for-chapter-counts" as="element()" select="." tunnel="true"/>
       </xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
@@ -60,6 +61,7 @@
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$chapter-number" tunnel="true"/>
         <xsl:with-param name="chapter" as="element()" select="." tunnel="true"/>
+        <xsl:with-param name="root-for-chapter-counts" as="element()" select="." tunnel="true"/>
       </xsl:apply-templates>
     </xsl:copy>
 
@@ -95,6 +97,7 @@
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$appendix-code" tunnel="true"/>
         <xsl:with-param name="chapter" as="element()" select="." tunnel="true"/>
+        <xsl:with-param name="root-for-chapter-counts" as="element()" select="." tunnel="true"/>
       </xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
@@ -105,6 +108,51 @@
   <xsl:template match="db:table[local:is-numbered(.)] | db:example[local:is-numbered(.)] | db:figure[local:is-numbered(.)]" mode="#all">
     <xsl:call-template name="copy-with-index-number"/>
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:co" mode="#all">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:attribute name="number" select="count(preceding-sibling::db:co) + 1"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:footnote" mode="#all">
+    <xsl:param name="root-for-chapter-counts" as="element()" required="yes" tunnel="true"/>
+
+    <!-- Find out which number this footnote has in the current chapter/sect/appendix: -->
+    <xsl:variable name="current-footnote" as="element(db:footnote)" select="."/>
+    <xsl:variable name="all-footnotes" as="element(db:footnote)*" select="$root-for-chapter-counts//db:footnote"/>
+    <xsl:variable name="footnote-number" as="xs:integer?">
+      <xsl:iterate select="$all-footnotes">
+        <xsl:param name="count" as="xs:integer" select="1"/>
+        <xsl:choose>
+          <xsl:when test=". is  $current-footnote">
+            <xsl:break select="$count"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:next-iteration>
+              <xsl:with-param name="count" select="$count + 1"/>
+            </xsl:next-iteration>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:iterate>
+    </xsl:variable>
+
+    <!-- If found, add it as @number to the footnote: -->
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:if test="exists($footnote-number)">
+        <xsl:attribute name="number" select="$footnote-number"/>
+      </xsl:if>
+      <xsl:apply-templates mode="#current"/>
+    </xsl:copy>
+
+  </xsl:template>
+
 
   <!-- ================================================================== -->
 
