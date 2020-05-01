@@ -13,7 +13,7 @@ The `xtpxlib-xdoc` component contains an XProc (1.0) based DocBook publication t
 
 ## Technical information
 
-Component version: V1.0.A - 2020-02-16
+Component version: V1.1 - 2020-05-01
 
 Documentation: [`https://xdoc.xtpxlib.org`](https://xdoc.xtpxlib.org)
 
@@ -27,7 +27,11 @@ This component depends on:
 
 ## Version history
 
-**V1.0.A - 2020-02-16 (current)**
+**V1.1 - 2020-05-01 (current)**
+
+Updated the DocBook to PDF conversion (added footnotes, callouts, nested tables, etc.).
+
+**V1.0.A - 2020-02-16**
 
 New logo and minor fixes.
 
