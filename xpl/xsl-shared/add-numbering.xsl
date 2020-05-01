@@ -37,15 +37,15 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:chapter |db:preface" mode="mode-book">
+  <xsl:template match="db:chapter | db:preface" mode="mode-book">
     <xsl:copy>
       <xsl:copy-of select="@*"/>
-      <xsl:variable name="chapter-number" as="xs:string"
-        select="if (self::db:preface) then '0' else string(count(preceding-sibling::db:chapter) + 1)"/>
+      <xsl:variable name="chapter-number" as="xs:string" select="if (self::db:preface) then '0' else string(count(preceding-sibling::db:chapter) + 1)"/>
       <xsl:attribute name="number" select="$chapter-number"/>
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$chapter-number" tunnel="true"/>
         <xsl:with-param name="chapter" as="element()" select="." tunnel="true"/>
+        <xsl:with-param name="root-for-chapter-counts" as="element()" select="." tunnel="true"/>
       </xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
@@ -61,6 +61,7 @@
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$chapter-number" tunnel="true"/>
         <xsl:with-param name="chapter" as="element()" select="." tunnel="true"/>
+        <xsl:with-param name="root-for-chapter-counts" as="element()" select="." tunnel="true"/>
       </xsl:apply-templates>
     </xsl:copy>
 
@@ -68,7 +69,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:sect1 | db:sect2 | db:sect3" mode="#all">
+  <xsl:template match="db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:sect7 | db:sect8 | db:sect9" mode="#all">
     <xsl:param name="chapter-number" as="xs:string" required="yes" tunnel="true"/>
     <xsl:param name="section-number-prefix" as="xs:string?" required="no" select="()" tunnel="true"/>
 
@@ -96,6 +97,7 @@
       <xsl:apply-templates mode="#current">
         <xsl:with-param name="chapter-number" as="xs:string" select="$appendix-code" tunnel="true"/>
         <xsl:with-param name="chapter" as="element()" select="." tunnel="true"/>
+        <xsl:with-param name="root-for-chapter-counts" as="element()" select="." tunnel="true"/>
       </xsl:apply-templates>
     </xsl:copy>
   </xsl:template>
@@ -106,6 +108,51 @@
   <xsl:template match="db:table[local:is-numbered(.)] | db:example[local:is-numbered(.)] | db:figure[local:is-numbered(.)]" mode="#all">
     <xsl:call-template name="copy-with-index-number"/>
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:co" mode="#all">
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:attribute name="number" select="count(preceding-sibling::db:co) + 1"/>
+    </xsl:copy>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:footnote" mode="#all">
+    <xsl:param name="root-for-chapter-counts" as="element()" required="yes" tunnel="true"/>
+
+    <!-- Find out which number this footnote has in the current chapter/sect/appendix: -->
+    <xsl:variable name="current-footnote" as="element(db:footnote)" select="."/>
+    <xsl:variable name="all-footnotes" as="element(db:footnote)*" select="$root-for-chapter-counts//db:footnote"/>
+    <xsl:variable name="footnote-number" as="xs:integer?">
+      <xsl:iterate select="$all-footnotes">
+        <xsl:param name="count" as="xs:integer" select="1"/>
+        <xsl:choose>
+          <xsl:when test=". is  $current-footnote">
+            <xsl:break select="$count"/>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:next-iteration>
+              <xsl:with-param name="count" select="$count + 1"/>
+            </xsl:next-iteration>
+          </xsl:otherwise>
+        </xsl:choose>
+      </xsl:iterate>
+    </xsl:variable>
+
+    <!-- If found, add it as @number to the footnote: -->
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:if test="exists($footnote-number)">
+        <xsl:attribute name="number" select="$footnote-number"/>
+      </xsl:if>
+      <xsl:apply-templates mode="#current"/>
+    </xsl:copy>
+
+  </xsl:template>
+
 
   <!-- ================================================================== -->
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step"
-  version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:docbook-to-pdf">
+<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
+  xmlns:c="http://www.w3.org/ns/xproc-step" version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:docbook-to-pdf">
 
   <p:documentation>
       This turns Docbook (5.1) into a PDF using FOP.
@@ -54,15 +54,21 @@
   <p:option name="main-font-size" required="false" select="10">
     <p:documentation>Main font size as an integer. Usual values somewhere between 8 and 10.</p:documentation>
   </p:option>
-  
+
   <p:option name="global-resources-directory" required="false" select="()">
     <p:documentation>Images that are tagged as `role="global"` are searched here (discarding any directory information in the image's URI)</p:documentation>
   </p:option>
-  
+
+  <p:option name="href-xsl-fo" required="false" select="()">
+    <p:documentation>If set, writes the intermediate XSL-FO to this href (so you can inspect it when things go wrong in FOP)</p:documentation>
+  </p:option>
+
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting XSL-FO (that was transformed into the PDF).</p:documentation>
     <p:pipe port="result" step="final-output"/>
   </p:output>
+
+  <p:import href="../../xtpxlib-common/xplmod/common.mod/common.mod.xpl"/>
 
   <!-- ================================================================== -->
 
@@ -106,9 +112,14 @@
     <p:with-param name="main-font-size" select="$main-font-size"/>
     <p:with-param name="output-type" select="$output-type"/>
   </p:xslt>
+  <xtlc:tee>
+    <p:with-option name="href" select="$href-xsl-fo"/>
+    <p:with-option name="enable" select="normalize-space($href-xsl-fo) ne ''"/>
+  </xtlc:tee>
 
   <p:identity name="final-output"/>
 
+  <!-- Make it into a PDF: -->
   <p:xsl-formatter name="step-create-pdf" content-type="application/pdf">
     <p:with-option name="href" select="$href-pdf"/>
     <p:with-param name="UserConfig" select="$fop-config"/>
