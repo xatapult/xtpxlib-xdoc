@@ -294,7 +294,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:note | db:warning | db:sidebar">
+  <xsl:template match="db:note | db:warning | db:sidebar | db:tip | db:caution">
 
     <div class="{local-name(.)}">
       <xsl:call-template name="copy-id">
@@ -330,6 +330,24 @@
         <xsl:with-param name="object-name" select="'Example'"/>
       </xsl:call-template>
     </div>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:blockquote">
+    <xsl:call-template name="insert-error">
+      <xsl:with-param name="block" select="true()"/>
+      <xsl:with-param name="msg-parts" select="'Element blockquote not supported for HTML conversion'"/>
+    </xsl:call-template>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:calloutlist">
+    <xsl:call-template name="insert-error">
+      <xsl:with-param name="block" select="true()"/>
+      <xsl:with-param name="msg-parts" select="'Element calloutlist not supported for HTML conversion'"/>
+    </xsl:call-template>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -447,6 +465,16 @@
     </xsl:element>
 
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:entrytbl" mode="mode-table">
+    <xsl:call-template name="insert-error">
+      <xsl:with-param name="block" select="true()"/>
+      <xsl:with-param name="msg-parts" select="'Element entrytbl not supported for HTML conversion'"/>
+    </xsl:call-template>
+  </xsl:template>
+
 
   <!-- ================================================================== -->
   <!-- INLINE CONTENTS: -->
@@ -597,12 +625,35 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:code | db:literal" mode="mode-inline">
+  <xsl:template match="db:indexterm" mode="mode-inline">
+    <!-- Ignore... -->
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:code | db:literal | db:uri | db:function | db:classname | db:type | db:parameter | db:varname | db:package"
+    mode="mode-inline">
     <xsl:param name="in-table" as="xs:boolean" required="no" select="false()" tunnel="true"/>
 
     <xsl:call-template name="handle-inline-text">
       <xsl:with-param name="fixed-width" select="true()"/>
     </xsl:call-template>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template
+    match="db:acronym | db:phrase | db:orgname | db:application | db:keysym | db:personname | db:firstname | db:surname | db:productnumber"
+    mode="mode-inline">
+    <!-- No special formatting for these elements... -->
+    <xsl:apply-templates mode="#current"/>
+  </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:guimenu | db:guimenuitem | db:guiicon | db:guibutton | db:guilabel" mode="mode-inline">
+    <!-- No special formatting for these GUI related elements... -->
+    <xsl:apply-templates mode="#current"/>
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -734,6 +785,14 @@
     </xsl:call-template>
   </xsl:template>
 
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template match="db:footnote" mode="mode-inline">
+    <xsl:call-template name="insert-error">
+      <xsl:with-param name="block" select="false()"/>
+      <xsl:with-param name="msg-parts" select="'Element footnote not supported for HTML conversion'"/>
+    </xsl:call-template>
+  </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
