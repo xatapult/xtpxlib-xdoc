@@ -1178,7 +1178,6 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-
   <xsl:template match="db:xref" mode="mode-inline">
 
     <xsl:variable name="id" as="xs:string" select="@linkend"/>

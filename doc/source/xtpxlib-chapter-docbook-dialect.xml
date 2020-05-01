@@ -41,10 +41,10 @@
     <itemizedlist>
       <listitem>
         <para>For books, <literal>&lt;preface></literal>, <literal>&lt;chapter></literal>, <tag>appendix</tag> and <literal>&lt;sect1></literal> to
-            <literal>&lt;sect3></literal> are recognized and handled.</para>
+            <literal>&lt;sect9></literal> are recognized and handled. Anything above <tag>sect3</tag> will not be numbered.</para>
       </listitem>
       <listitem>
-        <para>In articles only <tag>sect1</tag> to <tag>sect3</tag> are allowed.</para>
+        <para>In articles only <tag>sect1</tag> to <tag>sect9</tag> are allowed.</para>
       </listitem>
     </itemizedlist>
   </sect1>
@@ -68,7 +68,7 @@
             <colspec/>
             <thead>
               <row>
-                <entry><literal>@role</literal> value</entry>
+                <entry><para><literal>@role</literal> value</para></entry>
                 <entry>Description</entry>
               </row>
             </thead>
@@ -172,9 +172,27 @@
                   <para>unnumbered table</para>
                 </entry>
               </row>
+              <row>
+                <entry><para>An <tag>entrytbl</tag></para></entry>
+                <entrytbl cols="2">
+                  <tbody>
+                    <row>
+                      <entry>1</entry>
+                      <entry>2</entry>
+                    </row>
+                    <row>
+                      <entry>3</entry>
+                      <entry>4</entry>
+                    </row>
+                  </tbody>
+                </entrytbl>
+              </row>
             </tbody>
           </tgroup>
         </table>
+        <para>A table can have multiple <tag>tgroup</tag> elements.</para>
+        <para>You can add a nested table in a cell using the <tag>entrytbl</tag> element (currently for PDF only).</para>
+        <para><tag>spanspec</tag> elements are ignored.</para>
         <para>Tables are notoriously difficult in that FOP cannot compute column widths automatically. To amand this (a little bit) add
             <code>colspec/@colwidth</code> information. There is also a mechanism for columns with code (set in a fixed-width font), see <xref
             linkend="sect-fixed-width-column-mechanism"/>.</para>
@@ -187,6 +205,27 @@
             parse="text"></literal> construction:</para>
         <para><literal><![CDATA[<programlisting><xi:include href="ref" parse="text"/></programlisting>]]></literal></para>
         <para>Or use a <literal>&lt;![CDATA[</literal> construction around the piece of code.</para>
+      </listitem>
+
+      <listitem>
+        <para>For PDF generation it is possible to use so-called <emphasis>callouts</emphasis> to draw attention to parts of a program listing. These callouts can become
+          links (both ways) using the right markup. For example:</para>
+
+        <programlisting xml:space="preserve">xquery version "3.0" encoding "UTF-8";
+module namespace x101log = "http://www.exist-db.org/book/namespaces/exist101"; <co xml:id="one0one.log.1_co" linkends="one0one.log.1"/>
+declare function x101log:add-log-message($message as xs:string)
+  as empty-sequence() <co xml:id="one0one.log.2_co" linkends="one0one.log.2"/> 
+…
+};</programlisting>
+        <calloutlist role="wide">
+          <callout arearefs="one0one.log.1_co" xml:id="one0one.log.1">
+            <para>The <literal>module namespace</literal> definition at the top defines …</para>
+          </callout>
+
+          <callout arearefs="one0one.log.2_co" xml:id="one0one.log.2">
+            <para>We declare a function that returns <literal>empty-sequence()?</literal>.</para>
+          </callout>
+        </calloutlist>
       </listitem>
 
       <listitem>
@@ -242,47 +281,45 @@
       </listitem>
 
       <listitem>
-        <para role="keep-with-next"><emphasis role="bold">Notes and warnings</emphasis>: The <literal>&lt;note></literal> element inserts a note and
-            <literal>&lt;warning></literal> a warning:</para>
+        <para role="keep-with-next"><emphasis role="bold">Notes, warnings &amp; cautions</emphasis>: </para>
         <note>
-          <para>This is a note! Nulla ac ex urna. Ut auctor odio quis nulla porta bibendum. Proin hendrerit molestie velit sit amet tristique. Vivamus
-            laoreet ligula leo, vitae placerat ipsum porta sed. Morbi blandit ex mauris, eu volutpat tortor mattis eu. Nam et molestie mi. Aliquam
-            erat volutpat. Aenean a imperdiet lectus. Phasellus condimentum dignissim laoreet.</para>
+          <para>This is a note! … (<tag>note</tag>)</para>
         </note>
         <warning>
-          <para>This is a warning! Nulla ac ex urna. Ut auctor odio quis nulla porta bibendum. Proin hendrerit molestie velit sit amet tristique.
-            Vivamus laoreet ligula leo, vitae placerat ipsum porta sed. Morbi blandit ex mauris, eu volutpat tortor mattis eu. Nam et molestie mi.
-            Aliquam erat volutpat. Aenean a imperdiet lectus. Phasellus condimentum dignissim laoreet.</para>
+          <para>This is a warning! … (<tag>warning</tag>)</para>
         </warning>
-        <para>If you add a <tag>title</tag> element, the standard title (NOTE/WARNING) will be replaced by its contents.</para>
+        <caution>
+          <para>This is a caution! … (<tag>caution</tag>)</para>
+        </caution>
+        <para>If you add a <tag>title</tag> element, the standard title will be replaced by its contents.</para>
       </listitem>
 
       <listitem>
-        <para role="keep-with-next"><emphasis role="bold">Sidebars</emphasis>: The <literal>&lt;sidebar></literal> element inserts sidebar
-          section:</para>
+        <para role="keep-with-next"><emphasis role="bold">Sidebars &amp; tips</emphasis>: </para>
         <sidebar>
           <title>Title of the sidebar</title>
-          <para>Contents of the sidebar. Nulla ac ex urna. Ut auctor odio quis nulla porta bibendum. Proin hendrerit molestie velit sit amet
-            tristique. Vivamus laoreet ligula leo, vitae placerat ipsum porta sed. Morbi blandit ex mauris, eu volutpat tortor mattis eu. Nam et
-            molestie mi. Aliquam erat volutpat. Aenean a imperdiet lectus. Phasellus condimentum dignissim laoreet.</para>
-          <informalfigure>
-            <mediaobject>
-              <imageobject>
-                <imagedata fileref="resources/logo-xatapult.jpg" width="10%"/>
-              </imageobject>
-            </mediaobject>
-          </informalfigure>
+          <para>Contents of the sidebar. … (<tag>sidebar</tag>)</para>
         </sidebar>
+        <tip>
+          <title>Title of the tip</title>
+          <para>Contents of the tip. … (<tag>tip</tag>)</para>
+        </tip>
       </listitem>
 
       <listitem>
         <para role="keep-with-next"><emphasis role="bold">Examples</emphasis>: The <literal>&lt;example></literal> element inserts an example:</para>
         <example xml:id="example-example">
           <title>Example of an example</title>
-          <para>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus elementum diam nec nunc elementum, eget dapibus dui malesuada. Aenean
-            facilisis consequat odio, vitae euismod eros tempor nec. Vestibulum cursus tortor tortor, semper euismod sapien sagittis et. </para>
+          <para>Lorem ipsum dolor sit amet, consectetur adipiscing elit. …</para>
         </example>
         <para>Add <code>role="nonumber"</code> to an example to stop it from getting a number.</para>
+      </listitem>
+
+      <listitem>
+        <para role="keep-with-next"><emphasis role="bold">Block quotes</emphasis>:</para>
+        <blockquote>
+          <para>Example of a <tag>blockquote</tag> element's output…</para>
+        </blockquote>
       </listitem>
 
     </itemizedlist>
@@ -308,6 +345,7 @@
       <listitem>
         <para><emphasis role="bold"><literal>&lt;literal></literal></emphasis> or <emphasis role="bold"><literal>&lt;code></literal></emphasis>:
           Creates a piece of literal, <code>mono-spaced</code> text.</para>
+        <para>Lot's of other elements that have to do with programming (like <tag>function></tag> and <tag>varname</tag>) have the same effect.</para>
 
       </listitem>
 
@@ -330,7 +368,7 @@
       <listitem>
         <para><emphasis role="bold"><literal>&lt;inlinemediaobject></literal></emphasis>: Inserts an inline image <inlinemediaobject role="global">
             <imageobject>
-              <imagedata fileref="resources/x-xatapult.jpg" width="3%"/>
+              <imagedata fileref="resources/x-xatapult.jpg" width="20%"/>
             </imageobject>
           </inlinemediaobject>, like this.</para>
         <para>In running the conversion pipelines, you can specify (as an option) a special "global" directory that contains global images (and other
@@ -376,6 +414,10 @@
       <listitem>
         <para><emphasis role="bold"><literal>&lt;userinput></literal></emphasis>: Use to indicate data entered by the user, like this: <userinput>data
             entered here</userinput></para>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold"><literal>&lt;quote></literal></emphasis>: Use for adding a quote: <quote>To be or not to be…</quote>.</para>
       </listitem>
 
       <listitem>
@@ -555,6 +597,17 @@
             </tbody>
           </tgroup>
         </table>
+      </listitem>
+
+      <listitem>
+        <para><emphasis role="bold"><literal>&lt;footnote></literal></emphasis> Adds a footnote<footnote>
+            <para>This is a footnote's text!</para>
+          </footnote></para>
+      </listitem>
+
+      <listitem>
+        <para>There are lots of elements that are ignored. For instance all the <tag>gui…</tag> elements, <tag>orgname</tag> and many more (but the
+          list is not (yet) DocBook complete).</para>
       </listitem>
 
     </itemizedlist>
