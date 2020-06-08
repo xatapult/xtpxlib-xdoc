@@ -60,7 +60,7 @@
               <colspec/>
               <thead>
                 <row>
-                  <entry>Module</entry>
+                  <entry>Module/Pipeline</entry>
                   <entry>Description</entry>
                 </row>
               </thead>
