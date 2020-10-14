@@ -49,6 +49,7 @@
   <p:variable name="filter" select="string(/*/@filter)"/>
   <p:variable name="toc-only" select="(/*/@toc-only, false())[1]"/>
   <p:variable name="depth" select="(xs:integer(/*/@depth), -1)[1]"/>
+  <p:variable name="id-suffix" select="string(/*/@id-suffix)"/>
 
   <p:identity name="original-source"/>
 
@@ -66,6 +67,7 @@
     </p:input>
     <p:with-param name="full-dir" select="$full-dir"/>
     <p:with-param name="filter" select="$filter"/>
+    <p:with-param name="id-suffix" select="$id-suffix"/>
   </p:xslt>
   <xdoc:markdown-to-docbook/>
   <p:identity name="toc"/>

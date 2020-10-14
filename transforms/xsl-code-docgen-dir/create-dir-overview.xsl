@@ -39,6 +39,7 @@
     <!-- Debug reporting only -->
   </xsl:param>
   <xsl:param name="filter" as="xs:string" required="yes"/>
+  <xsl:param name="id-suffix" as="xs:string" required="yes"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL DECLARATIONS: -->
@@ -70,11 +71,12 @@
                     <xsl:sort select="@name"/>
                     <xsl:variable name="filename" as="xs:string" select="@name"/>
                     <xsl:variable name="href-file" as="xs:string" select="@href-abs"/>
+                    <xsl:variable name="id" as="xs:string" select="$id-suffix || $filename"/>
                     <row>
                       <entry>
                         <para>
                           <code role="code-width-limited">
-                            <link linkend="{$filename}">{ $filename }</link>
+                            <link linkend="{$id}">{ $filename }</link>
                           </code>
                         </para>
                       </entry>

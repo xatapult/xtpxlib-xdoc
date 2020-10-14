@@ -40,7 +40,8 @@
   <xsl:variable name="sublevels" as="xs:boolean" select="xtlc:str2bln(/xdoc:transform/@sublevels, true())"/>
 
   <!-- Identifier information. The base id is either as @id on the xdoc:transform or is generated from the filename. -->
-  <xsl:variable name="base-id" as="xs:string" select="xtlc:str2id((/xdoc:transform/@id, $document-filename)[1])"/>
+  <xsl:variable name="id-suffix" as="xs:string?" select="/xdoc:transform/@id-suffix"/>
+  <xsl:variable name="base-id" as="xs:string" select="xtlc:str2id((/xdoc:transform/@id, $id-suffix || $document-filename)[1])"/>
 
   <!-- ================================================================== -->
 
@@ -512,7 +513,8 @@
     <xsl:param name="object-name" as="xs:string" required="yes"/>
 
     <!-- Options: -->
-    <xsl:variable name="option-declarations" as="element(p:option)*" select="$parent-elm/p:option[local:xpl-object-is-visible(.)]"/>
+    <xsl:variable name="option-declarations" as="element(p:option)*"
+      select="$parent-elm/p:option[local:xpl-object-is-visible(.)][not(local:xpl-option-is-static(.))]"/>
     <xsl:variable name="has-type-info" as="xs:boolean" select="exists($option-declarations/@as)"/>
     <xsl:if test="exists($option-declarations)">
       <table>
@@ -658,6 +660,13 @@
   <xsl:function name="local:xpl-object-is-visible" as="xs:boolean">
     <xsl:param name="object" as="element()"/>
     <xsl:sequence select="empty($object/@visibility) or ($object/@visibility ne 'private')"/>
+  </xsl:function>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="local:xpl-option-is-static" as="xs:boolean">
+    <xsl:param name="option" as="element(p:option)"/>
+    <xsl:sequence select="xtlc:str2bln($option/@static, false())"/>
   </xsl:function>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

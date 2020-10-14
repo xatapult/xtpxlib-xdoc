@@ -13,7 +13,8 @@
          header-level="…" 
          add-table-titles="…"
          sublevels="…"
-         id="…" &gt;
+         id="…" 
+         id-suffix="…" &gt;
         &lt;xi:include href="path/to/document/to/generate/documentation/for"/&gt;
       &lt;/xdoc:transform&gt;
       ```
@@ -27,7 +28,8 @@
         - Otherwise a title with this level is created (e.g. `header-level="1"` means a `sect1` element).
       - `@add-table-titles`: (boolean, default `false`) Whether to add titles to generated tables.
       - `@sublevels`: (boolean, default `true`) If true only the main section will be a "real" section. All sublevels will become bridgeheads.
-      - `@id`: Optional identifier of this section. If absent the id will become the document's filename.
+      - `@id`: Optional identifier of this section. If absent the id will become the document's filename, optionally suffixed with `@id-suffix`.
+      - `@id-suffix`: Optional suffix for creating an id based on the filename.
         
       If the format to document has  means to add documentation of itself (like XProc (`p:documentation`) or XML Schema (`xs:annotation`)), 
       this is used. If there is no such thing (like for XSLT and straight XML), comments starting with a tilde (`~`) are used. 
