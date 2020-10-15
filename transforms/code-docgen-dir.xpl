@@ -12,7 +12,8 @@
          dir="…" 
          depth="…"
          filter="…" 
-         toc-only="…" /&gt;
+         toc-only="…"
+         id-suffix="…" &gt;
       ```
       
       - `@dir`: Directory to process
@@ -22,6 +23,7 @@
         - When gt 1, the sub-directories up to this depth are processed.
       - `@filter`: optional regexp filter (e.g. get only XProc files with `filter="\.xpl$"`)
       - `@toc-only`: (boolean, default `false`) Whether to produce a ToC table only.
+      - `@id-suffix`: Optional suffix for creating an id based on the filename.      
         
       All (other) attributes are passed to `code-docgen.xpl`.        
   </p:documentation>
@@ -49,6 +51,7 @@
   <p:variable name="filter" select="string(/*/@filter)"/>
   <p:variable name="toc-only" select="(/*/@toc-only, false())[1]"/>
   <p:variable name="depth" select="(xs:integer(/*/@depth), -1)[1]"/>
+  <p:variable name="id-suffix" select="string(/*/@id-suffix)"/>
 
   <p:identity name="original-source"/>
 
@@ -66,6 +69,7 @@
     </p:input>
     <p:with-param name="full-dir" select="$full-dir"/>
     <p:with-param name="filter" select="$filter"/>
+    <p:with-param name="id-suffix" select="$id-suffix"/>
   </p:xslt>
   <xdoc:markdown-to-docbook/>
   <p:identity name="toc"/>
