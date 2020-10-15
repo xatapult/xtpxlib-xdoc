@@ -543,38 +543,45 @@
             </row>
           </thead>
           <tbody>
-            <xsl:for-each select="$option-declarations">
+            <xsl:for-each-group select="$option-declarations" group-by="@name">
               <xsl:sort select="@name"/>
-              <row>
-                <entry>
-                  <para>
-                    <code role="code-width-limited">{ @name }</code>
-                  </para>
-                </entry>
-                <xsl:if test="$has-type-info">
+              <xsl:for-each select="current-group()[1]">
+                <xsl:sort select="@name"/>
+                <row>
                   <entry>
                     <para>
-                      <code role="code-width-limited">{ @as }</code>
+                      <code role="code-width-limited">{ @name }</code>
                     </para>
                   </entry>
-                </xsl:if>
-                <entry>
-                  <para>
-                    <xsl:call-template name="output-true-marker">
-                      <xsl:with-param name="value" select="local:yes-no-to-boolean(@required, false())"/>
-                    </xsl:call-template>
-                  </para>
-                </entry>
-                <entry>
-                  <para>
-                    <code role="code-width-limited">{ @select }</code>
-                  </para>
-                </entry>
-                <entry>
-                  <xsl:call-template name="xpl-get-element-documentation"/>
-                </entry>
-              </row>
-            </xsl:for-each>
+                  <xsl:if test="$has-type-info">
+                    <entry>
+                      <para>
+                        <code role="code-width-limited">{ @as }</code>
+                      </para>
+                    </entry>
+                  </xsl:if>
+                  <entry>
+                    <para>
+                      <xsl:call-template name="output-true-marker">
+                        <xsl:with-param name="value" select="local:yes-no-to-boolean(@required, false())"/>
+                      </xsl:call-template>
+                    </para>
+                  </entry>
+                  <entry>
+                    <para>
+                      <code role="code-width-limited">{ @select }</code>
+                    </para>
+                  </entry>
+                  <entry>
+                    <xsl:call-template name="xpl-get-element-documentation"/>
+                  </entry>
+                </row>
+              </xsl:for-each>
+              
+            </xsl:for-each-group>
+            
+            
+            
           </tbody>
         </tgroup>
       </table>
