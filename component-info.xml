@@ -3,6 +3,9 @@
   xmlns:xml="http://www.w3.org/XML/1998/namespace" xsi:schemaLocation="http://www.xtpxlib.nl/ns/webdoc ../xtpxlib-webdoc/xsd/component-info.xsd" name="xtpxlib-xdoc">
 
   <releases>
+    <release version="1.1.2" date="2020-11-30">
+      Various small changes and fixes
+    </release>
     <release version="1.1.1" date="2020-10-15">
       Added `id-suffix` option to generating code documentation.
       
