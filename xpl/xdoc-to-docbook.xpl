@@ -31,7 +31,7 @@
   <p:serialization port="result" method="xml" encoding="UTF-8" indent="true" omit-xml-declaration="false"/>
 
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
-
+  
   <!-- ================================================================== -->
 
   <!-- Add a specific xml:base attribute to the root element. Otherwise base-uri computations somehow don't return the right value... -->
@@ -76,7 +76,8 @@
        element will be unwrapped before finishing.
   -->
   <p:viewport match="xdoc:transform" name="transform-viewport">
-
+    <p:variable name="base-uri-source" select="base-uri(/*)"/>
+    
     <!-- Make the href attribute absolute and process the $xdoc indicator: -->
     <p:xslt>
       <p:input port="stylesheet">
@@ -84,6 +85,10 @@
       </p:input>
       <p:with-param name="null" select="()"/>
     </p:xslt>
+    <!-- Add the base URI of the source document as an attribute: -->
+    <p:add-attribute attribute-name="xdoc:base-uri-source" match="/*">
+      <p:with-option name="attribute-value" select="$base-uri-source"/>
+    </p:add-attribute>
     <p:identity name="prepared-transform-element"/>
 
     <p:group>
