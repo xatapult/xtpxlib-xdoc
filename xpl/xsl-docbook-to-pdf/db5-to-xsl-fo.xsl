@@ -90,7 +90,7 @@
   <xsl:variable name="super-sub-font-shift" as="xs:double" select="$super-sub-font-size div 1.5"/>
   <xsl:variable name="chapter-font-size-addition" as="xs:double" select="6"/>
   <xsl:variable name="standard-small-indent" as="xs:double" select="0.15"/>
-  <xsl:variable name="standard-itemized-list-indent" as="xs:double" select="0.4"/>
+  <xsl:variable name="standard-itemized-list-indent" as="xs:double" select="0.6"/>
 
   <xsl:variable name="text-font-family" as="xs:string" select="'Garamond, serif'"/>
   <xsl:attribute-set name="attributes-standard-font-settings">
@@ -554,6 +554,7 @@
   <xsl:template match="db:itemizedlist | db:orderedlist" mode="mode-block">
 
     <xsl:variable name="in-ordered-list" as="xs:boolean" select="exists(self::db:orderedlist)"/>
+    <xsl:variable name="startingumber" as="xs:integer" select="xtlc:str2int(@startingnumber, 1)"/>
 
     <list-block provisional-distance-between-starts="{local:dimcm($standard-itemized-list-indent)}"
       space-after="{local:dimpt($standard-paragraph-distance-pt)}" keep-with-previous="always">
@@ -578,7 +579,7 @@
           <list-item-label end-indent="label-end()">
             <xsl:choose>
               <xsl:when test="$in-ordered-list">
-                <xsl:variable name="item-number" as="xs:integer" select="count(preceding-sibling::db:listitem) + 1"/>
+                <xsl:variable name="item-number" as="xs:integer" select="$position + $startingumber - 1"/>
                 <block><xsl:value-of select="$item-number"/>.</block>
               </xsl:when>
               <xsl:otherwise>
