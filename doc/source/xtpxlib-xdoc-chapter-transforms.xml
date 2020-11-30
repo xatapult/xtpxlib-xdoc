@@ -11,7 +11,7 @@
 
   <!-- ================================================================== -->
 
-  <sect1 >
+  <sect1>
     <title>Running an <code>xdoc</code> transform</title>
 
     <para>The <tag>xdoc:transform</tag>extension element runs an <code>xdoc</code> transformation (either XProc (1.0) or XSLT (2.0 or 3.0)). It is
@@ -50,6 +50,10 @@
             <tag>xdoc:transform</tag> root element itself for its attributes.</para>
       </listitem>
       <listitem>
+        <para>The <tag>xdoc:transform</tag> element has an additional attribute <code>xdoc:base-uri-source</code> that holds the URI of the source
+          document. Useful when resolving other URI&#160;s.</para>
+      </listitem>
+      <listitem>
         <para>The output of the stylesheet/pipeline must be the resulting (valid!) DocBook.</para>
       </listitem>
       <listitem>
@@ -68,7 +72,8 @@
     <programlisting><xi:include href="includes/example-data.xml" parse="text"/></programlisting>
 
     <para role="keep-with-next">You want to show this as tables. The following XSLT stylesheet (called <code>transform-weather-data.xsl</code>) will
-      do the <code>xdoc</code> transform trick. As its input it gets the weather data wrapped in the <tag>xdoc:transform</tag> element (see below).</para>
+      do the <code>xdoc</code> transform trick. As its input it gets the weather data wrapped in the <tag>xdoc:transform</tag> element (see
+      below).</para>
     <programlisting><xi:include href="transforms/transform-weather-data.xsl" parse="text"/></programlisting>
 
     <para role="keep-with-next">In your document you add:</para>

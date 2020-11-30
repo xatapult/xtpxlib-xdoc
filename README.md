@@ -13,7 +13,7 @@ The `xtpxlib-xdoc` component contains an XProc (1.0) based DocBook publication t
 
 ## Technical information
 
-Component version: V1.1.1 - 2020-10-15
+Component version: V1.1.2 - 2020-11-30
 
 Documentation: [`https://xdoc.xtpxlib.org`](https://xdoc.xtpxlib.org)
 
@@ -27,7 +27,11 @@ This component depends on:
 
 ## Version history
 
-**V1.1.1 - 2020-10-15 (current)**
+**V1.1.2 - 2020-11-30 (current)**
+
+Various small changes and fixes
+
+**V1.1.1 - 2020-10-15**
 
 Added `id-suffix` option to generating code documentation.
 

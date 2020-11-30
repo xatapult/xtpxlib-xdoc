@@ -211,8 +211,14 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:itemizedlist | db:orderedlist | db:simplelist">
+    
     <xsl:variable name="in-ordered-list" as="xs:boolean" select="exists(self::db:orderedlist)"/>
+    <xsl:variable name="startingumber" as="xs:integer" select="xtlc:str2int(@startingnumber, 1)"/>
+    
     <xsl:element name="{if ($in-ordered-list) then 'ol' else 'ul'}">
+      <xsl:if test="$in-ordered-list and ($startingumber ne 1)">
+        <xsl:attribute name="start" select="$startingumber"/>
+      </xsl:if>
       <xsl:attribute name="class" select="local-name(.)"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>

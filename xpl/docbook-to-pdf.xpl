@@ -122,7 +122,8 @@
   <!-- Make it into a PDF: -->
   <p:xsl-formatter name="step-create-pdf" content-type="application/pdf">
     <p:with-option name="href" select="$href-pdf"/>
-    <p:with-param name="UserConfig" select="$fop-config"/>
+<!--    <p:with-param name="UserConfig" select="replace($fop-config, '^file:/', '')"/>-->
+    <p:with-param name="null" select="()"/>
   </p:xsl-formatter>
 
 </p:declare-step>
