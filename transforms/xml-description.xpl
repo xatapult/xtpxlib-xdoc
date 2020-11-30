@@ -34,7 +34,10 @@
   </p:output>
 
   <!-- ================================================================== -->
-
+  
+  <p:unwrap match="xdoc:attribute-group"/>
+  <p:unwrap match="xdoc:element-group"/>
+  
   <p:xslt>
     <p:input port="stylesheet">
       <p:document href="xsl-xml-description/do-element-description.xsl"/>

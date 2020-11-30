@@ -217,4 +217,24 @@
     </xs:annotation>
     <xs:restriction base="xs:string"/>
   </xs:simpleType>
+  <xs:element name="attribute-group">
+    <xs:annotation>
+      <xs:documentation>Use this as the root element for include files that describe a number of attributes</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group maxOccurs="unbounded" minOccurs="0" ref="xdoc:g-attribute"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="element-group">
+    <xs:annotation>
+      <xs:documentation>Use this as the root element for include files that describe a number of elements</xs:documentation>
+    </xs:annotation>
+    <xs:complexType>
+      <xs:sequence>
+        <xs:group maxOccurs="unbounded" minOccurs="0" ref="xdoc:g-element"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>
