@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <info>
+    <title>xtpxlib/xdoc module</title>
+    <subtitle>Test document for print css</subtitle>
+    <pubdate>2020</pubdate>
+    <author>
+      <personname>Erik&#160;Siegel</personname>
+    </author>
+    <orgname>Xatapult</orgname>
+    <mediaobject role="top-logo">
+      <imageobject>
+        <imagedata fileref="../figures/logo-xatapult.jpg" width="20%"/>
+      </imageobject>
+    </mediaobject>
+    <mediaobject role="center-page">
+      <imageobject>
+        <imagedata fileref="../figures/Xatapult%20X.jpg" width="10%"/>
+      </imageobject>
+    </mediaobject>
+  </info>
+
+  <!-- ================================================================== -->
+
+  <chapter>
+    <title>Introduction</title>
+
+
+    <para>This document is for testing some features of the <code>xtpxlib-xdoc</code> component with regards to Print CSS.</para>
+    <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore eaque inventore harum impedit cupiditate necessitatibus dolorem
+      dignissimos eius ducimus at quod minima? Reprehenderit doloremque ratione unde veniam voluptate voluptatem at. </para>
+
+  </chapter>
+
+  <!-- ================================================================== -->
+
+  <chapter>
+    <title>Stuff</title>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>Parameters</title>
+
+      <para role="keep-with-next">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores aperiam sunt hic sit neque doloremque mollitia aliquam ex iure est
+        nesciunt quas voluptate doloribus. Modi nam placeat maxime accusamus dolorem. </para>
+      <para>Est similique vitae eaque accusantium magni ea illo ab amet ut debitis minus nostrum explicabo libero necessitatibus modi voluptatibus
+        atque voluptatem numquam in dolores quo expedita temporibus ipsam itaque nihil. </para>
+    </sect1>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  </chapter>
+
+
+</book>

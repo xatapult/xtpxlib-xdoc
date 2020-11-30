@@ -1,0 +1,10 @@
+@import url("common.css");
+
+@page {
+    size: A4;
+    margin: 2cm;
+}
+
+div.chapter {
+    page-break-before: always;
+}
