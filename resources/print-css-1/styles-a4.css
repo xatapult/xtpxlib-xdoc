@@ -36,7 +36,12 @@
 }
 @font-face {
   font-family: Courier;
-  src: url("Courier/courier.ttf") format('truetype');
+  src: url("Courier/09809_COURIER.ttf") format('truetype');
+  font-weight: bold;
+}
+@font-face {
+  font-family: Courier;
+  src: url("Courier/09769_cour.ttf") format('truetype');
 }
 /* ============================================================================================================ */
 /* Page setup: */
@@ -60,7 +65,6 @@
     margin-bottom: 0.75cm;
     border-bottom: 1px solid black;
     font-size: 75%;
-    background-color: lightgrey;
   }
   @top-right {
     content: counter(page) " / " counter(pages);
@@ -70,7 +74,6 @@
     margin-bottom: 0.75cm;
     border-bottom: 1px solid black;
     font-size: 75%;
-    background-color: lightgrey;
   }
 }
 /* ============================================================================================================ */
@@ -90,14 +93,14 @@ div.info {
 }
 div.info > h1.title {
   position: absolute;
-  top: 3cm;
+  top: 3.5cm;
   left: 0cm;
   font-size: 300%;
   font-weight: bold;
 }
 div.info > h2.subtitle {
   position: absolute;
-  top: 6cm;
+  top: 5.5cm;
   left: 0cm;
   font-size: 200%;
   font-weight: bold;
@@ -223,9 +226,76 @@ div.sect4 > h1.title:before {
   width: 2cm;
 }
 /* ============================================================================================================ */
+/* Lists: */
+li {
+  list-style-position: outside;
+  margin-bottom: 0.4em;
+}
+li:nth-last-child(1) {
+  margin-bottom: 1em;
+}
+li:nth-child(1) {
+  page-break-before: avoid;
+}
+ul > li {
+  margin-left: 22px;
+  list-style-type: square;
+}
+ol > li {
+  margin-left: 30px;
+  list-style-type: decimal;
+}
+dl > dt {
+  font-weight: bold;
+  margin-left: 1em;
+  margin-bottom: 0.4em;
+  margin-top: 0.8em;
+  page-break-after: avoid;
+}
+dl > dd {
+  margin-left: 2em;
+}
+dl > dt:nth-child(1) {
+  page-break-before: avoid;
+}
+/* ============================================================================================================ */
+/* Special block stuff: */
+.keep-with-next,
+.header {
+  page-break-after: avoid;
+}
+.keep-with-previous {
+  page-break-before: avoid;
+}
+p {
+  margin-bottom: 0.4em;
+}
+p.break {
+  content: "";
+  height: 1rem;
+}
+p.smallbreak {
+  content: "";
+  height: 0.5rem;
+}
+p.break-before {
+  margin-top: 1rem;
+}
+p.break-after {
+  margin-bottom: 1rem;
+}
+pre {
+  font-family: Courier;
+  font-size: 90%;
+  background-color: lightgrey;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding: 2pt;
+}
+/* ============================================================================================================ */
 /* Inline: */
 code {
   font-family: Courier;
-  font-weight: bold;
-  font-size: 95%;
+  font-size: 90%;
 }
+/* ============================================================================================================ */

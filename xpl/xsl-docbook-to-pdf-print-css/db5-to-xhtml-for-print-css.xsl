@@ -50,6 +50,7 @@
       'orderedlist': 'ol',
       'listitem': 'li',
       'variablelist': 'dl',
+      'programlisting': 'pre',
       (: Inline: :)
       'literal': 'code',
       'code': 'code'
@@ -349,7 +350,12 @@
     <xsl:if test="exists($elm/@number)">
       <xsl:attribute name="data-number" select="@number"/>
     </xsl:if>
-
+    
+    <!-- A list starting number: -->
+    <xsl:if test="exists($elm/@startingnumber)">
+      <xsl:attribute name="start" select="$elm/@startingnumber"/>
+    </xsl:if>
+    
     <!-- Check for preserve space: -->
     <xsl:if test="local-name($elm) = $add-preserve-space-element-names">
       <xsl:attribute name="xml:space" select="'preserve'"/>

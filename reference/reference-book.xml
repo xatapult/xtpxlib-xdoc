@@ -30,6 +30,11 @@
 
     <para>This chapter tests the structural elements, <tag>sect*</tag>.</para>
 
+    <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam
+      corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet,
+      consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis deserunt
+      iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+
     <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
     <sect1>
@@ -67,6 +72,206 @@
         </sect3>
       </sect2>
     </sect1>
+  </chapter>
+
+  <!-- ======================================================================= -->
+
+  <chapter>
+    <title>Lists</title>
+
+    <para>Several kinds of lists and nestings.</para>
+
+    <sect1>
+      <title>Basic lists</title>
+
+      <para>Bulleted list:</para>
+      <itemizedlist>
+        <listitem>
+          <para>List item #1</para>
+          <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam
+            corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis
+            deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+        </listitem>
+        <listitem>
+          <para>List item #2</para>
+        </listitem>
+        <listitem>
+          <para>List item #3</para>
+        </listitem>
+      </itemizedlist>
+
+      <para>Numbered list:</para>
+      <orderedlist>
+        <listitem>
+          <para>List item #1</para>
+          <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam
+            corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis
+            deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+        </listitem>
+        <listitem>
+          <para>List item #2</para>
+        </listitem>
+        <listitem>
+          <para>List item #3</para>
+        </listitem>
+      </orderedlist>
+
+      <para>Variable list:</para>
+      <variablelist>
+        <varlistentry>
+          <term>First entry</term>
+          <listitem>
+            <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+              quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet </para>
+            <para>nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam
+              ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam
+              voluptatem necessitatibus facere.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Second entry</term>
+          <listitem>
+            <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+              quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor
+              sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum
+              veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+          </listitem>
+        </varlistentry>
+        <varlistentry>
+          <term>Third entry</term>
+          <listitem>
+            <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+              quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor
+              sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum
+              veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+          </listitem>
+        </varlistentry>
+      </variablelist>
+
+    </sect1>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>Nested lists</title>
+
+      <itemizedlist>
+        <listitem>
+          <para>List item #1</para>
+          <orderedlist>
+            <listitem>
+              <para>List item #1</para>
+              <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+                quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum
+                dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti
+                quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+            </listitem>
+            <listitem>
+              <para>List item #2</para>
+            </listitem>
+            <listitem>
+              <para>List item #3</para>
+            </listitem>
+          </orderedlist>
+        </listitem>
+        <listitem>
+          <para>List item #2</para>
+        </listitem>
+        <listitem>
+          <para>List item #3</para>
+          <variablelist>
+            <varlistentry>
+              <term>First entry</term>
+              <listitem>
+                <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+                  quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet </para>
+                <para>nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil
+                  quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt
+                  ullam voluptatem necessitatibus facere.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Second entry</term>
+              <listitem>
+                <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+                  quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum
+                  dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti
+                  quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+              </listitem>
+            </varlistentry>
+            <varlistentry>
+              <term>Third entry</term>
+              <listitem>
+                <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+                  quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum
+                  dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti
+                  quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+              </listitem>
+            </varlistentry>
+          </variablelist>
+        </listitem>
+      </itemizedlist>
+
+    </sect1>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>Specials</title>
+
+      <para>Numbered list starting at 13:</para>
+      <orderedlist startingnumber="13">
+        <listitem>
+          <para>List item #1</para>
+        </listitem>
+        <listitem>
+          <para>List item #2</para>
+        </listitem>
+        <listitem>
+          <para>List item #3</para>
+        </listitem>
+      </orderedlist>
+    </sect1>
+
+  </chapter>
+
+  <!-- ======================================================================= -->
+
+  <chapter>
+    <title>Special block constructions</title>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>Special paragraphs</title>
+
+      <para>The following paragraph is a break:</para>
+      <para role="break">THIS SHOULD NOT BE VISIBLE</para>
+
+      <para>The following paragraph is a small break:</para>
+      <para role="smallbreak">THIS SHOULD NOT BE VISIBLE</para>
+
+      <para role="break-after">And this is a line after the small break. It has a break-after...</para>
+      <para>The para inbetween...</para>
+      <para>The para inbetween...</para>
+      <para>The para inbetween...</para>
+      <para role="break-before">The para with a break-before...</para>
+    </sect1>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>Program listings</title>
+
+      <programlisting xml:space="preserve">Line1
+Line2
+Line3</programlisting>
+      <para/>
+
+    </sect1>
+
   </chapter>
 
 </book>

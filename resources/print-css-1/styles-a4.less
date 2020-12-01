@@ -9,6 +9,10 @@
 @number-left-indent: 2cm;
 @header-top-margin: 1.2em;
 @header-bottom-margin: 0.8em; 
+@list-entries-spacing: 0.4em;
+@normal-para-spacing: 0.4em;
+@para-break-size: 1rem;
+@monospace-font-size: 90%;
 
 /* ============================================================================================================ */
 /* Font setup: */
@@ -48,7 +52,13 @@
 
 @font-face {
   font-family: Courier;
-  src: url("Courier/courier.ttf") format('truetype');
+  src: url("Courier/09809_COURIER.ttf") format('truetype');
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: Courier;
+  src: url("Courier/09769_cour.ttf") format('truetype');
 }
 
 /* ============================================================================================================ */
@@ -75,7 +85,6 @@
     margin-bottom: 0.75cm;
     border-bottom: 1px solid black;
     font-size: 75%;
-    background-color: lightgrey;
   }
   @top-right {
     content: counter(page) " / " counter(pages);
@@ -85,7 +94,6 @@
     margin-bottom: 0.75cm;
     border-bottom: 1px solid black;
     font-size: 75%;
-    background-color: lightgrey;
   }
 }
 
@@ -110,7 +118,7 @@ div.info {
 
 div.info > h1.title {
   position: absolute;
-  top: 3cm;
+  top: 3.5cm;
   left: 0cm;
   font-size: 300%;
   font-weight: bold;
@@ -118,7 +126,7 @@ div.info > h1.title {
 
 div.info > h2.subtitle {
   position: absolute;
-  top: 6cm;
+  top: 5.5cm;
   left: 0cm;
   font-size: 200%;
   font-weight: bold;
@@ -268,14 +276,98 @@ div.sect4 > h1.title:before {
 }
 
 /* ============================================================================================================ */
+/* Lists: */
+
+li {
+  list-style-position: outside;
+  margin-bottom: @list-entries-spacing;
+}
+
+li:nth-last-child(1) {
+  margin-bottom: @list-entries-spacing * 2.5;
+}
+
+li:nth-child(1) {
+  page-break-before: avoid;
+}
+
+ul > li {
+  margin-left: 22px;
+  list-style-type: square;
+}
+
+ol > li {
+  margin-left: 30px;
+  list-style-type: decimal;
+}
+
+dl > dt {
+  font-weight: bold;
+  margin-left: 1em;
+  margin-bottom: @normal-para-spacing;
+  margin-top: @normal-para-spacing * 2;
+  page-break-after: avoid;
+}
+
+dl > dd {
+  margin-left: 2em;
+}
+
+dl > dt:nth-child(1) {
+  page-break-before: avoid;
+}
+
+/* ============================================================================================================ */
+/* Special block stuff: */
+
+.keep-with-next, .header {
+  page-break-after: avoid;
+}
+
+.keep-with-previous {
+  page-break-before: avoid;
+}
+
+p {
+  margin-bottom: @normal-para-spacing;
+}
+
+p.break {
+  content: "";
+  height: @para-break-size;
+}
+
+p.smallbreak {
+  content: "";
+  height: @para-break-size * 0.5;
+}
+
+p.break-before {
+  margin-top: @para-break-size;
+}
+
+p.break-after {
+  margin-bottom: @para-break-size;
+}
+
+pre {
+  font-family: Courier;
+  font-size: @monospace-font-size;
+  background-color: lightgrey;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding: 2pt;
+}
+
+/* ============================================================================================================ */
 /* Inline: */
 
 code {
   font-family: Courier;
-  font-weight: bold;
-  font-size: 95%;
+  font-size: @monospace-font-size;
 } 
 
+/* ============================================================================================================ */
 
 
 
