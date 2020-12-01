@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-model href="../../../xatapult/xtpxlib-xdoc/xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude" version="5.0">
+
+  <info>
+    <title>XDoc DocBook Reference book </title>
+    <subtitle>Testing my DocBook-to-output conversions! </subtitle>
+    <pubdate>2020-12-12</pubdate>
+    <author>
+      <personname>Erik Siegel</personname>
+    </author>
+    <orgname>Xatapult</orgname>
+    <mediaobject role="top-logo">
+      <imageobject>
+        <imagedata fileref="figures/logo-xatapult.jpg" role="altwidth:10%" width="30%"/>
+      </imageobject>
+    </mediaobject>
+    <!-- This picture here doesn't make sense, but as long as it's something... -->
+    <mediaobject role="center-page">
+      <imageobject>
+        <imagedata fileref="figures/schematroll-1.svg" width="40%"/>
+      </imageobject>
+    </mediaobject>
+  </info>
+
+  <!-- ======================================================================= -->
+
+  <chapter>
+    <title>Structure</title>
+
+    <para>This chapter tests the structural elements, <tag>sect*</tag>.</para>
+
+    <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+    <sect1>
+      <title>A sect1</title>
+
+      <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam
+        corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet,
+        consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis
+        deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+
+      <sect2>
+        <title>A sect2</title>
+
+        <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam
+          corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet,
+          consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis
+          deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+
+        <sect3>
+          <title>A sect3</title>
+
+          <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam
+            corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor sit amet,
+            consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum veritatis
+            deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+
+          <sect4>
+            <title>A sect4</title>
+
+            <para>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto
+              quibusdam corrupti quis earum veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere. Lorem ipsum dolor
+              sit amet, consectetur adipisicing elit. Voluptas nihil quisquam ducimus nulla tempore possimus architecto quibusdam corrupti quis earum
+              veritatis deserunt iste impedit eveniet nesciunt ullam voluptatem necessitatibus facere.</para>
+          </sect4>
+        </sect3>
+      </sect2>
+    </sect1>
+  </chapter>
+
+</book>
