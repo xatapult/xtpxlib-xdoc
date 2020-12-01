@@ -1,49 +1,65 @@
-@import "css-reset.css";
 /* ============================================================================================================ */
 /* CSS stylesheet for Print CSS (Prince) 
  * 
 */
 /* ============================================================================================================ */
+
+@import "css-reset.css";
+
+@number-left-indent: 2cm;
+@header-top-margin: 1.2em;
+@header-bottom-margin: 0.8em; 
+
 /* ============================================================================================================ */
 /* Font setup: */
 @font-face {
   font-family: Times;
   src: url('Times/TIMESR.ttf') format('truetype');
 }
+
 @font-face {
   font-family: Gentium;
   src: url('Gentium/GentiumPlus-I.ttf') format('truetype');
 }
+
 @font-face {
   font-family: Lato;
   src: url("Lato2OFL/Lato-Regular.ttf") format('truetype');
 }
+
 @font-face {
   font-family: Lato;
   src: url("Lato2OFL/Lato-Bold.ttf") format('truetype');
   font-weight: bold;
 }
+
 @font-face {
   font-family: Lato;
   src: url("Lato2OFL/Lato-Italic.ttf") format('truetype');
   font-style: italic;
 }
+
 @font-face {
   font-family: Lato;
   src: url("Lato2OFL/Lato-BoldItalic.ttf") format('truetype');
   font-style: italic;
   font-weight: bold;
 }
+
 @font-face {
   font-family: Courier;
   src: url("Courier/courier.ttf") format('truetype');
 }
+
 /* ============================================================================================================ */
 /* Page setup: */
+
 @page frontpage {
   size: A4;
   margin: 2cm;
+
 }
+
 @page running-text {
   size: A4;
   margin-left: 3.5cm;
@@ -51,7 +67,6 @@
   margin-top: 2cm;
   margin-bottom: 1.5cm;
   font-family: Lato;
-  
   @top-left {
     content: string(chapter-title);
     vertical-align: bottom;
@@ -73,21 +88,26 @@
     background-color: lightgrey;
   }
 }
+
 /* ============================================================================================================ */
 /* Generic: */
+
 body {
   font-family: Lato;
   font-size: 10pt;
   orphans: 3;
   widows: 3;
 }
+
 /* ============================================================================================================ */
 /* Front page: */
+
 div.info {
   page: frontpage;
   font-family: Lato;
   font-size: 10pt;
 }
+
 div.info > h1.title {
   position: absolute;
   top: 3cm;
@@ -95,6 +115,7 @@ div.info > h1.title {
   font-size: 300%;
   font-weight: bold;
 }
+
 div.info > h2.subtitle {
   position: absolute;
   top: 6cm;
@@ -102,130 +123,160 @@ div.info > h2.subtitle {
   font-size: 200%;
   font-weight: bold;
 }
+
 div.info p.personname {
   position: absolute;
   top: 25cm;
   left: 0cm;
-}
-div.info > p.orgname {
+} 
+
+div.info > p.orgname{
   position: absolute;
   top: 25.5cm;
   left: 0cm;
 }
-div.info > p.pubdate {
+
+div.info > p.pubdate{
   position: absolute;
   top: 26cm;
   left: 0cm;
 }
+
 div.info > img.top-logo {
   position: absolute;
   top: 0cm;
   left: 0cm;
 }
+
 div.info > img.center-page {
   position: absolute;
   top: 8cm;
   left: 3cm;
 }
+
+
+
 /* ============================================================================================================ */
 /* Structure: */
+
 /* Chapter:*/
 div.chapter {
   page: running-text;
   page-break-before: always;
   string-set: chapter-number attr(data-number);
 }
+
 div.chapter > h1.title {
   /* Preserve the title for use in the page header: */
   string-set: chapter-title content();
   font-size: 200%;
   font-weight: bold;
-  margin-top: 1.2em;
-  margin-left: -2cm;
-  margin-bottom: 0.8em;
+  margin-top: @header-top-margin;
+  margin-left: -@number-left-indent;
+  margin-bottom: @header-bottom-margin;
   page-break-after: avoid;
 }
+
 div.chapter > h1.title:before {
   content: string(chapter-number);
-  float: left;
-  width: 2cm;
+  float:left;
+  width: @number-left-indent;
 }
+
 /* sect1: */
 div.sect1 {
   string-set: sect1-number attr(data-number);
-}
+} 
+
 div.sect1 > h1.title {
   /* Preserve the title for use in the page header: */
   font-size: 150%;
   font-weight: bold;
-  margin-left: -2cm;
-  margin-top: 1.2em;
-  margin-bottom: 0.8em;
+  margin-left: -@number-left-indent;
+  margin-top: @header-top-margin;
+  margin-bottom: @header-bottom-margin;
   page-break-after: avoid;
 }
+
 div.sect1 > h1.title:before {
   content: string(sect1-number);
-  float: left;
-  width: 2cm;
+  float:left;
+  width: @number-left-indent;
 }
+
 /* sect2: */
 div.sect2 {
   string-set: sect2-number attr(data-number);
-}
+} 
+
 div.sect2 > h1.title {
   /* Preserve the title for use in the page header: */
   font-size: 120%;
   font-weight: bold;
-  margin-left: -2cm;
-  margin-top: 1.2em;
-  margin-bottom: 0.8em;
+  margin-left: -@number-left-indent;
+  margin-top: @header-top-margin;
+  margin-bottom: @header-bottom-margin;
   page-break-after: avoid;
 }
+
 div.sect2 > h1.title:before {
   content: string(sect2-number);
-  float: left;
-  width: 2cm;
+  float:left;
+  width: @number-left-indent;
 }
+
 /* sect3: */
 div.sect3 {
   string-set: sect3-number attr(data-number);
-}
+} 
+
 div.sect3 > h1.title {
   /* Preserve the title for use in the page header: */
   font-size: 120%;
   font-weight: bold;
-  margin-left: -2cm;
-  margin-top: 1.2em;
-  margin-bottom: 0.8em;
+  margin-left: -@number-left-indent;
+  margin-top: @header-top-margin;
+  margin-bottom: @header-bottom-margin;
   page-break-after: avoid;
 }
+
 div.sect3 > h1.title:before {
   content: string(sect3-number);
-  float: left;
-  width: 2cm;
+  float:left;
+  width: @number-left-indent;
 }
+
 /* sect4: */
 div.sect4 {
   string-set: sect4-number attr(data-number);
-}
+} 
+
 div.sect4 > h1.title {
   /* Preserve the title for use in the page header: */
   font-size: 120%;
   font-weight: bold;
-  margin-left: -2cm;
-  margin-top: 1.2em;
-  margin-bottom: 0.8em;
+  margin-left: -@number-left-indent;
+  margin-top: @header-top-margin;
+  margin-bottom: @header-bottom-margin;
   page-break-after: avoid;
 }
+
 div.sect4 > h1.title:before {
   content: string(sect4-number);
-  float: left;
-  width: 2cm;
+  float:left;
+  width: @number-left-indent;
 }
+
 /* ============================================================================================================ */
 /* Inline: */
+
 code {
   font-family: Courier;
   font-weight: bold;
   font-size: 95%;
-}
+} 
+
+
+
+
+

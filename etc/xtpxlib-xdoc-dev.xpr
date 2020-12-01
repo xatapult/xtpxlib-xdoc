@@ -14,11 +14,11 @@
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/xsl-docbook-to-xhtml/db5-to-xhtml.xsl</String>
+                                    <String>../reference/reference-book.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>test-xdoc-to-xhtml</String>
+                                        <String>test-docbook-to-pdf-print-css</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -34,11 +34,51 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>../xpl/docbook-to-xhtml.xpl</String>
+                                    <String>../build/test-docbook-to-pdf-print-css-result.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
-                                        <String>test-xdoc-to-xhtml</String>
+                                        <String>test-docbook-to-pdf-print-css</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xsl-docbook-to-pdf-print-css/db5-to-xhtml-for-print-css.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-docbook-to-pdf-print-css</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/docbook-to-pdf-print-css.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-docbook-to-pdf-print-css</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -64,6 +104,106 @@
                                 <field name="scenarioTypes">
                                     <list>
                                         <String>XML</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xdoc-to-xhtml.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-xdoc-to-xhtml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../doc/source/xtpxlib-xdoc-componentdoc.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/xsl-docbook-to-xhtml/db5-to-xhtml.xsl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-xdoc-to-xhtml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../doc/source/xtpxlib-chapter-docbook-dialect.xml</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../xpl/docbook-to-xhtml.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>test-xdoc-to-xhtml</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
                                     </list>
                                 </field>
                                 <field name="scenarioStorageLocations">
@@ -199,26 +339,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>run-getting-started</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioStorageLocations">
-                                    <list>
-                                        <Byte>2</Byte>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../doc/source/xtpxlib-xdoc-componentdoc.xml</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>generate-componentdoc</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -415,26 +535,6 @@
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../../xtpxlib-common/doc/data/componentdoc-website-template.html</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>generate-componentdoc</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioStorageLocations">
-                                    <list>
-                                        <Byte>2</Byte>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../doc/source/xtpxlib-chapter-docbook-dialect.xml</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -779,26 +879,6 @@
                                 <field name="scenarioIds">
                                     <list>
                                         <String>test-generate-moduledoc-website</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioTypes">
-                                    <list>
-                                        <String>XPROC</String>
-                                    </list>
-                                </field>
-                                <field name="scenarioStorageLocations">
-                                    <list>
-                                        <Byte>2</Byte>
-                                    </list>
-                                </field>
-                            </scenarioAssociation>
-                            <scenarioAssociation>
-                                <field name="url">
-                                    <String>../xpl/xdoc-to-xhtml.xpl</String>
-                                </field>
-                                <field name="scenarioIds">
-                                    <list>
-                                        <String>test-xdoc-to-xhtml</String>
                                     </list>
                                 </field>
                                 <field name="scenarioTypes">
@@ -1598,6 +1678,178 @@
                                 </field>
                                 <field name="locationToOpenInBrowserURL">
                                     <null/>
+                                </field>
+                                <field name="openInEditor">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="showInHTMLPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInXMLPane">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="showInSVGPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="showInResultSetPane">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="useXSLTInput">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="xsltParams">
+                                    <list/>
+                                </field>
+                                <field name="cascadingStylesheets">
+                                    <String-array/>
+                                </field>
+                                <field name="xslTransformer">
+                                    <String>Add-on for Calabash XProc Engine</String>
+                                </field>
+                                <field name="extensionURLs">
+                                    <String-array/>
+                                </field>
+                            </xprocScenario>
+                            <xprocScenario>
+                                <field name="inputPorts">
+                                    <xprocInputPort-array>
+                                        <xprocInputPort>
+                                            <field name="urls">
+                                                <String-array>
+                                                    <String>file:/C:/Data/Erik/work/xatapult/xtpxlib-xdoc/reference/reference-book.xml</String>
+                                                </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
+                                            </field>
+                                        </xprocInputPort>
+                                    </xprocInputPort-array>
+                                </field>
+                                <field name="outputPorts">
+                                    <xprocOutputPort-array>
+                                        <xprocOutputPort>
+                                            <field name="url">
+                                                <String>${BUILD}/test-docbook-to-pdf-print-css-result.xml</String>
+                                            </field>
+                                            <field name="showInSequenceView">
+                                                <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
+                                            </field>
+                                        </xprocOutputPort>
+                                    </xprocOutputPort-array>
+                                </field>
+                                <field name="xprocOptions">
+                                    <xprocOption-array>
+                                        <xprocOption>
+                                            <field name="namespaceURI">
+                                                <String></String>
+                                            </field>
+                                            <field name="localName">
+                                                <String>href-pdf</String>
+                                            </field>
+                                            <field name="value">
+                                                <String>${BUILD}/test-docbook-to-pdf-print-css.pdf</String>
+                                            </field>
+                                        </xprocOption>
+                                        <xprocOption>
+                                            <field name="namespaceURI">
+                                                <String></String>
+                                            </field>
+                                            <field name="localName">
+                                                <String>print-css-processor</String>
+                                            </field>
+                                            <field name="value">
+                                                <null/>
+                                            </field>
+                                        </xprocOption>
+                                        <xprocOption>
+                                            <field name="namespaceURI">
+                                                <String></String>
+                                            </field>
+                                            <field name="localName">
+                                                <String>href-css</String>
+                                            </field>
+                                            <field name="value">
+                                                <null/>
+                                            </field>
+                                        </xprocOption>
+                                        <xprocOption>
+                                            <field name="namespaceURI">
+                                                <String></String>
+                                            </field>
+                                            <field name="localName">
+                                                <String>href-xhtml</String>
+                                            </field>
+                                            <field name="value">
+                                                <String>${BUILD}/test-docbook-to-pdf-print-css.xhtml</String>
+                                            </field>
+                                        </xprocOption>
+                                    </xprocOption-array>
+                                </field>
+                                <field name="xprocParameters">
+                                    <xprocParameterPort-array>
+                                        <xprocParameterPort>
+                                            <field name="portName">
+                                                <String>*</String>
+                                            </field>
+                                            <field name="parameters">
+                                                <xprocParameter-array/>
+                                            </field>
+                                        </xprocParameterPort>
+                                    </xprocParameterPort-array>
+                                </field>
+                                <field name="advancedOptionsMap">
+                                    <null/>
+                                </field>
+                                <field name="name">
+                                    <String>test-docbook-to-pdf-print-css</String>
+                                </field>
+                                <field name="baseURL">
+                                    <null/>
+                                </field>
+                                <field name="footerURL">
+                                    <null/>
+                                </field>
+                                <field name="fOPMethod">
+                                    <null/>
+                                </field>
+                                <field name="fOProcessorName">
+                                    <null/>
+                                </field>
+                                <field name="headerURL">
+                                    <null/>
+                                </field>
+                                <field name="inputXSLURL">
+                                    <String>file:/C:/Data/Erik/work/xatapult/xtpxlib-xdoc/xpl/docbook-to-pdf-print-css.xpl</String>
+                                </field>
+                                <field name="inputXMLURL">
+                                    <String></String>
+                                </field>
+                                <field name="defaultScenario">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="isFOPPerforming">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="type">
+                                    <String>XPROC</String>
+                                </field>
+                                <field name="saveAs">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="openInBrowser">
+                                    <Boolean>false</Boolean>
+                                </field>
+                                <field name="outputResource">
+                                    <null/>
+                                </field>
+                                <field name="openOtherLocationInBrowser">
+                                    <Boolean>true</Boolean>
+                                </field>
+                                <field name="locationToOpenInBrowserURL">
+                                    <String>${BUILD}/test-docbook-to-pdf-print-css.pdf</String>
                                 </field>
                                 <field name="openInEditor">
                                     <Boolean>true</Boolean>

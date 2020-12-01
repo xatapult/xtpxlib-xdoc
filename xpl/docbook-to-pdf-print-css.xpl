@@ -65,12 +65,13 @@
   </p:option>
 
   <p:output port="result" primary="true" sequence="false">
+    <p:pipe port="result" step="xhtml-before-print-css-processing"></p:pipe>
     <p:documentation>The resulting XSL-FO (that was transformed into the PDF).</p:documentation>
   </p:output>
-
+  <p:serialization port="result" method="xml" encoding="UTF-8" indent="true" omit-xml-declaration="false"/>
+  
   <p:import href="../../xtpxlib-common/xplmod/common.mod/common.mod.xpl"/>
-  <p:import href="docbook-to-xhtml.xpl"/>
-
+  
   <p:variable name="arg-separator" select="'|'"/>
 
   <p:variable name="href-in-normalized" select="replace($href-xhtml, '^file:/+', '')"/>
@@ -78,28 +79,45 @@
 
   <!-- ================================================================== -->
 
-  <!-- Create a basic XHTML file: -->
-  <xdoc:docbook-to-xhtml/>
-
-  <!-- Make it into useable XHTML: -->
+  <!-- Add a specific xml:base attribute to the root element. Otherwise base-uri computations somehow don't return the right value... -->
+  <p:add-attribute attribute-name="xml:base" match="/*">
+    <p:with-option name="attribute-value" select="base-uri(/*)"/>
+  </p:add-attribute>
+  
+  <!-- Create the input XHTML: -->
   <p:xslt>
     <p:input port="stylesheet">
-      <p:document href="xsl-docbook-to-pdf-print-css/prepare-print-css.xsl"/>
-    </p:input>
-    <p:with-param name="print-css-processor" select="$print-css-processor"/>
-    <p:with-param name="href-css" select="$href-css"/>
-  </p:xslt>
-  <p:xslt>
-    <p:input port="stylesheet">
-      <p:document href="xsl-docbook-to-pdf-print-css/to-xhtml.xsl"/>
+      <p:document href="xsl-shared/add-identifiers.xsl"/>
     </p:input>
     <p:with-param name="null" select="()"/>
   </p:xslt>
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-shared/add-numbering.xsl"/>
+    </p:input>
+    <p:with-param name="null" select="()"/>
+  </p:xslt>
+  
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-docbook-to-pdf-print-css/db5-to-xhtml-for-print-css.xsl"/>
+    </p:input>
+    <p:with-param name="href-css" select="$href-css"/>
+    <p:with-param name="print-css-processor" select="$print-css-processor"/>
+  </p:xslt>
+  <p:identity name="xhtml-before-print-css-processing"></p:identity>
+  
+  <!-- Store it (this *must* be done, because the Print CSS processor expects it on disk): -->
   <p:store indent="true" method="xml" name="store-xhtml">
     <p:with-option name="href" select="$href-xhtml"/>
   </p:store>
 
   <!-- Turn it in to PDF: -->
+  <p:identity>
+    <p:input port="source">
+      <p:pipe port="result" step="xhtml-before-print-css-processing"/>
+    </p:input>
+  </p:identity>
   <p:choose>
 
     <!-- Prince: -->
@@ -129,5 +147,6 @@
     </p:otherwise>
 
   </p:choose>
+  <p:sink/>
 
 </p:declare-step>
