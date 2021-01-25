@@ -30,7 +30,8 @@
 
   <xsl:variable name="standard-coded-description-indent" as="xs:integer" select="2"/>
   <xsl:variable name="show-nr-of-enum-values-for-attribute-in-coded-description" as="xs:integer" select="3">
-    <!-- The number of attribute enumeration values to show in the coded description (if there are more this will be followed by an ellipsis) -->
+    <!-- The number of attribute enumeration values to show in the coded description 
+      (if there are more this will be followed by an ellipsis) -->
   </xsl:variable>
 
   <xsl:variable name="description-table-name-column-min-width-cm" as="xs:double" select="1.2"/>
@@ -209,7 +210,6 @@
   <xsl:template match="xdoc:choice" mode="mode-coded-description">
     <xsl:param name="indent" as="xs:integer" required="yes"/>
 
-    <xsl:variable name="occurs" as="xs:string" select="(@occurs, '*')[1]"/>
     <xsl:variable name="opening-prefix" as="xs:string" select="'( '"/>
     <xsl:variable name="elements" as="element()+" select="xdoc:element | xdoc:element-placeholder"/>
 

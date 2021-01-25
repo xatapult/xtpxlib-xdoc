@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local"
-  xmlns:db="http://docbook.org/ns/docbook" xmlns:fo="http://www.w3.org/1999/XSL/Format" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
-  xmlns="http://www.w3.org/1999/XSL/Format" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xlink="http://www.w3.org/1999/xlink"
+<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local"
+  xmlns:db="http://docbook.org/ns/docbook" xmlns:fo="http://www.w3.org/1999/XSL/Format"
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns="http://www.w3.org/1999/XSL/Format"
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xlink="http://www.w3.org/1999/xlink"
   exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!--*	
@@ -39,16 +41,19 @@
   </xsl:param>
 
   <xsl:variable name="default-main-font-size" as="xs:integer" select="8"/>
-  <xsl:param name="main-font-size" as="xs:string" required="no" select="string($default-main-font-size)"/>
+  <xsl:param name="main-font-size" as="xs:string" required="no"
+    select="string($default-main-font-size)"/>
 
   <xsl:variable name="output-type-sb" as="xs:string" select="'sb'">
     <!-- sb = standard book, the book as sized by O'Reilly and most others, 17,2cm wide, 23,1cm high -->
   </xsl:variable>
   <xsl:variable name="output-type-a4" as="xs:string" select="'a4'"/>
   <xsl:param name="output-type" as="xs:string" required="no" select="$output-type-a4"/>
-  <xsl:variable name="is-a4" as="xs:boolean" select="lower-case(normalize-space($output-type)) eq $output-type-a4"/>
+  <xsl:variable name="is-a4" as="xs:boolean"
+    select="lower-case(normalize-space($output-type)) eq $output-type-a4"/>
 
-  <xsl:variable name="is-preliminary-version" as="xs:boolean" select="xtlc:str2bln($preliminary-version, false())"/>
+  <xsl:variable name="is-preliminary-version" as="xs:boolean"
+    select="xtlc:str2bln($preliminary-version, false())"/>
   <xsl:variable name="do-chapter-id" as="xs:string" select="normalize-space($chapter-id)"/>
   <xsl:variable name="chapter-id-provided" as="xs:boolean" select="$do-chapter-id ne ''"/>
 
@@ -83,7 +88,8 @@
   </xsl:attribute-set>
 
   <!-- Standard attribute sets and other settings: -->
-  <xsl:variable name="standard-font-size" as="xs:double" select="xtlc:str2int($main-font-size, $default-main-font-size)"/>
+  <xsl:variable name="standard-font-size" as="xs:double"
+    select="xtlc:str2int($main-font-size, $default-main-font-size)"/>
   <xsl:variable name="standard-fixed-font-size" as="xs:double" select="$standard-font-size - 1"/>
   <xsl:variable name="special-titles-font-size" as="xs:double" select="$standard-font-size - 2"/>
   <xsl:variable name="super-sub-font-size" as="xs:double" select="$standard-font-size - 3"/>
@@ -105,7 +111,8 @@
     <xsl:attribute name="font-size" select="local:dimpt($standard-font-size)"/>
   </xsl:attribute-set>
 
-  <xsl:variable name="code-font-family" as="xs:string" select="'&apos;&apos;Courier New&apos;&apos;, monospace'"/>
+  <xsl:variable name="code-font-family" as="xs:string"
+    select="'&apos;&apos;Courier New&apos;&apos;, monospace'"/>
   <xsl:attribute-set name="attributes-codeblock-font-settings">
     <xsl:attribute name="font-family" select="$code-font-family"/>
     <xsl:attribute name="font-size" select="local:dimpt($standard-font-size - 3)"/>
@@ -116,8 +123,10 @@
 
   <!-- Distance between paragraphs -->
   <xsl:variable name="standard-paragraph-distance-pt" as="xs:double" select="2"/>
-  <xsl:variable name="break-paragraph-distance-pt" as="xs:double" select="$standard-paragraph-distance-pt * 5"/>
-  <xsl:variable name="standard-extra-paragraph-distance-pt" as="xs:double" select="$standard-paragraph-distance-pt * 2"/>
+  <xsl:variable name="break-paragraph-distance-pt" as="xs:double"
+    select="$standard-paragraph-distance-pt * 5"/>
+  <xsl:variable name="standard-extra-paragraph-distance-pt" as="xs:double"
+    select="$standard-paragraph-distance-pt * 2"/>
 
   <!-- Others: -->
   <xsl:variable name="bookmark-final-page-block" as="xs:string" select="'bookmark-final-page-block'"/>
@@ -130,13 +139,15 @@
   <!-- Debug info: -->
   <xsl:variable name="debug-info-block" as="element(fo:block)?">
     <xsl:if test="$is-preliminary-version">
-      <fo:block font-style="italic" font-size="{local:dimpt($standard-font-size - 1)}" font-weight="bold">Preliminary version (<xsl:value-of
+      <fo:block font-style="italic" font-size="{local:dimpt($standard-font-size - 1)}"
+        font-weight="bold">Preliminary version (<xsl:value-of
           select="format-dateTime(current-dateTime(), $xtlc:default-dt-format-en)"/>)</fo:block>
     </xsl:if>
   </xsl:variable>
 
   <!-- Locations: -->
-  <xsl:variable name="callouts-location" as="xs:string" select="resolve-uri('../../resources/callouts/', static-base-uri()) => xtlc:href-canonical()"/>
+  <xsl:variable name="callouts-location" as="xs:string"
+    select="resolve-uri('../../resources/callouts/', static-base-uri()) => xtlc:href-canonical()"/>
 
   <!-- ================================================================== -->
   <!-- MAIN TEMPLATES: -->
@@ -155,12 +166,14 @@
       <!-- Define the pages: -->
       <layout-master-set>
         <!-- Front page: -->
-        <simple-page-master master-name="{$spm-frontpage}" xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
+        <simple-page-master master-name="{$spm-frontpage}"
+          xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
           <!-- The front page uses the full available page, no headers or footers. -->
           <region-body margin-top="0cm"/>
         </simple-page-master>
         <!-- Content pages -->
-        <simple-page-master master-name="{$spm-contents}" xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
+        <simple-page-master master-name="{$spm-contents}"
+          xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
           <!-- The normal content page defines a header. -->
           <region-body margin-top="{if ($is-a4) then 2 else 1.5}cm"/>
           <region-before extent="{if ($is-a4) then 1.5 else 1}cm"/>
@@ -189,7 +202,8 @@
       <layout-master-set>
         <!-- No front page -->
         <!-- Content pages -->
-        <simple-page-master master-name="{$spm-contents}" xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
+        <simple-page-master master-name="{$spm-contents}"
+          xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
           <!-- The normal content page defines a header. -->
           <region-body margin-top="2cm"/>
           <region-before extent="1.5cm"/>
@@ -227,7 +241,8 @@
     <!-- Title information: -->
     <block-container font-variant="small-caps" letter-spacing="1pt" font-weight="bold">
       <block space-before="{local:dimpt($break-paragraph-distance-pt div 2)}"
-        font-size="{local:dimpt($standard-font-size + $chapter-font-size-addition)}" font-family="{$title-font-family}">
+        font-size="{local:dimpt($standard-font-size + $chapter-font-size-addition)}"
+        font-family="{$title-font-family}">
         <xsl:value-of select="string-join((/*/db:info/db:title, /*/db:info/db:subtitle), ' - ')"/>
       </block>
     </block-container>
@@ -237,7 +252,8 @@
     <xsl:variable name="author" as="xs:string?" select="/*/db:info/db:author/db:personname"/>
     <xsl:variable name="organization" as="xs:string?" select="/*/db:info/db:orgname"/>
     <xsl:if test="exists($author) or exists($organization) or exists($publication-date)">
-      <block space-before="{local:dimpt($break-paragraph-distance-pt div 2)}" font-size="{local:dimpt($standard-font-size + 1)}">
+      <block space-before="{local:dimpt($break-paragraph-distance-pt div 2)}"
+        font-size="{local:dimpt($standard-font-size + 1)}">
         <xsl:value-of select="string-join(($author, $organization, $publication-date), ' - ')"/>
       </block>
     </xsl:if>
@@ -252,7 +268,8 @@
 
   <xsl:template name="create-book-frontpage">
 
-    <page-sequence master-reference="{$spm-frontpage}" xsl:use-attribute-sets="attributes-title-font-settings">
+    <page-sequence master-reference="{$spm-frontpage}"
+      xsl:use-attribute-sets="attributes-title-font-settings">
       <flow flow-name="xsl-region-body">
 
         <!-- Logo's at the top: -->
@@ -269,8 +286,10 @@
         </xsl:for-each>
 
         <!-- Title information: -->
-        <block-container absolute-position="fixed" top="{local:dimcm($standard-page-margin-top + 5)}" left="{local:dimcm($standard-page-margin-left)}"
-          font-variant="small-caps" letter-spacing="1pt" font-weight="bold">
+        <block-container absolute-position="fixed"
+          top="{local:dimcm($standard-page-margin-top + 5)}"
+          left="{local:dimcm($standard-page-margin-left)}" font-variant="small-caps"
+          letter-spacing="1pt" font-weight="bold">
           <block space-after="1cm" font-size="18pt">
             <xsl:value-of select="/*/db:info/db:title"/>
           </block>
@@ -283,7 +302,8 @@
         <xsl:for-each select="/*/db:info/db:mediaobject">
           <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
           <xsl:if test="'center-page' = $roles">
-            <block-container absolute-position="fixed" top="{local:dimcm($standard-page-margin-top + 10)}"
+            <block-container absolute-position="fixed"
+              top="{local:dimcm($standard-page-margin-top + 10)}"
               left="{local:dimcm($standard-page-margin-left)}"
               width="{local:dimcm($page-width - $standard-page-margin-right - $standard-page-margin-left)}">
               <block vertical-align="middle" text-align="center">
@@ -297,7 +317,8 @@
         </xsl:for-each>
 
         <!-- Some more information at the bottom: -->
-        <block-container absolute-position="fixed" top="{local:dimcm($page-height - 3)}" left="{local:dimcm($standard-page-margin-left)}">
+        <block-container absolute-position="fixed" top="{local:dimcm($page-height - 3)}"
+          left="{local:dimcm($standard-page-margin-left)}">
           <xsl:variable name="publication-date" as="xs:string?" select="/*/db:info/db:pubdate"/>
           <xsl:variable name="author" as="xs:string?" select="/*/db:info/db:author/db:personname"/>
           <xsl:variable name="organization" as="xs:string?" select="/*/db:info/db:orgname"/>
@@ -326,24 +347,27 @@
     <xsl:param name="root" as="element()" required="no" select="."/>
     <xsl:param name="in-article" as="xs:boolean" required="yes" tunnel="true"/>
 
-    <page-sequence master-reference="{$spm-contents}" xsl:use-attribute-sets="attributes-standard-font-settings" initial-page-number="1">
-      
+    <page-sequence master-reference="{$spm-contents}"
+      xsl:use-attribute-sets="attributes-standard-font-settings" initial-page-number="1">
+
       <!-- Footnote separator: -->
-      <fo:static-content flow-name="xsl-footnote-separator">                   
-        <fo:block text-align-last="justify">                         
-          <fo:leader leader-length="50%" rule-thickness="0.5pt" leader-pattern="rule"/>                       
+      <fo:static-content flow-name="xsl-footnote-separator">
+        <fo:block text-align-last="justify">
+          <fo:leader leader-length="50%" rule-thickness="0.5pt" leader-pattern="rule"/>
         </fo:block>
       </fo:static-content>
-      
+
       <!-- Setup a header: -->
-      <static-content flow-name="xsl-region-before" font-size="{local:dimpt($special-titles-font-size)}" font-family="{$title-font-family}">
+      <static-content flow-name="xsl-region-before"
+        font-size="{local:dimpt($special-titles-font-size)}" font-family="{$title-font-family}">
         <block border-bottom="thin solid black">
           <xsl:value-of select="string-join((/*/db:info/db:title, /*/db:info/db:subtitle), ' - ')"/>
         </block>
         <xsl:choose>
           <xsl:when test="$is-a4 or $in-article">
             <block text-align="right" space-before="{local:dimpt(-$standard-font-size)}">
-              <page-number/>&#160;/&#160;<page-number-citation ref-id="{$bookmark-final-page-block}"/>
+              <page-number/>&#160;/&#160;<page-number-citation ref-id="{$bookmark-final-page-block}"
+              />
             </block>
           </xsl:when>
           <xsl:otherwise>
@@ -400,7 +424,8 @@
     <xsl:choose>
       <xsl:when test="$in-article and not(self::db:sect1)">
         <xsl:call-template name="insert-error">
-          <xsl:with-param name="msg-parts" select="('Element ', local-name(.) || ' not allowed in article')"/>
+          <xsl:with-param name="msg-parts"
+            select="('Element ', local-name(.) || ' not allowed in article')"/>
         </xsl:call-template>
       </xsl:when>
       <xsl:when test="$in-article">
@@ -410,7 +435,8 @@
       </xsl:when>
       <xsl:when test="not($chapter-id-provided) or (@xml:id eq $chapter-id)">
         <xsl:call-template name="chapter-section-header-title-out">
-          <xsl:with-param name="font-size" select="$standard-font-size + $chapter-font-size-addition"/>
+          <xsl:with-param name="font-size"
+            select="$standard-font-size + $chapter-font-size-addition"/>
           <xsl:with-param name="page-break" select="true()"/>
         </xsl:call-template>
         <xsl:call-template name="handle-block-contents">
@@ -426,16 +452,20 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:sect7 | db:sect8 | db:sect9" mode="mode-block">
+  <xsl:template
+    match="db:sect1 | db:sect2 | db:sect3 | db:sect4 | db:sect5 | db:sect6 | db:sect7 | db:sect8 | db:sect9"
+    mode="mode-block">
 
     <xsl:variable name="element-name" as="xs:string" select="local-name(.)"/>
-    <xsl:variable name="section-level" as="xs:integer" select="xs:integer(substring-after($element-name, 'sect'))"/>
+    <xsl:variable name="section-level" as="xs:integer"
+      select="xs:integer(substring-after($element-name, 'sect'))"/>
     <xsl:variable name="font-size" as="xs:double"
       select="if ($section-level le 3) then ($standard-font-size + $chapter-font-size-addition - $section-level - 2) else ($standard-font-size + 1)"/>
 
     <xsl:call-template name="chapter-section-header-title-out">
       <xsl:with-param name="font-size" select="$font-size"/>
-      <xsl:with-param name="number" select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
+      <xsl:with-param name="number"
+        select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
     </xsl:call-template>
     <xsl:call-template name="handle-block-contents">
       <xsl:with-param name="contents" select="* except db:title"/>
@@ -462,7 +492,8 @@
     <xsl:variable name="is-halfbreak" as="xs:boolean" select="$roles = ('halfbreak')"/>
     <xsl:variable name="is-break" as="xs:boolean" select="$roles = ('break')"/>
 
-    <block space-after="{local:dimpt($standard-paragraph-distance-pt)}" keep-together.within-page="always">
+    <block space-after="{local:dimpt($standard-paragraph-distance-pt)}"
+      keep-together.within-page="always">
       <xsl:if test="$is-halfbreak">
         <xsl:attribute name="font-size" select="local:dimpt($standard-font-size div 4)"/>
       </xsl:if>
@@ -499,8 +530,10 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:blockquote" mode="mode-block">
-    <block space-before.minimum="{local:dimpt($standard-font-size * 1.5)}" space-after="{local:dimpt($standard-font-size * 1.5)}">
-      <block margin-left="{local:dimcm($standard-itemized-list-indent)}" margin-right="{local:dimcm($standard-itemized-list-indent)}">
+    <block space-before.minimum="{local:dimpt($standard-font-size * 1.5)}"
+      space-after="{local:dimpt($standard-font-size * 1.5)}">
+      <block margin-left="{local:dimcm($standard-itemized-list-indent)}"
+        margin-right="{local:dimcm($standard-itemized-list-indent)}">
         <xsl:apply-templates select="db:* except db:attribution" mode="#current"/>
       </block>
       <xsl:if test="exists(db:attribution)">
@@ -511,7 +544,8 @@
             </db:emphasis>
           </db:para>
         </xsl:variable>
-        <block margin-left="{local:dimcm($standard-itemized-list-indent * 3)}" margin-right="{local:dimcm($standard-itemized-list-indent * 2)}"
+        <block margin-left="{local:dimcm($standard-itemized-list-indent * 3)}"
+          margin-right="{local:dimcm($standard-itemized-list-indent * 2)}"
           keep-with-previous="always">
           <xsl:apply-templates select="$attribution" mode="#current"/>
         </block>
@@ -522,7 +556,8 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:bridgehead" mode="mode-block">
-    <block space-before.minimum="{local:dimpt(1.5 * $standard-font-size)}" space-after="{local:dimpt($standard-font-size div 2)}" font-weight="bold"
+    <block space-before.minimum="{local:dimpt(1.5 * $standard-font-size)}"
+      space-after="{local:dimpt($standard-font-size div 2)}" font-weight="bold"
       text-decoration="underline" keep-with-next="always">
       <xsl:call-template name="copy-id"/>
       <xsl:call-template name="handle-inline-contents">
@@ -537,7 +572,8 @@
     <!-- We will only output remarks when debug is on! -->
     <xsl:choose>
       <xsl:when test="$is-preliminary-version">
-        <block font-style="italic" background-color="yellow" border="thin solid black" margin-top="{local:dimpt($standard-font-size div 2)}"
+        <block font-style="italic" background-color="yellow" border="thin solid black"
+          margin-top="{local:dimpt($standard-font-size div 2)}"
           margin-bottom="{local:dimpt($standard-font-size div 2)}">
           <xsl:text>***&#160;</xsl:text>
           <xsl:call-template name="handle-inline-contents">
@@ -564,8 +600,10 @@
         <list-item space-after="{local:dimpt($standard-paragraph-distance-pt)}">
           <xsl:call-template name="copy-id"/>
 
-          <xsl:variable name="position" as="xs:integer" select="count(preceding-sibling::db:listitem) + 1"/>
-          <xsl:variable name="is-last" as="xs:boolean" select="empty(following-sibling::db:listitem)"/>
+          <xsl:variable name="position" as="xs:integer"
+            select="count(preceding-sibling::db:listitem) + 1"/>
+          <xsl:variable name="is-last" as="xs:boolean"
+            select="empty(following-sibling::db:listitem)"/>
           <xsl:choose>
             <xsl:when test="$position le 1">
               <xsl:attribute name="keep-with-next" select="'always'"/>
@@ -579,7 +617,8 @@
           <list-item-label end-indent="label-end()">
             <xsl:choose>
               <xsl:when test="$in-ordered-list">
-                <xsl:variable name="item-number" as="xs:integer" select="$position + $startingumber - 1"/>
+                <xsl:variable name="item-number" as="xs:integer"
+                  select="$position + $startingumber - 1"/>
                 <block><xsl:value-of select="$item-number"/>.</block>
               </xsl:when>
               <xsl:otherwise>
@@ -653,11 +692,13 @@
     <!-- Remove trailing and leading whitespace and CR characters and break it into lines: -->
     <xsl:variable name="contents-prepared-for-lines-separation" as="xs:string"
       select="string($contents-with-co-elements-expanded) => replace('^\s+', '') => replace('\s+$', '') => replace('&#x0d;', '')"/>
-    <xsl:variable name="lines" as="xs:string*" select="tokenize($contents-prepared-for-lines-separation, '&#x0a;')"/>
+    <xsl:variable name="lines" as="xs:string*"
+      select="tokenize($contents-prepared-for-lines-separation, '&#x0a;')"/>
 
     <!-- Make it XSL-FO: -->
     <xsl:variable name="space-before-after" as="xs:double" select="$standard-font-size div 2.0"/>
-    <block keep-together.within-column="always" space-before="{local:dimpt($space-before-after)}" space-after="{local:dimpt($space-before-after)}">
+    <block keep-together.within-column="always" space-before="{local:dimpt($space-before-after)}"
+      space-after="{local:dimpt($space-before-after)}">
       <xsl:if test="not($in-example)">
         <xsl:attribute name="margin-left" select="local:dimcm($standard-small-indent)"/>
         <xsl:attribute name="margin-right" select="local:dimcm($standard-small-indent)"/>
@@ -665,7 +706,8 @@
       <xsl:call-template name="copy-id"/>
       <xsl:for-each select="$lines">
         <block xsl:use-attribute-sets="attributes-codeblock-font-settings">
-          <xsl:variable name="line-contents-for-output" as="xs:string" select="if (. eq '') then '&#160;' else ."/>
+          <xsl:variable name="line-contents-for-output" as="xs:string"
+            select="if (. eq '') then '&#160;' else ."/>
 
           <!-- We have to parse every line for embedded <co> elements... -->
           <xsl:variable name="regexp" as="xs:string" select="'\[\[##(&lt;co.+?/&gt;)##\]\]'"/>
@@ -681,9 +723,12 @@
               </xsl:variable>
               <xsl:choose>
                 <!-- Take the <co> element and make it into a call-out. Potentially add ids and a link to the call-out list. -->
-                <xsl:when test="($co-element instance of element(co)) and exists($co-element/@number)">
-                  <xsl:variable name="number" as="xs:integer" select="xtlc:str2int($co-element/@number, 1)"/>
-                  <xsl:variable name="linkend" as="xs:string?" select="xtlc:str2seq($co-element/@linkends)[1]"/>
+                <xsl:when
+                  test="($co-element instance of element(co)) and exists($co-element/@number)">
+                  <xsl:variable name="number" as="xs:integer"
+                    select="xtlc:str2int($co-element/@number, 1)"/>
+                  <xsl:variable name="linkend" as="xs:string?"
+                    select="xtlc:str2seq($co-element/@linkends)[1]"/>
                   <xsl:variable name="id" as="xs:string?" select="xs:string($co-element/@xml:id)"/>
                   <xsl:sequence select="local:callout-graphic($number, $id, $linkend, true())"/>
                 </xsl:when>
@@ -713,11 +758,13 @@
   <xsl:template match="db:calloutlist" mode="mode-block">
 
     <!-- Find out how many callouts there are max in one entry of the callout list. We need this to set the left hanging indent of the list.  -->
-    <xsl:variable name="entries-per-callout" as="xs:integer*" select="for $co in db:callout return count(xtlc:str2seq($co/@arearefs))"/>
+    <xsl:variable name="entries-per-callout" as="xs:integer*"
+      select="for $co in db:callout return count(xtlc:str2seq($co/@arearefs))"/>
     <xsl:variable name="max-callouts" as="xs:integer" select="max(($entries-per-callout, 1))"/>
 
     <!-- Create the list: -->
-    <list-block provisional-distance-between-starts="{local:dimcm($standard-itemized-list-indent * $max-callouts + 0.15)}"
+    <list-block
+      provisional-distance-between-starts="{local:dimcm($standard-itemized-list-indent * $max-callouts + 0.15)}"
       space-after="{local:dimpt($standard-paragraph-distance-pt)}" keep-with-previous="always">
       <xsl:call-template name="copy-id"/>
 
@@ -729,8 +776,10 @@
         <list-item space-after="{local:dimpt($standard-paragraph-distance-pt)}">
           <xsl:call-template name="copy-id"/>
 
-          <xsl:variable name="position" as="xs:integer" select="count(preceding-sibling::db:listitem) + 1"/>
-          <xsl:variable name="is-last" as="xs:boolean" select="empty(following-sibling::db:listitem)"/>
+          <xsl:variable name="position" as="xs:integer"
+            select="count(preceding-sibling::db:listitem) + 1"/>
+          <xsl:variable name="is-last" as="xs:boolean"
+            select="empty(following-sibling::db:listitem)"/>
           <xsl:choose>
             <xsl:when test="$position le 1">
               <xsl:attribute name="keep-with-next" select="'always'"/>
@@ -748,9 +797,12 @@
                   <xsl:value-of select="'&#160;'"/>
                 </xsl:if>
                 <xsl:variable name="arearef" as="xs:string" select="."/>
-                <xsl:variable name="referenced-element" as="element()?" select="key($id-index-name, $arearef, $original-document)[1]"/>
-                <xsl:variable name="number" as="xs:integer" select="xtlc:str2int($referenced-element/@number, 1)"/>
-                <xsl:variable name="referenced-id" as="xs:string?" select="$referenced-element/@xml:id"/>
+                <xsl:variable name="referenced-element" as="element()?"
+                  select="key($id-index-name, $arearef, $original-document)[1]"/>
+                <xsl:variable name="number" as="xs:integer"
+                  select="xtlc:str2int($referenced-element/@number, 1)"/>
+                <xsl:variable name="referenced-id" as="xs:string?"
+                  select="$referenced-element/@xml:id"/>
                 <xsl:sequence select="local:callout-graphic($number, (), $arearef, false())"/>
               </xsl:for-each>
             </block>
@@ -776,7 +828,8 @@
     </xsl:call-template>
     <xsl:for-each select="db:member">
       <block margin-left="{local:dimcm($standard-small-indent)}">
-        <xsl:variable name="position" as="xs:integer" select="count(preceding-sibling::db:member) + 1"/>
+        <xsl:variable name="position" as="xs:integer"
+          select="count(preceding-sibling::db:member) + 1"/>
         <xsl:variable name="is-last" as="xs:boolean" select="empty(following-sibling::db:member)"/>
         <xsl:choose>
           <xsl:when test="$position le 2">
@@ -834,7 +887,8 @@
       <xsl:with-param name="size-pt" select="$standard-extra-paragraph-distance-pt"/>
       <xsl:with-param name="keep-with-next" select="true()"/>
     </xsl:call-template>
-    <block margin-left="{local:dimcm($standard-itemized-list-indent)}" margin-right="{local:dimcm($standard-itemized-list-indent)}"
+    <block margin-left="{local:dimcm($standard-itemized-list-indent)}"
+      margin-right="{local:dimcm($standard-itemized-list-indent)}"
       padding="{local:dimcm($standard-small-indent)}" border="thin solid {$title-color}">
       <xsl:if test="$is-special">
         <xsl:attribute name="background-color" select="'#C0C0C0'"/>
@@ -870,8 +924,10 @@
       <xsl:with-param name="keep-with-next" select="true()"/>
     </xsl:call-template>
     <block border="solid 0.2mm black" margin-left="{local:dimcm($standard-itemized-list-indent)}"
-      margin-right="{local:dimcm($standard-itemized-list-indent)}" padding="{local:dimcm($standard-small-indent)}">
-      <block font-weight="bold" keep-with-next="always" margin-top="{local:dimpt($standard-paragraph-distance-pt)}" text-align="left"
+      margin-right="{local:dimcm($standard-itemized-list-indent)}"
+      padding="{local:dimcm($standard-small-indent)}">
+      <block font-weight="bold" keep-with-next="always"
+        margin-top="{local:dimpt($standard-paragraph-distance-pt)}" text-align="left"
         font-size="{local:dimpt($standard-font-size + 1)}">
         <xsl:call-template name="handle-inline-text">
           <xsl:with-param name="contents" select="db:title/node()"/>
@@ -893,7 +949,8 @@
       <xsl:with-param name="size-pt" select="$standard-extra-paragraph-distance-pt"/>
       <xsl:with-param name="keep-with-next" select="true()"/>
     </xsl:call-template>
-    <block margin-left="{local:dimcm($standard-small-indent)}" margin-right="{local:dimcm($standard-small-indent)}">
+    <block margin-left="{local:dimcm($standard-small-indent)}"
+      margin-right="{local:dimcm($standard-small-indent)}">
       <xsl:apply-templates select="db:* except db:title" mode="#current">
         <xsl:with-param name="in-example" as="xs:boolean" select="true()" tunnel="true"/>
       </xsl:apply-templates>
@@ -932,7 +989,8 @@
     <xsl:param name="align-left" as="xs:boolean" required="no" select="true()"/>
 
     <xsl:if test="(normalize-space($object/db:title) ne '') or exists($object/@number)">
-      <block text-align="{if ($align-left) then 'left' else 'center'}" font-style="italic" font-size="{local:dimpt($special-titles-font-size)}"
+      <block text-align="{if ($align-left) then 'left' else 'center'}" font-style="italic"
+        font-size="{local:dimpt($special-titles-font-size)}"
         space-after="{local:dimpt($standard-font-size)}" keep-with-previous="always">
         <xsl:if test="exists($object-name) and exists($object/@number)">
           <xsl:value-of select="$object-name"/>
@@ -962,7 +1020,8 @@
     <xsl:apply-templates select="db:tgroup" mode="mode-table">
       <xsl:with-param name="table-elm" as="element()" select="." tunnel="true"/>
       <xsl:with-param name="phase-description" as="xs:string" select="'table'" tunnel="true"/>
-      <xsl:with-param name="in-informal-table" as="xs:boolean" select="$in-informal-table" tunnel="true"/>
+      <xsl:with-param name="in-informal-table" as="xs:boolean" select="$in-informal-table"
+        tunnel="true"/>
       <xsl:with-param name="in-table" as="xs:boolean" select="true()" tunnel="true"/>
     </xsl:apply-templates>
 
@@ -980,7 +1039,8 @@
     <xsl:param name="table-elm" as="element()?" required="false" select="()" tunnel="true"/>
     <xsl:comment> == *****TGROUP <xsl:value-of select="position()"/> == </xsl:comment>
 
-    <table space-before="{local:dimpt(2 * $standard-paragraph-distance-pt)}" space-after="{local:dimpt(3 * $standard-paragraph-distance-pt)}"
+    <table space-before="{local:dimpt(2 * $standard-paragraph-distance-pt)}"
+      space-after="{local:dimpt(3 * $standard-paragraph-distance-pt)}"
       font-size="{local:dimpt($standard-font-size - 1)}">
 
       <xsl:if test="exists($table-elm) and (position() eq 1)">
@@ -1146,12 +1206,13 @@
   <xsl:template name="handle-inline-contents">
     <xsl:param name="contents" as="node()*" required="yes"/>
     <xsl:param name="small-font-size" as="xs:boolean" required="no" select="false()"/>
-    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()" tunnel="true"/>
+    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()"
+      tunnel="true"/>
 
     <xsl:apply-templates select="$contents" mode="mode-inline">
       <xsl:with-param name="phase-description" as="xs:string" select="'inline'" tunnel="true"/>
-      <xsl:with-param name="fixed-font-size-adjust" as="xs:integer?" select="if ($small-font-size) then -2 else $fixed-font-size-adjust" tunnel="true"
-      />
+      <xsl:with-param name="fixed-font-size-adjust" as="xs:integer?"
+        select="if ($small-font-size) then -2 else $fixed-font-size-adjust" tunnel="true"/>
     </xsl:apply-templates>
   </xsl:template>
 
@@ -1172,7 +1233,8 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:guimenu | db:guimenuitem | db:guiicon | db:guibutton | db:guilabel" mode="mode-inline">
+  <xsl:template match="db:guimenu | db:guimenuitem | db:guiicon | db:guibutton | db:guilabel"
+    mode="mode-inline">
     <!-- No special formatting for these GUI related elements... -->
     <xsl:apply-templates mode="#current"/>
   </xsl:template>
@@ -1182,14 +1244,16 @@
   <xsl:template match="db:xref" mode="mode-inline">
 
     <xsl:variable name="id" as="xs:string" select="@linkend"/>
-    <xsl:variable name="referenced-element" as="element()*" select="key($id-index-name, $id, $original-document)"/>
+    <xsl:variable name="referenced-element" as="element()*"
+      select="key($id-index-name, $id, $original-document)"/>
     <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(@role)"/>
     <xsl:variable name="do-capitalize" as="xs:boolean" select="'capitalize' = $roles"/>
     <xsl:variable name="text-only" as="xs:boolean" select="'text' = $roles"/>
 
     <xsl:if test="count($referenced-element) gt 1">
       <xsl:call-template name="xtlc:raise-error">
-        <xsl:with-param name="msg-parts" select="('Id occurs ', count($referenced-element), ' times: ', xtlc:q($id))"/>
+        <xsl:with-param name="msg-parts"
+          select="('Id occurs ', count($referenced-element), ' times: ', xtlc:q($id))"/>
       </xsl:call-template>
     </xsl:if>
 
@@ -1241,7 +1305,8 @@
             <xsl:when
               test="$referenced-element/self::db:figure[exists(@number)] or $referenced-element/self::db:table[exists(@number)] or
                 $referenced-element/self::db:example[exists(@number)]">
-              <xsl:value-of select="local:xref-capitalize(local-name($referenced-element), $do-capitalize)"/>
+              <xsl:value-of
+                select="local:xref-capitalize(local-name($referenced-element), $do-capitalize)"/>
               <xsl:text>&#160;</xsl:text>
               <xsl:value-of select="$referenced-element/@number"/>
             </xsl:when>
@@ -1254,7 +1319,8 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="insert-error">
-          <xsl:with-param name="msg-parts" select="('Referenced linkend id ', xtlc:q(@linkend), ' not found')"/>
+          <xsl:with-param name="msg-parts"
+            select="('Referenced linkend id ', xtlc:q(@linkend), ' not found')"/>
           <xsl:with-param name="block" select="false()"/>
         </xsl:call-template>
       </xsl:otherwise>
@@ -1274,28 +1340,33 @@
 
   <xsl:template match="db:emphasis" mode="mode-inline">
 
-    <xsl:variable name="role" as="xs:string*" select="normalize-space(@role)"/>
-    <xsl:variable name="bold" as="xs:boolean" select="$role eq 'bold'"/>
-    <xsl:variable name="underline" as="xs:boolean" select="$role eq 'underline'"/>
+    <xsl:variable name="roles" as="xs:string*" select="tokenize(@role, '\s+')[.]"/>
+    <xsl:variable name="bold" as="xs:boolean" select="'bold' = $roles"/>
+    <xsl:variable name="underline" as="xs:boolean" select="'underline' = $roles"/>
+    <xsl:variable name="italic" as="xs:boolean"
+      select="('italic' = $roles) or (not($bold) and not($underline))"/>
 
     <xsl:call-template name="handle-inline-text">
       <xsl:with-param name="bold" select="$bold"/>
       <xsl:with-param name="underline" select="$underline"/>
-      <xsl:with-param name="italic" select="not($bold) and not($underline)"/>
+      <xsl:with-param name="italic" select="$italic"/>
     </xsl:call-template>
 
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:template match="db:code | db:literal | db:uri | db:function | db:classname | db:type | db:parameter | db:varname | db:package"
+  <xsl:template
+    match="db:code | db:literal | db:uri | db:function | db:classname | db:type | db:parameter | db:varname | db:package"
     mode="mode-inline">
-    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()" tunnel="true"/>
+    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()"
+      tunnel="true"/>
     <xsl:param name="in-table" as="xs:boolean" required="no" select="false()" tunnel="true"/>
 
     <xsl:call-template name="handle-inline-text">
       <xsl:with-param name="fixed-width" select="true()"/>
-      <xsl:with-param name="fixed-font-size-adjust" as="xs:integer?" select="if ($in-table) then -1 else $fixed-font-size-adjust" tunnel="true"/>
+      <xsl:with-param name="fixed-font-size-adjust" as="xs:integer?"
+        select="if ($in-table) then -1 else $fixed-font-size-adjust" tunnel="true"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -1309,7 +1380,8 @@
         <basic-link external-destination="{@xlink:href}">
           <xsl:call-template name="handle-inline-text">
             <xsl:with-param name="color" select="$link-color"/>
-            <xsl:with-param name="text" select="if ((normalize-space(.) eq '') and empty(*)) then @xlink:href else ()"/>
+            <xsl:with-param name="text"
+              select="if ((normalize-space(.) eq '') and empty(*)) then @xlink:href else ()"/>
           </xsl:call-template>
         </basic-link>
       </xsl:when>
@@ -1317,10 +1389,12 @@
       <!-- Link to something internal: -->
       <xsl:when test="exists(@linkend)">
         <xsl:variable name="id" as="xs:string" select="@linkend"/>
-        <xsl:variable name="referenced-element" as="element()*" select="key($id-index-name, $id, $original-document)"/>
+        <xsl:variable name="referenced-element" as="element()*"
+          select="key($id-index-name, $id, $original-document)"/>
         <xsl:if test="count($referenced-element) gt 1">
           <xsl:call-template name="xtlc:raise-error">
-            <xsl:with-param name="msg-parts" select="('Id occurs ', count($referenced-element), ' times: ', xtlc:q($id))"/>
+            <xsl:with-param name="msg-parts"
+              select="('Id occurs ', count($referenced-element), ' times: ', xtlc:q($id))"/>
           </xsl:call-template>
         </xsl:if>
         <xsl:choose>
@@ -1333,7 +1407,8 @@
           </xsl:when>
           <xsl:otherwise>
             <xsl:call-template name="insert-error">
-              <xsl:with-param name="msg-parts" select="('Referenced linkend id ', xtlc:q(@linkend), ' not found')"/>
+              <xsl:with-param name="msg-parts"
+                select="('Referenced linkend id ', xtlc:q(@linkend), ' not found')"/>
               <xsl:with-param name="block" select="false()"/>
             </xsl:call-template>
           </xsl:otherwise>
@@ -1344,7 +1419,8 @@
       <xsl:otherwise>
         <xsl:call-template name="insert-error">
           <xsl:with-param name="block" select="false()"/>
-          <xsl:with-param name="msg-parts" select="('Invalid link element. Missing @xlink:href or @linkend')"/>
+          <xsl:with-param name="msg-parts"
+            select="('Invalid link element. Missing @xlink:href or @linkend')"/>
         </xsl:call-template>
 
       </xsl:otherwise>
@@ -1427,7 +1503,8 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:superscript" mode="mode-inline">
-    <inline vertical-align="sup" baseline-shift="{local:dimpt($super-sub-font-shift)}" font-size="{local:dimpt($super-sub-font-size)}">
+    <inline vertical-align="sup" baseline-shift="{local:dimpt($super-sub-font-shift)}"
+      font-size="{local:dimpt($super-sub-font-size)}">
       <xsl:apply-templates mode="#current"/>
     </inline>
   </xsl:template>
@@ -1451,7 +1528,8 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:tag" mode="mode-inline">
-    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()" tunnel="true"/>
+    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()"
+      tunnel="true"/>
     <xsl:param name="in-table" as="xs:boolean" required="no" select="false()" tunnel="true"/>
 
     <xsl:variable name="class" as="xs:string" select="(@class, 'element')[1]"/>
@@ -1488,7 +1566,8 @@
         <xsl:value-of select="$contents"/>
       </xsl:with-param>
       <xsl:with-param name="fixed-width" select="true()"/>
-      <xsl:with-param name="fixed-font-size-adjust" as="xs:integer?" select="if ($in-table) then -1 else $fixed-font-size-adjust" tunnel="true"/>
+      <xsl:with-param name="fixed-font-size-adjust" as="xs:integer?"
+        select="if ($in-table) then -1 else $fixed-font-size-adjust" tunnel="true"/>
     </xsl:call-template>
   </xsl:template>
 
@@ -1498,12 +1577,15 @@
 
     <xsl:variable name="number" as="xs:string" select="(@number, '*')[1]"/>
     <footnote>
-      <inline vertical-align="sup" baseline-shift="{local:dimpt($super-sub-font-shift)}" font-size="{local:dimpt($super-sub-font-size)}">
+      <inline vertical-align="sup" baseline-shift="{local:dimpt($super-sub-font-shift)}"
+        font-size="{local:dimpt($super-sub-font-size)}">
         <xsl:value-of select="$number"/>
       </inline>
       <footnote-body>
-        <list-block provisional-distance-between-starts="{local:dimcm($standard-itemized-list-indent)}"
-          space-after="{local:dimpt($standard-paragraph-distance-pt)}" font-size="{local:dimpt($standard-font-size - 2)}">
+        <list-block
+          provisional-distance-between-starts="{local:dimcm($standard-itemized-list-indent)}"
+          space-after="{local:dimpt($standard-paragraph-distance-pt)}"
+          font-size="{local:dimpt($standard-font-size - 2)}">
           <list-item space-after="{local:dimpt($standard-paragraph-distance-pt)}">
             <list-item-label end-indent="label-end()">
               <block><xsl:value-of select="$number"/>.</block>
@@ -1546,7 +1628,8 @@
     <xsl:param name="underline" as="xs:boolean" required="no" select="false()"/>
     <xsl:param name="fixed-width" as="xs:boolean" required="no" select="false()"/>
     <xsl:param name="color" as="xs:string?" required="no" select="()"/>
-    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()" tunnel="true"/>
+    <xsl:param name="fixed-font-size-adjust" as="xs:integer?" required="no" select="()"
+      tunnel="true"/>
 
     <xsl:variable name="inline-attributes" as="attribute()*">
       <xsl:if test="$bold">
@@ -1563,7 +1646,8 @@
       </xsl:if>
       <xsl:if test="$fixed-width">
         <xsl:attribute name="font-family" select="$code-font-family"/>
-        <xsl:attribute name="font-size" select="local:dimpt($standard-fixed-font-size + ($fixed-font-size-adjust, 0)[1])"/>
+        <xsl:attribute name="font-size"
+          select="local:dimpt($standard-fixed-font-size + ($fixed-font-size-adjust, 0)[1])"/>
       </xsl:if>
     </xsl:variable>
     <xsl:variable name="inline-contents" as="item()*">
@@ -1618,10 +1702,12 @@
   <xsl:template match="db:*[matches(local-name(.), 'sect[1-9]')]" mode="mode-create-toc">
 
     <xsl:variable name="element-name" as="xs:string" select="local-name(.)"/>
-    <xsl:variable name="section-level" as="xs:integer" select="xs:integer(substring-after($element-name, 'sect'))"/>
+    <xsl:variable name="section-level" as="xs:integer"
+      select="xs:integer(substring-after($element-name, 'sect'))"/>
     <xsl:call-template name="toc-entry-out">
       <xsl:with-param name="level" select="$section-level"/>
-      <xsl:with-param name="number" select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
+      <xsl:with-param name="number"
+        select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
     </xsl:call-template>
     <xsl:apply-templates mode="#current"/>
   </xsl:template>
@@ -1682,7 +1768,8 @@
     <xsl:choose>
       <xsl:when test="(. instance of text()) and (normalize-space(.) ne '')">
         <xsl:call-template name="insert-error">
-          <xsl:with-param name="msg-parts" select="('Unhandled text node encountered: ', xtlc:q(.))"/>
+          <xsl:with-param name="msg-parts" select="('Unhandled text node encountered: ', xtlc:q(.))"
+          />
         </xsl:call-template>
       </xsl:when>
       <xsl:when test=". instance of element()">
@@ -1704,9 +1791,11 @@
     <xsl:param name="block" as="xs:boolean" required="no" select="true()"/>
     <xsl:param name="phase-description" as="xs:string?" required="false" select="()" tunnel="true"/>
 
-    <xsl:variable name="phase-phrase" as="xs:string" select="if (empty($phase-description)) then '' else concat(' (phase: ', $phase-description, ')')"/>
+    <xsl:variable name="phase-phrase" as="xs:string"
+      select="if (empty($phase-description)) then '' else concat(' (phase: ', $phase-description, ')')"/>
     <xsl:variable name="base-message-fo" as="element(fo:inline)">
-      <inline font-weight="bold" color="red">[*** {xtlc:items2str(($msg-parts, $phase-phrase))}]</inline>
+      <inline font-weight="bold" color="red">[*** {xtlc:items2str(($msg-parts,
+        $phase-phrase))}]</inline>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$block">
@@ -1732,16 +1821,20 @@
 
     <xsl:choose>
       <xsl:when test="$is-global and (string($global-resources-directory) ne '')">
-        <xsl:sequence select="xtlc:href-concat(($global-resources-directory, xtlc:href-name($href)))"/>
+        <xsl:sequence
+          select="xtlc:href-concat(($global-resources-directory, xtlc:href-name($href)))"/>
       </xsl:when>
       <xsl:otherwise>
-        <xsl:variable name="xml-bases" as="xs:string*" select="$originating-elm/ancestor-or-self::*/@xml:base"/>
+        <xsl:variable name="xml-bases" as="xs:string*"
+          select="$originating-elm/ancestor-or-self::*/@xml:base"/>
         <xsl:choose>
           <xsl:when test="xtlc:href-is-absolute($href)">
             <xsl:sequence select="$href"/>
           </xsl:when>
           <xsl:when test="exists($xml-bases)">
-            <xsl:sequence select="xtlc:href-concat((for $base in $xml-bases return xtlc:href-path($base), $href))"/>
+            <xsl:sequence
+              select="xtlc:href-concat((for $base in $xml-bases return xtlc:href-path($base), $href))"
+            />
           </xsl:when>
           <xsl:otherwise>
             <xsl:sequence select="resolve-uri($href, base-uri($originating-elm))"/>
@@ -1762,10 +1855,12 @@
       <xsl:when test="exists($imagedata)">
         <xsl:for-each select="$imagedata">
           <xsl:variable name="current-imagedata" as="element(db:imagedata)" select="."/>
-          <xsl:variable name="full-uri" as="xs:string" select="local:get-full-uri($current-imagedata, $current-imagedata/@fileref, $is-global)"/>
+          <xsl:variable name="full-uri" as="xs:string"
+            select="local:get-full-uri($current-imagedata, $current-imagedata/@fileref, $is-global)"/>
           <xsl:variable name="width" as="xs:string?" select="$current-imagedata/@width"/>
           <xsl:variable name="height" as="xs:string?" select="$current-imagedata/@height"/>
-          <external-graphic src="url({$full-uri})" content-width="scale-to-fit" content-height="scale-to-fit" scaling="uniform"
+          <external-graphic src="url({$full-uri})" content-width="scale-to-fit"
+            content-height="scale-to-fit" scaling="uniform"
             inline-progression-dimension.maximum="90%">
             <xsl:if test="exists($width)">
               <xsl:attribute name="content-width" select="$width"/>
@@ -1798,8 +1893,10 @@
     <xsl:variable name="number-left-indent-cm" as="xs:double" select="1.5"/>
 
     <list-block start-indent="{if ($is-a4) then local:dimcm($number-left-indent-cm * -1.0) else 0}"
-      provisional-distance-between-starts="{local:dimcm($number-left-indent-cm)}" id="{$id}" font-size="{local:dimpt($font-size)}" font-weight="bold"
-      space-after="{local:dimpt($standard-font-size * 0.8)}" keep-with-next="always" font-family="{$title-font-family}">
+      provisional-distance-between-starts="{local:dimcm($number-left-indent-cm)}" id="{$id}"
+      font-size="{local:dimpt($font-size)}" font-weight="bold"
+      space-after="{local:dimpt($standard-font-size * 0.8)}" keep-with-next="always"
+      font-family="{$title-font-family}">
       <xsl:if test="$page-break">
         <xsl:attribute name="page-break-before" select="'always'"/>
       </xsl:if>
@@ -1871,7 +1968,8 @@
 
   <xsl:function name="local:element-is-in-table" as="xs:boolean">
     <xsl:param name="elm" as="element()"/>
-    <xsl:sequence select="exists($elm/ancestor::db:table) or exists($elm/ancestor::db:informaltable)"/>
+    <xsl:sequence
+      select="exists($elm/ancestor::db:table) or exists($elm/ancestor::db:informaltable)"/>
   </xsl:function>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
@@ -1882,8 +1980,9 @@
     <xsl:param name="referenced-id" as="xs:string?"/>
     <xsl:param name="in-programlisting" as="xs:boolean"/>
     <xsl:variable name="callout-graphic" as="element(fo:external-graphic)">
-      <external-graphic src="url({xtlc:href-concat(($callouts-location, $number || '.pdf'))})" content-width="scale-to-fit"
-        content-height="scale-to-fit" scaling="uniform" inline-progression-dimension.maximum="90%">
+      <external-graphic src="url({xtlc:href-concat(($callouts-location, $number || '.pdf'))})"
+        content-width="scale-to-fit" content-height="scale-to-fit" scaling="uniform"
+        inline-progression-dimension.maximum="90%">
         <xsl:if test="normalize-space($id) ne ''">
           <xsl:attribute name="id" select="$id"/>
         </xsl:if>
