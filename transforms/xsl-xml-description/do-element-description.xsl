@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema"
-  xmlns:fn="http://www.w3.org/2005/xpath-functions" xmlns:local="#local-zz55g" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
-  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:db="http://docbook.org/ns/docbook" xmlns="http://docbook.org/ns/docbook"
-  exclude-result-prefixes="#all">
+<xsl:stylesheet version="3.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fn="http://www.w3.org/2005/xpath-functions"
+  xmlns:local="#local-zz55g" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:db="http://docbook.org/ns/docbook"
+  xmlns="http://docbook.org/ns/docbook" exclude-result-prefixes="#all">
   <!-- ================================================================== -->
   <!--*	
     Converts an XML element description to Docbook 5 (as an xdoc transformation)
@@ -29,7 +30,8 @@
   <xsl:variable name="ellipsis" as="xs:string" select="'&#x2026;'"/>
 
   <xsl:variable name="standard-coded-description-indent" as="xs:integer" select="2"/>
-  <xsl:variable name="show-nr-of-enum-values-for-attribute-in-coded-description" as="xs:integer" select="3">
+  <xsl:variable name="show-nr-of-enum-values-for-attribute-in-coded-description" as="xs:integer"
+    select="3">
     <!-- The number of attribute enumeration values to show in the coded description 
       (if there are more this will be followed by an ellipsis) -->
   </xsl:variable>
@@ -42,11 +44,15 @@
   <xsl:variable name="enums-table-value-column-min-width-cm" as="xs:double" select="0.8"/>
   <xsl:variable name="enums-table-value-column-max-width-cm" as="xs:double" select="2"/>
 
+  <xsl:variable name="sort-attributes" as="xs:boolean"
+    select="xtlc:str2bln(/xdoc:transform/xdoc:element-description[1]/@sort-attributes, false())"/>
+ 
   <!-- ================================================================== -->
 
   <xsl:template match="/xdoc:transform">
     <!-- Because of how the transformation pipelines work, the actual element description always comes wrapped inside a <xdoc:transform> element: -->
-    <xsl:variable name="element-description" as="element(xdoc:element-description)?" select="xdoc:element-description[1]"/>
+    <xsl:variable name="element-description" as="element(xdoc:element-description)?"
+      select="xdoc:element-description[1]"/>
     <xsl:choose>
       <xsl:when test="exists($element-description)">
         <xdoc:GROUP>
@@ -55,7 +61,9 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:call-template name="xtlc:raise-error">
-          <xsl:with-param name="msg-parts" select="'No xdoc:element-description element as root of an XML element description transformation'"/>
+          <xsl:with-param name="msg-parts"
+            select="'No xdoc:element-description element as root of an XML element description transformation'"
+          />
         </xsl:call-template>
       </xsl:otherwise>
     </xsl:choose>
@@ -76,7 +84,7 @@
 
     <!-- Attributes table: -->
     <xsl:call-template name="output-description-table">
-      <xsl:with-param name="descriptions" select="xdoc:attribute"/>
+      <xsl:with-param name="descriptions" select="local:sort-attributes(xdoc:attribute)"/>
       <xsl:with-param name="header" as="element()*" select="xdoc:attribute-table-header/*"/>
     </xsl:call-template>
 
@@ -97,16 +105,20 @@
   <!-- CODED DESCRIPTION: -->
 
   <xsl:template name="create-coded-description">
-    <xsl:param name="element-description" as="element(xdoc:element-description)" required="no" select="."/>
+    <xsl:param name="element-description" as="element(xdoc:element-description)" required="no"
+      select="."/>
 
     <xsl:for-each select="$element-description">
       <xsl:variable name="id" as="xs:string" select="(@id, xtlc:str2id(@name, 'element-'))[1]"/>
       <xsl:variable name="element-name" as="xs:string" select="@name"/>
       <xsl:variable name="attributes" as="element(xdoc:attribute)*" select="xdoc:attribute"/>
-      <xsl:variable name="contents" as="element()*" select="xdoc:choice | xdoc:element | xdoc:element-placeholder"/>
-      <xsl:variable name="additional-text-elm" as="element(xdoc:additional-text-coded-description)?" select="xdoc:additional-text-coded-description"/>
+      <xsl:variable name="contents" as="element()*"
+        select="xdoc:choice | xdoc:element | xdoc:element-placeholder"/>
+      <xsl:variable name="additional-text-elm" as="element(xdoc:additional-text-coded-description)?"
+        select="xdoc:additional-text-coded-description"/>
       <xsl:variable name="additional-text" as="xs:string" select="string($additional-text-elm)"/>
-      <xsl:variable name="has-additional-text" as="xs:boolean" select="normalize-space($additional-text) ne ''"/>
+      <xsl:variable name="has-additional-text" as="xs:boolean"
+        select="normalize-space($additional-text) ne ''"/>
 
       <!-- Create the formatted example: -->
       <programlisting xml:id="{$id}">
@@ -131,7 +143,7 @@
               </xsl:when>
               <xsl:otherwise>
                 <xsl:variable name="indent" as="xs:integer" select="string-length($element-name) + 2"/>
-                <xsl:for-each select="$attributes">
+                <xsl:for-each select="local:sort-attributes($attributes)">
                   <xsl:if test="position() ne 1">
                     <xsl:value-of select="local:spaces($indent)"/>
                   </xsl:if>
@@ -250,8 +262,10 @@
     <xsl:variable name="comment-end" as="xs:string" select="' --&gt;'"/>
     <xsl:variable name="additional-text" as="xs:string" select="normalize-space($elm)"/>
     <xsl:if test="$additional-text ne ''">
-      <xsl:variable name="additional-text-parts" as="xs:string*" select="tokenize($additional-text, '\|')"/>
-      <xsl:variable name="as-comment" as="xs:boolean" select="xtlc:str2bln($elm/@as-comment, false())"/>
+      <xsl:variable name="additional-text-parts" as="xs:string*"
+        select="tokenize($additional-text, '\|')"/>
+      <xsl:variable name="as-comment" as="xs:boolean"
+        select="xtlc:str2bln($elm/@as-comment, false())"/>
       <xsl:value-of select="local:spaces($indent)"/>
       <xsl:choose>
         <xsl:when test="$as-comment">
@@ -302,7 +316,8 @@
               And anyway, we have no idea how wide this thing actually is, so this is made a parameter. -->
             <xsl:value-of
               select="string-join(for $e in $enums[position() le $show-nr-of-enum-values-for-attribute-in-coded-description] return xtlc:q($e/@value), ' | ')"/>
-            <xsl:if test="count($enums) gt $show-nr-of-enum-values-for-attribute-in-coded-description">
+            <xsl:if
+              test="count($enums) gt $show-nr-of-enum-values-for-attribute-in-coded-description">
               <xsl:text> </xsl:text>
               <xsl:value-of select="$ellipsis"/>
             </xsl:if>
@@ -322,9 +337,12 @@
     <xsl:param name="descriptions" as="element()*" required="yes"/>
     <xsl:param name="header" as="element()*" required="no" select="()"/>
 
-    <xsl:variable name="descriptions-to-use" as="element()*" select="$descriptions[xtlc:str2bln(@describe, true())]"/>
-    <xsl:variable name="is-attributes" as="xs:boolean" select="exists($descriptions[1]/self::xdoc:attribute)"/>
-    <xsl:variable name="has-type-info" as="xs:boolean" select="exists($descriptions-to-use/xdoc:type)"/>
+    <xsl:variable name="descriptions-to-use" as="element()*"
+      select="$descriptions[xtlc:str2bln(@describe, true())]"/>
+    <xsl:variable name="is-attributes" as="xs:boolean"
+      select="exists($descriptions[1]/self::xdoc:attribute)"/>
+    <xsl:variable name="has-type-info" as="xs:boolean"
+      select="exists($descriptions-to-use/xdoc:type)"/>
 
 
     <!-- Output if anything left: -->
@@ -369,7 +387,8 @@
                   <para>
                     <xsl:choose>
                       <xsl:when test="$is-attributes">
-                        <xsl:value-of select="if (xtlc:str2bln(@required, false())) then '1' else '?'"/>
+                        <xsl:value-of
+                          select="if (xtlc:str2bln(@required, false())) then '1' else '?'"/>
                       </xsl:when>
                       <xsl:when test="exists(parent::xdoc:choice)">
                         <!-- In case this element is in a choice we take the occurrences of the choice. That is not exactly correct but better
@@ -386,12 +405,14 @@
                   <entry>
                     <xsl:call-template name="output-type-info-in-description-table">
                       <xsl:with-param name="type" select="xdoc:type"/>
-                      <xsl:with-param name="column-width-cm" select="$description-table-type-column-width-cm"/>
+                      <xsl:with-param name="column-width-cm"
+                        select="$description-table-type-column-width-cm"/>
                     </xsl:call-template>
                   </entry>
                 </xsl:if>
                 <entry>
-                  <xsl:if test="(normalize-space(@default) ne '') and not(xtlc:str2bln(@required, false()))">
+                  <xsl:if
+                    test="(normalize-space(@default) ne '') and not(xtlc:str2bln(@required, false()))">
                     <para>Default: <code><xsl:value-of select="@default"/></code></para>
                   </xsl:if>
                   <xsl:call-template name="output-docbook-contents">
@@ -515,7 +536,8 @@
     <xsl:param name="convert-namespaces" as="xs:string*" required="yes"/>
 
     <xsl:apply-templates select="$elms" mode="mode-output-docbook-contents">
-      <xsl:with-param name="convert-namespaces" as="xs:string*" select="$convert-namespaces" tunnel="true"/>
+      <xsl:with-param name="convert-namespaces" as="xs:string*" select="$convert-namespaces"
+        tunnel="true"/>
     </xsl:apply-templates>
   </xsl:template>
 
@@ -536,5 +558,23 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-
+  
+  <!-- ======================================================================= -->
+  <!-- SORTING SUPPORT: -->
+  
+  <xsl:function name="local:sort-attributes" as="element(xdoc:attribute)*">
+    <xsl:param name="attributes" as="element(xdoc:attribute)*"/>
+    
+    <xsl:choose>
+      <xsl:when test="$sort-attributes">
+        <xsl:perform-sort select="$attributes">
+          <xsl:sort select="@name"/>
+        </xsl:perform-sort>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$attributes"/>
+      </xsl:otherwise>  
+    </xsl:choose>
+  </xsl:function>
+  
 </xsl:stylesheet>

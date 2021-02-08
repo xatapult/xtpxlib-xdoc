@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.xtpxlib.nl/ns/xdoc"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  targetNamespace="http://www.xtpxlib.nl/ns/xdoc" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
   <xs:element name="element-description">
     <xs:complexType>
       <xs:sequence>
@@ -55,6 +55,7 @@
           <xs:documentation>If not given the id will become: element-{@name} (with invalid characters replaced by underscores)</xs:documentation>
         </xs:annotation>
       </xs:attribute>
+      <xs:attribute default="false" name="sort-attributes" type="xs:boolean"/>
     </xs:complexType>
   </xs:element>
   <xs:group name="g-description">
