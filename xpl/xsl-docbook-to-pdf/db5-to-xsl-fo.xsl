@@ -148,6 +148,14 @@
   <!-- Locations: -->
   <xsl:variable name="callouts-location" as="xs:string"
     select="resolve-uri('../../resources/callouts/', static-base-uri()) => xtlc:href-canonical()"/>
+  
+  <!-- Special characters: -->
+  <xsl:variable name="double-quote-open" as="xs:string" select="'&#x201c;'"/>
+  <xsl:variable name="double-quote-close" as="xs:string" select="'&#x201d;'"/>
+  <xsl:variable name="single-quote-open" as="xs:string" select="'&#x2018;'"/>
+  <xsl:variable name="single-quote-close" as="xs:string" select="'&#x2019;'"/>
+  <xsl:variable name="apostrophe" as="xs:string" select="'&#x2019;'"/>
+  
 
   <!-- ================================================================== -->
   <!-- MAIN TEMPLATES: -->
@@ -1274,9 +1282,9 @@
                   <xsl:value-of select="$referenced-element/@xreflabel"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:text>&quot;</xsl:text>
+                  <xsl:text>{$double-quote-open}</xsl:text>
                   <xsl:value-of select="$referenced-element/@xreflabel"/>
-                  <xsl:text>&quot; on page&#160;</xsl:text>
+                  <xsl:text>{$double-quote-close} on page&#160;</xsl:text>
                   <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
                 </xsl:otherwise>
               </xsl:choose>
@@ -1295,9 +1303,9 @@
                   <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
                 </xsl:when>
                 <xsl:otherwise>
-                  <xsl:text>"</xsl:text>
+                  <xsl:text>{$double-quote-open}</xsl:text>
                   <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
-                  <xsl:text>" on page&#160;</xsl:text>
+                  <xsl:text>{$double-quote-close} on page&#160;</xsl:text>
                   <page-number-citation ref-id="{$referenced-element/@xml:id}"/>
                 </xsl:otherwise>
               </xsl:choose>
