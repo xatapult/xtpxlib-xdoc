@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:local="#local.pfs_dr3_h3b"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:cx="http://xmlcalabash.com/ns/extensions" version="1.0" xpath-version="2.0"
+<p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step"
+  xmlns:local="#local.pfs_dr3_h3b" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:cx="http://xmlcalabash.com/ns/extensions" version="1.0" xpath-version="2.0"
   exclude-inline-prefixes="#all" type="xdoc:xdoc-to-docbook">
 
   <p:documentation>
@@ -24,22 +25,29 @@
   <p:option name="parameter-filters" required="false" select="()">
     <p:documentation>Optional filter settings for processing the parameters. Format: `name=value|name=value|…`.</p:documentation>
   </p:option>
-
+  
+  <p:option name="alttarget" required="false" select="()">
+    <p:documentation>The target for applying alternate settings.</p:documentation>
+  </p:option>
+  
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting DocBook</p:documentation>
   </p:output>
-  <p:serialization port="result" method="xml" encoding="UTF-8" indent="true" omit-xml-declaration="false"/>
+  <p:serialization port="result" method="xml" encoding="UTF-8" indent="true"
+    omit-xml-declaration="false"/>
 
   <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
-  
+
   <!-- ================================================================== -->
 
-  <!-- Add a specific xml:base attribute to the root element. Otherwise base-uri computations somehow don't return the right value... -->
+  <!-- Add a specific xml:base attribute to the root element. Otherwise base-uri computations 
+    somehow don't return the right value... -->
   <p:add-attribute attribute-name="xml:base" match="/*">
     <p:with-option name="attribute-value" select="base-uri(/*)"/>
   </p:add-attribute>
 
-  <!-- Process the XIncludes. But before that, check for parameter references in the xi:include/@href attributes first. -->
+  <!-- Process the XIncludes. But before that, check for parameter references in the 
+    xi:include/@href attributes first. -->
   <p:xslt>
     <p:input port="stylesheet">
       <p:document href="xsl-xdoc-to-docbook/substitute-parameters-xinclude-href.xsl"/>
@@ -50,7 +58,7 @@
   <p:xinclude>
     <p:with-option name="fixup-xml-base" select="true()"/>
   </p:xinclude>
-  
+
   <!-- Process any <xdoc:dump-parameters>: -->
   <p:viewport match="xdoc:dump-parameters">
     <p:xslt>
@@ -72,12 +80,13 @@
   </p:xslt>
 
   <!-- Do the transforms: -->
-  <!-- Remark: if any of these transformation wants to return multiple elements, these should be wrapped in a <xdoc:GROUP> element. This
-       element will be unwrapped before finishing.
+  <!-- Remark: if any of these transformation wants to return multiple elements, 
+    these should be wrapped in a <xdoc:GROUP> element. This
+    element will be unwrapped before finishing.
   -->
   <p:viewport match="xdoc:transform" name="transform-viewport">
     <p:variable name="base-uri-source" select="base-uri(/*)"/>
-    
+
     <!-- Make the href attribute absolute and process the $xdoc indicator: -->
     <p:xslt>
       <p:input port="stylesheet">
@@ -155,7 +164,8 @@
   <!--  Remove grouping with <xdoc:GROUP> elements: -->
   <p:unwrap match="xdoc:GROUP"/>
 
-  <!-- Substitute all parameter references again (in case the transforms generated something that included a parameter reference): -->
+  <!-- Substitute all parameter references again (in case the transforms generated 
+    something that included a parameter reference): -->
   <p:xslt>
     <p:input port="stylesheet">
       <p:document href="xsl-xdoc-to-docbook/substitute-parameters.xsl"/>
@@ -164,4 +174,16 @@
     <p:with-param name="parameter-filters" select="$parameter-filters"/>
   </p:xslt>
   
+  <!-- Handle any alt specs: -->
+  <p:xslt>
+    <p:input port="stylesheet">
+      <p:document href="xsl-xdoc-to-docbook/process-alt-settings.xsl"/>
+    </p:input>
+    <p:with-param name="alttarget" select="$alttarget"/>
+  </p:xslt>
+  
+  <!-- Remove any not handled xdoc stuff: -->
+  <p:delete match="xdoc:*"/>
+  <p:delete match="@xdoc:*"/>
+
 </p:declare-step>

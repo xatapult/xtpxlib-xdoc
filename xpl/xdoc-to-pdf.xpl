@@ -60,6 +60,10 @@
   <p:option name="href-docbook" required="false" select="()">
     <p:documentation>If set, writes the intermediate full DocBook to this href (so you can inspect it when things go wrong)</p:documentation>
   </p:option>
+  
+  <p:option name="alttarget" required="false" select="()">
+    <p:documentation>The target for applying alternate settings.</p:documentation>
+  </p:option>
 
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>Some XML report about the conversion</p:documentation>
@@ -74,6 +78,7 @@
   <xdoc:xdoc-to-docbook>
     <p:with-option name="href-parameters" select="$href-parameters"/>
     <p:with-option name="parameter-filters" select="$parameter-filters"/>
+    <p:with-option name="alttarget" select="$alttarget"/> 
   </xdoc:xdoc-to-docbook>
   
   <xtlc:tee>

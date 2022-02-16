@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
-  xmlns:c="http://www.w3.org/ns/xproc-step" version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:docbook-to-pdf">
+<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
+  xmlns:c="http://www.w3.org/ns/xproc-step" version="1.0" xpath-version="2.0"
+  exclude-inline-prefixes="#all" type="xdoc:docbook-to-pdf">
 
   <p:documentation>
       This turns Docbook (5.1) into a PDF using FOP.
@@ -43,7 +45,8 @@
     <p:documentation>Specific chapter identifier to output.</p:documentation>
   </p:option>
 
-  <p:option name="fop-config" required="false" select="resolve-uri('../../xtpxlib-common/data/fop-default-config.xml', static-base-uri())">
+  <p:option name="fop-config" required="false"
+    select="resolve-uri('../../xtpxlib-common/data/fop-default-config.xml', static-base-uri())">
     <p:documentation>Reference to the FOP configuration file</p:documentation>
   </p:option>
 
@@ -69,6 +72,7 @@
   </p:output>
 
   <p:import href="../../xtpxlib-common/xplmod/common.mod/common.mod.xpl"/>
+  <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
 
   <!-- ================================================================== -->
 
@@ -120,10 +124,35 @@
   <p:identity name="final-output"/>
 
   <!-- Make it into a PDF: -->
-  <p:xsl-formatter name="step-create-pdf" content-type="application/pdf">
+  <!-- 202201: There seems to be a problem with Calabsh running FOP: Images no longer appear 
+    and a bugfix is not forthcoming. 
+    Therefore we try to do the trick by calling FOP directly...
+  -->
+  <!--<p:xsl-formatter name="step-create-pdf" content-type="application/pdf">
     <p:with-option name="href" select="$href-pdf"/>
-<!--    <p:with-param name="UserConfig" select="replace($fop-config, '^file:/', '')"/>-->
+    <p:with-param name="UserConfig" select="replace($fop-config, '^file:/', '')"/>
     <p:with-param name="null" select="()"/>
-  </p:xsl-formatter>
-
+  </p:xsl-formatter>-->
+  <p:group>
+    <p:variable name="arg-separator" select="'|'"/>
+    <p:variable name="fop" select="replace(resolve-uri('../../xtools/fop/fop.bat', static-base-uri()), '^file:/+?', '')"/>
+    <p:exec name="execute-ant-project-windows">
+      <p:input port="source">
+        <p:empty/>
+      </p:input>
+      <p:with-option name="command" select="'cmd'"/>
+      <p:with-option name="args" select="string-join(
+        (  '/C', $fop, 
+           replace($href-xsl-fo, '^file:/+?', ''),     
+           replace($href-pdf, '^file:/+?', '')
+        ), 
+        $arg-separator
+      )"/>
+      <p:with-option name="arg-separator" select="$arg-separator"/>
+      <p:with-option name="result-is-xml" select="false()"/>
+      <p:with-option name="wrap-result-lines" select="true()"/>
+      <p:with-option name="wrap-error-lines" select="true()"/>
+    </p:exec>
+    <p:sink/>
+  </p:group>
 </p:declare-step>

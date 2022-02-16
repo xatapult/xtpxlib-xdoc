@@ -46,7 +46,7 @@
 
   <xsl:variable name="sort-attributes" as="xs:boolean"
     select="xtlc:str2bln(/xdoc:transform/xdoc:element-description[1]/@sort-attributes, false())"/>
- 
+
   <!-- ================================================================== -->
 
   <xsl:template match="/xdoc:transform">
@@ -73,19 +73,23 @@
 
   <xsl:template match="xdoc:element-description">
 
+    <xsl:variable name="base-id" as="xs:string" select="(@id, xtlc:str2id(@name))[1]"/>
+
     <!-- We start with the coded description: -->
-    <xsl:call-template name="create-coded-description"/>
+    <xsl:call-template name="create-coded-description">
+      <xsl:with-param name="base-id" select="$base-id"/>
+    </xsl:call-template>
 
     <!-- Then output the general description: -->
     <xsl:call-template name="output-docbook-contents">
       <xsl:with-param name="encompassing-element" select="xdoc:description"/>
     </xsl:call-template>
 
-
     <!-- Attributes table: -->
     <xsl:call-template name="output-description-table">
       <xsl:with-param name="descriptions" select="local:sort-attributes(xdoc:attribute)"/>
       <xsl:with-param name="header" as="element()*" select="xdoc:attribute-table-header/*"/>
+      <xsl:with-param name="base-id" select="$base-id"/>
     </xsl:call-template>
 
     <!-- Elements table (remove doubles): -->
@@ -96,8 +100,8 @@
         </xsl:for-each-group>
       </xsl:with-param>
       <xsl:with-param name="header" as="element()*" select="xdoc:element-table-header/*"/>
+      <xsl:with-param name="base-id" select="$base-id"/>
     </xsl:call-template>
-
 
   </xsl:template>
 
@@ -107,9 +111,9 @@
   <xsl:template name="create-coded-description">
     <xsl:param name="element-description" as="element(xdoc:element-description)" required="no"
       select="."/>
+    <xsl:param name="base-id" as="xs:string" required="yes"/>
 
     <xsl:for-each select="$element-description">
-      <xsl:variable name="id" as="xs:string" select="(@id, xtlc:str2id(@name, 'element-'))[1]"/>
       <xsl:variable name="element-name" as="xs:string" select="@name"/>
       <xsl:variable name="attributes" as="element(xdoc:attribute)*" select="xdoc:attribute"/>
       <xsl:variable name="contents" as="element()*"
@@ -121,7 +125,7 @@
         select="normalize-space($additional-text) ne ''"/>
 
       <!-- Create the formatted example: -->
-      <programlisting xml:id="{$id}">
+      <programlisting xml:id="{$base-id}-xlisting">
 
         <xsl:text>&lt;</xsl:text>
         <xsl:value-of select="$element-name"/>
@@ -334,6 +338,7 @@
   <!-- ATTRIBUTES/ELEMENTS TABLE: -->
 
   <xsl:template name="output-description-table">
+    <xsl:param name="base-id" as="xs:string" required="yes"/>
     <xsl:param name="descriptions" as="element()*" required="yes"/>
     <xsl:param name="header" as="element()*" required="no" select="()"/>
 
@@ -344,7 +349,6 @@
     <xsl:variable name="has-type-info" as="xs:boolean"
       select="exists($descriptions-to-use/xdoc:type)"/>
 
-
     <!-- Output if anything left: -->
     <xsl:if test="exists($descriptions-to-use)">
       <para role="halfbreak"/>
@@ -354,7 +358,8 @@
       <!-- Add role to the name column so the final goal transformations (e.g. the one that creates XSL-FO) can compute the actual width. -->
       <xsl:variable name="name-column-role" as="xs:string"
         select="'code-width-cm:' || $description-table-name-column-min-width-cm || '-' || $description-table-name-column-max-width-cm"/>
-      <table role="nonumber">
+      <table role="nonumber"
+        xml:id="{$base-id}-{if ($is-attributes) then 'attributes' else 'child-elements'}">
         <title/>
         <tgroup cols="{if ($has-type-info) then 4 else 3}">
           <colspec colname="name" role="{$name-column-role}"/>
@@ -377,10 +382,11 @@
           </thead>
           <tbody>
             <xsl:for-each select="$descriptions-to-use">
+              <xsl:variable name="name" as="xs:string" select="string(@name)"/>
               <row>
                 <entry>
                   <code role="code-width-limited">
-                    <xsl:value-of select="@name"/>
+                    <xsl:value-of select="$name"/>
                   </code>
                 </entry>
                 <entry>
@@ -420,6 +426,8 @@
                   </xsl:call-template>
                   <xsl:call-template name="output-type-enums-table">
                     <xsl:with-param name="type" select="xdoc:type"/>
+                    <xsl:with-param name="base-id" select="$base-id"/>
+                    <xsl:with-param name="name" select="$name"/>
                   </xsl:call-template>
                 </entry>
               </row>
@@ -453,13 +461,15 @@
 
   <xsl:template name="output-type-enums-table">
     <xsl:param name="type" as="element(xdoc:type)?" required="yes"/>
+    <xsl:param name="base-id" as="xs:string" required="yes"/>
+    <xsl:param name="name" as="xs:string" required="yes"/>
 
     <xsl:for-each select="$type">
       <xsl:variable name="enums" as="element(xdoc:enum)*" select="xdoc:enum"/>
       <xsl:if test="exists($enums)">
         <xsl:variable name="enums-column-role" as="xs:string"
           select="'code-width-cm:' || $enums-table-value-column-min-width-cm || '-' || $enums-table-value-column-max-width-cm"/>
-        <table role="nonumber">
+        <table role="nonumber" xml:id="{$base-id}-enums-{$name}">
           <title/>
           <tgroup cols="2">
             <colspec colname="value" role="{$enums-column-role}"/>
@@ -558,13 +568,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- ======================================================================= -->
   <!-- SORTING SUPPORT: -->
-  
+
   <xsl:function name="local:sort-attributes" as="element(xdoc:attribute)*">
     <xsl:param name="attributes" as="element(xdoc:attribute)*"/>
-    
+
     <xsl:choose>
       <xsl:when test="$sort-attributes">
         <xsl:perform-sort select="$attributes">
@@ -573,8 +583,8 @@
       </xsl:when>
       <xsl:otherwise>
         <xsl:sequence select="$attributes"/>
-      </xsl:otherwise>  
+      </xsl:otherwise>
     </xsl:choose>
   </xsl:function>
-  
+
 </xsl:stylesheet>
