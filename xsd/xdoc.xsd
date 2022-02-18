@@ -63,4 +63,19 @@
       </xs:attribute>
     </xs:complexType>
   </xs:element>
+  <xs:element name="altimagedata">
+    <xs:complexType>
+      <xs:attribute name="idref" type="xs:NCName" use="required">
+        <xs:annotation>
+          <xs:documentation>Identifier of the image for which the imagedata must be altered.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="target" type="xs:NCName" use="required">
+        <xs:annotation>
+          <xs:documentation>Name of the target type for which these settings must be used</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:anyAttribute namespace="##any" processContents="skip"/>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

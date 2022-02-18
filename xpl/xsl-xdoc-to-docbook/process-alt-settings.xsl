@@ -17,9 +17,13 @@
 
   <xsl:mode on-no-match="shallow-copy"/>
   <xsl:mode name="mode-change-colspec" on-no-match="shallow-copy"/>
+  <xsl:mode name="mode-change-imagedata" on-no-match="shallow-copy"/>
 
   <xsl:variable name="altcolspecs-keyname" as="xs:string" select="'altcolspecs'"/>
   <xsl:key name="altcolspecs" match="xdoc:altcolspecs" use="@idref"/>
+
+  <xsl:variable name="altimagedata-keyname" as="xs:string" select="'altimagedata'"/>
+  <xsl:key name="altimagedata" match="xdoc:altimagedata" use="@idref"/>
 
   <!-- ======================================================================= -->
   <!-- PARAMETERS: -->
@@ -63,14 +67,41 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
+
   <xsl:template match="db:table" mode="mode-change-colspec">
     <!-- When finding a nested table. switch back to the default mode: -->
     <xsl:apply-templates select="." mode="#unnamed"/>
   </xsl:template>
+
+  <!-- ======================================================================= -->
+  <!-- ALTERNATIVE IMAGE DATA PROCESSING -->
+
+  <xsl:template match="db:figure[@xml:id]" mode="#all">
+    <xsl:variable name="id" as="xs:string" select="string(@xml:id)"/>
+    <xsl:variable name="altimagedata" as="element(xdoc:altimagedata)?"
+      select="key($altimagedata-keyname, $id)[@target eq $alttarget][1]"/>
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <xsl:apply-templates mode="mode-change-imagedata">
+        <xsl:with-param name="alt-imagedata" as="element(xdoc:altimagedata)?" select="$altimagedata"
+          tunnel="true"/>
+      </xsl:apply-templates>
+    </xsl:copy>
+  </xsl:template>
+
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
   
+  <xsl:template match="db:imagedata" mode="mode-change-imagedata">
+    <xsl:param name="alt-imagedata" as="element(xdoc:altimagedata)?" required="true" tunnel="true"/>
+    
+    <xsl:copy>
+      <xsl:copy-of select="@*"/>
+      <xsl:copy-of select="$alt-imagedata/@* except ($alt-imagedata/@idref, $alt-imagedata/@target)"/>
+      <xsl:apply-templates/>
+    </xsl:copy>
+  </xsl:template>
   
   <!-- ================================================================== -->
 
