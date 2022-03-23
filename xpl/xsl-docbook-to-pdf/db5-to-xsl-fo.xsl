@@ -93,7 +93,6 @@
   <xsl:variable name="standard-fixed-font-size" as="xs:double" select="$standard-font-size - 1"/>
   <xsl:variable name="special-titles-font-size" as="xs:double" select="$standard-font-size - 2"/>
   <xsl:variable name="super-sub-font-size" as="xs:double" select="$standard-font-size - 3"/>
-  <xsl:variable name="super-sub-font-shift" as="xs:double" select="$super-sub-font-size div 1.5"/>
   <xsl:variable name="chapter-font-size-addition" as="xs:double" select="6"/>
   <xsl:variable name="standard-small-indent" as="xs:double" select="0.15"/>
   <xsl:variable name="standard-itemized-list-indent" as="xs:double" select="0.6"/>
@@ -148,14 +147,14 @@
   <!-- Locations: -->
   <xsl:variable name="callouts-location" as="xs:string"
     select="resolve-uri('../../resources/callouts/', static-base-uri()) => xtlc:href-canonical()"/>
-  
+
   <!-- Special characters: -->
   <xsl:variable name="double-quote-open" as="xs:string" select="'&#x201c;'"/>
   <xsl:variable name="double-quote-close" as="xs:string" select="'&#x201d;'"/>
   <xsl:variable name="single-quote-open" as="xs:string" select="'&#x2018;'"/>
   <xsl:variable name="single-quote-close" as="xs:string" select="'&#x2019;'"/>
   <xsl:variable name="apostrophe" as="xs:string" select="'&#x2019;'"/>
-  
+
 
   <!-- ================================================================== -->
   <!-- MAIN TEMPLATES: -->
@@ -670,6 +669,7 @@
 
   <xsl:template match="db:programlisting" mode="mode-block">
     <xsl:param name="in-example" as="xs:boolean" required="no" select="false()" tunnel="true"/>
+    <xsl:param name="example-id" as="xs:string?" required="no" select="()" tunnel="true"/>
 
     <!-- Make the programlisting all text. This will encode the callout <co .../> elements. All other non-text is discarded. -->
     <xsl:variable name="contents-with-co-elements-expanded" as="xs:string">
@@ -711,7 +711,14 @@
         <xsl:attribute name="margin-left" select="local:dimcm($standard-small-indent)"/>
         <xsl:attribute name="margin-right" select="local:dimcm($standard-small-indent)"/>
       </xsl:if>
-      <xsl:call-template name="copy-id"/>
+      <xsl:choose>
+        <xsl:when test="$in-example and exists($example-id)">
+          <xsl:attribute name="id" select="$example-id"/>
+        </xsl:when>
+        <xsl:otherwise>
+          <xsl:call-template name="copy-id"/>
+        </xsl:otherwise>
+      </xsl:choose>
       <xsl:for-each select="$lines">
         <block xsl:use-attribute-sets="attributes-codeblock-font-settings">
           <xsl:variable name="line-contents-for-output" as="xs:string"
@@ -961,6 +968,8 @@
       margin-right="{local:dimcm($standard-small-indent)}">
       <xsl:apply-templates select="db:* except db:title" mode="#current">
         <xsl:with-param name="in-example" as="xs:boolean" select="true()" tunnel="true"/>
+        <xsl:with-param name="example-id" as="xs:string?" select="xs:string(@xml:id)" tunnel="true"
+        />
       </xsl:apply-templates>
       <xsl:call-template name="add-object-title">
         <xsl:with-param name="object-name" select="'Example'"/>
@@ -1511,8 +1520,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:superscript" mode="mode-inline">
-    <inline vertical-align="sup" baseline-shift="{local:dimpt($super-sub-font-shift)}"
-      font-size="{local:dimpt($super-sub-font-size)}">
+    <inline vertical-align="super" font-size="{local:dimpt($super-sub-font-size)}">
       <xsl:apply-templates mode="#current"/>
     </inline>
   </xsl:template>
@@ -1585,8 +1593,7 @@
 
     <xsl:variable name="number" as="xs:string" select="(@number, '*')[1]"/>
     <footnote>
-      <inline vertical-align="sup" baseline-shift="{local:dimpt($super-sub-font-shift)}"
-        font-size="{local:dimpt($super-sub-font-size)}">
+      <inline vertical-align="super" font-size="{local:dimpt($super-sub-font-size)}">
         <xsl:value-of select="$number"/>
       </inline>
       <footnote-body>
