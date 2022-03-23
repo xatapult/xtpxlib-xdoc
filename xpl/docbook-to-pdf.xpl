@@ -118,6 +118,7 @@
   </p:xslt>
   <xtlc:tee>
     <p:with-option name="href" select="$href-xsl-fo"/>
+    <p:with-option name="indent" select="false()"/> 
     <p:with-option name="enable" select="normalize-space($href-xsl-fo) ne ''"/>
   </xtlc:tee>
 
