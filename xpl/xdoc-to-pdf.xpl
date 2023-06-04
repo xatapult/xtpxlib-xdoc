@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
-  xmlns:c="http://www.w3.org/ns/xproc-step" version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:xdoc-to-pdf">
+<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common"
+  xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" version="1.0" xpath-version="2.0"
+  exclude-inline-prefixes="#all" type="xdoc:xdoc-to-pdf">
 
   <p:documentation>
      Convenience pipeline: Combines the [xdoc-to-docbook](%xdoc-to-docbook.xpl) and the [docbook-to-pdf](%docbook-to-pdf.xpl) steps in one.
@@ -37,7 +38,8 @@
     <p:documentation>Specific chapter identifier to output.</p:documentation>
   </p:option>
 
-  <p:option name="fop-config" required="false" select="resolve-uri('../../xtpxlib-common/data/fop-default-config.xml', static-base-uri())">
+  <p:option name="fop-config" required="false"
+    select="resolve-uri('../../xtpxlib-common/data/fop-default-config.xml', static-base-uri())">
     <p:documentation>Reference to the FOP configuration file</p:documentation>
   </p:option>
 
@@ -60,7 +62,7 @@
   <p:option name="href-docbook" required="false" select="()">
     <p:documentation>If set, writes the intermediate full DocBook to this href (so you can inspect it when things go wrong)</p:documentation>
   </p:option>
-  
+
   <p:option name="alttarget" required="false" select="()">
     <p:documentation>The target for applying alternate settings.</p:documentation>
   </p:option>
@@ -78,12 +80,12 @@
   <xdoc:xdoc-to-docbook>
     <p:with-option name="href-parameters" select="$href-parameters"/>
     <p:with-option name="parameter-filters" select="$parameter-filters"/>
-    <p:with-option name="alttarget" select="$alttarget"/> 
+    <p:with-option name="alttarget" select="$alttarget"/>
   </xdoc:xdoc-to-docbook>
-  
+
   <xtlc:tee>
     <p:with-option name="href" select="$href-docbook"/>
-    <p:with-option name="enable" select="normalize-space($href-docbook) ne ''"/> 
+    <p:with-option name="enable" select="normalize-space($href-docbook) ne ''"/>
   </xtlc:tee>
 
   <xdoc:docbook-to-pdf>

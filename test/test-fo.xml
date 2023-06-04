@@ -1,0 +1,268 @@
+<root xmlns="http://www.w3.org/1999/XSL/Format">
+  <layout-master-set>
+    <simple-page-master page-height="29.7cm" page-width="21cm" margin-top="1cm" margin-bottom="1.5cm" margin-left="4cm"
+      margin-right="2cm" master-name="spm-frontpage">
+      <region-body margin-top="0cm"/>
+    </simple-page-master>
+    <simple-page-master page-height="29.7cm" page-width="21cm" margin-top="1cm" margin-bottom="1.5cm" margin-left="4cm"
+      margin-right="2cm" master-name="spm-contents">
+      <region-body margin-top="2cm"/>
+      <region-before extent="1.5cm"/>
+    </simple-page-master>
+  </layout-master-set>
+  <page-sequence font-family="Calibri, sans-serif" font-size="10pt" master-reference="spm-frontpage">
+    <flow flow-name="xsl-region-body">
+      <block-container>
+        <block vertical-align="middle"><external-graphic
+            src="url(file:/C:/Data/Erik/work/xatapult/xtpxlib-xdoc/test/figures/logo-xatapult.jpg)" content-width="20%"
+            content-height="scale-to-fit" scaling="uniform" inline-progression-dimension.maximum="90%"/></block>
+      </block-container>
+      <block-container absolute-position="fixed" top="6cm" left="4cm" font-variant="small-caps" letter-spacing="1pt"
+        font-weight="bold">
+        <block space-after="1cm" font-size="18pt">xtpxlib/xdoc module</block>
+        <block font-size="14pt">Test document</block>
+      </block-container>
+      <block-container absolute-position="fixed" top="11cm" left="4cm" width="15cm">
+        <block vertical-align="middle" text-align="center"><external-graphic
+            src="url(file:/C:/Data/Erik/work/xatapult/xtpxlib-xdoc/test/figures/Xatapult%20X.jpg)" content-width="200%"
+            content-height="scale-to-fit" scaling="uniform" inline-progression-dimension.maximum="90%"/></block>
+      </block-container>
+      <block-container absolute-position="fixed" top="26.7cm" left="4cm">
+        <block>Erik Siegel - Xatapult</block>
+        <block>2019</block>
+        <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-size="9pt" font-weight="bold"
+          >Preliminary version (06-03-2023 10:02:11)</fo:block>
+      </block-container>
+    </flow>
+  </page-sequence>
+  <page-sequence font-family="Garamond, serif" font-size="10pt" master-reference="spm-contents" initial-page-number="1">
+    <fo:static-content xmlns:fo="http://www.w3.org/1999/XSL/Format" flow-name="xsl-footnote-separator">
+      <fo:block text-align-last="justify"><fo:leader leader-length="50%" rule-thickness="0.5pt" leader-pattern="rule"
+        /></fo:block>
+    </fo:static-content>
+    <static-content flow-name="xsl-region-before" font-size="8pt" font-family="Calibri, sans-serif">
+      <block border-bottom="thin solid black">xtpxlib/xdoc module - Test document</block>
+      <block text-align="right" space-before="-10pt"><page-number/> / <page-number-citation
+          ref-id="bookmark-final-page-block"/></block>
+      <fo:block xmlns:fo="http://www.w3.org/1999/XSL/Format" font-style="italic" font-size="9pt" font-weight="bold"
+        >Preliminary version (06-03-2023 10:02:11)</fo:block>
+    </static-content>
+    <flow flow-name="xsl-region-body">
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="TOC" font-size="16pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="19.2pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>0</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>Table of Contents</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block text-align-last="justify" margin-left="0cm" space-before="5pt"><basic-link internal-destination="d14e41"
+            ><inline font-weight="bold">1  Introduction</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e41"/></basic-link></block>
+      <block text-align-last="justify" margin-left="0cm" space-before="5pt"><basic-link internal-destination="d14e64"
+            ><inline font-weight="bold">2  Stuff</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e64"/></basic-link></block>
+      <block text-align-last="justify" margin-left="0.6cm"><basic-link internal-destination="d14e70"
+            ><inline>2.1  Parameters</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e70"/></basic-link></block>
+      <block text-align-last="justify" margin-left="0.6cm"><basic-link internal-destination="d14e79"
+            ><inline>2.2  {$test}</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e79"/></basic-link></block>
+      <block text-align-last="justify" margin-left="0.6cm"><basic-link internal-destination="d14e96"><inline>2.3  XML
+            Descriptions</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e96"/></basic-link></block>
+      <block text-align-last="justify" margin-left="0.6cm"><basic-link internal-destination="d14e108"
+            ><inline>2.4  Documentation generation</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e108"/></basic-link></block>
+      <block text-align-last="justify" margin-left="1.7999999999999998cm"><basic-link internal-destination="d14e112"
+            ><inline>2.4.1  XSLT Module</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e112"/></basic-link></block>
+      <block text-align-last="justify" margin-left="1.7999999999999998cm"><basic-link internal-destination="d14e122"
+            ><inline>2.4.2  XPROC Module</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e122"/></basic-link></block>
+      <block text-align-last="justify" margin-left="1.7999999999999998cm"><basic-link internal-destination="d14e132"
+            ><inline>2.4.3  XPROC Step</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e132"/></basic-link></block>
+      <block text-align-last="justify" margin-left="1.7999999999999998cm"><basic-link internal-destination="d14e142"
+            ><inline>2.4.4  XSD</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e142"/></basic-link></block>
+      <block text-align-last="justify" margin-left="1.7999999999999998cm"><basic-link internal-destination="d14e153"
+            ><inline>2.4.5  XML</inline>
+          <leader leader-pattern="dots"/><page-number-citation ref-id="d14e153"/></basic-link></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e41" font-size="16pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        page-break-before="always">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>1</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>Introduction</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block font-size="4pt" keep-with-next="always"> </block>
+      <block margin-left="0.6cm" margin-right="0.6cm" padding="0.15cm" border="thin solid purple"><block
+          font-weight="bold" keep-with-next="always" color="purple">WARNING:</block><block space-after="2pt"
+          keep-together.within-page="always" id="d14e47">This document is for testing the features of the <inline
+            font-family="'Courier New', monospace" font-size="9pt">xtpxlib-xdoc</inline> component.</block></block>
+      <block font-size="4pt"> </block>
+      <block space-after="2pt" keep-together.within-page="always" id="d14e53">The <inline
+          font-family="'Courier New', monospace" font-size="9pt">xtpxlib-xdoc</inline> module uses DocBook 5.1 as its
+        target vocabulary. However, it does not implement the full standard (which is huge!) but only those
+        elements/attributes that were deemed necessary. The <inline font-family="'Courier New', monospace"
+          font-size="9pt">xtpxlib-xdoc</inline> component adds several extensions which are tested by running this
+        document through the conversion pipelines. This means it also serves as partial documentation and
+        example.</block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e64" font-size="16pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        page-break-before="always">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>Stuff</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e70" font-size="13pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="15.6pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.1</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>Parameters</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:dump-parameters
+          type="table"&gt; (phase: block)]</inline></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e79" font-size="13pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="15.6pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.2</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>{$test}</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block space-after="2pt" keep-together.within-page="always" id="d14e83">Comes from an XProc
+        transformation:</block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="transforms/test.xpl"&gt; (phase: block)]</inline></block>
+      <block space-after="2pt" keep-together.within-page="always" space-before="10pt" id="d14e87">Comes from an XSLT
+        transformation:</block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="transforms/test.xsl"&gt; (phase: block)]</inline></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e96" font-size="13pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="15.6pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.3</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>XML Descriptions</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="$xdoc/xml-description/xml-description.xpl"&gt; (phase: block)]</inline></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e108" font-size="13pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="15.6pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.4</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>Documentation generation</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e112" font-size="12pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="14.399999999999999pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.4.1</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>XSLT Module</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="$xdoc/docgen/docgen.xpl" filecomponents="1"&gt; (phase: block)]</inline></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e122" font-size="12pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="14.399999999999999pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.4.2</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>XPROC Module</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="$xdoc/docgen/docgen.xpl" filecomponents="2"&gt; (phase: block)]</inline></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e132" font-size="12pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="14.399999999999999pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.4.3</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>XPROC Step</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="$xdoc/docgen/docgen.xpl"&gt; (phase: block)]</inline></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e142" font-size="12pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="14.399999999999999pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.4.4</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>XSD</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="$xdoc/docgen/docgen.xpl" filecomponents="0"&gt; (phase: block)]</inline></block>
+      <list-block start-indent="-1.5cm" provisional-distance-between-starts="1.5cm" id="d14e153" font-size="12pt"
+        font-weight="bold" space-after="8pt" keep-with-next="always" font-family="Calibri, sans-serif"
+        space-before="14.399999999999999pt">
+        <list-item>
+          <list-item-label end-indent="label-end()">
+            <block>2.4.5</block>
+          </list-item-label>
+          <list-item-body start-indent="body-start()">
+            <block>XML</block>
+          </list-item-body>
+        </list-item>
+      </list-block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xdoc:transform
+          href="$xdoc/docgen/docgen.xpl" filecomponents="-1"&gt; (phase: block)]</inline></block>
+      <block><inline font-weight="bold" color="red">[*** Unhandled element encountered: &lt;xi:include
+          href="{$include-file}"&gt; (phase: structure)]</inline></block>
+      <block id="bookmark-final-page-block"/>
+    </flow>
+  </page-sequence>
+</root>

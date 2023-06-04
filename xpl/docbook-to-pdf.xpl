@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
   xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
-  xmlns:c="http://www.w3.org/ns/xproc-step" version="1.0" xpath-version="2.0"
+  xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:pxf="http://exproc.org/proposed/steps/file" version="1.0" xpath-version="2.0"
   xmlns:cx="http://xmlcalabash.com/ns/extensions" exclude-inline-prefixes="#all"
   type="xdoc:docbook-to-pdf">
 
@@ -150,6 +150,13 @@
         ), 
         $arg-separator
     )"/>
+
+    <!-- 202306: For some reason, Java (or FOP?) suddenly requires the PDF directory to exist. -->
+    <p:variable name="href-pdf-dir" select="replace($href-pdf, '(.*)[/\\][^/\\]+$', '$1')"/>
+    <pxf:mkdir>
+      <p:with-option name="href" select="$href-pdf-dir"/>
+    </pxf:mkdir>
+
     <p:exec>
       <p:input port="source">
         <p:empty/>

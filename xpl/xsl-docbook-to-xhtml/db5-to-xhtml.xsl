@@ -25,6 +25,10 @@
   <!-- PARAMETERS: -->
 
   <xsl:param name="create-header" as="xs:string" required="false" select="string(true())"/>
+  <xsl:param name="add-roles-as-classes" as="xs:string" required="false" select="string(false())"/>
+
+  <xsl:variable name="do-create-header" as="xs:boolean" select="xs:boolean($create-header)"/>
+  <xsl:variable name="do-add-roles-as-classes" as="xs:boolean" select="xs:boolean($add-roles-as-classes)"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL VARIABLES: -->
@@ -52,7 +56,8 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="/db:book | /db:article">
-    <div class="{local-name(.)}">
+    <div>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
         <xsl:with-param name="force" select="true()"/>
@@ -65,8 +70,11 @@
   <!-- HEADER CREATION: -->
 
   <xsl:template match="db:info">
-    <xsl:if test="$create-header">
-      <div class="header">
+    <xsl:if test="$do-create-header">
+      <div>
+        <xsl:call-template name="add-class-info">
+          <xsl:with-param name="base-classes" select="'header'"/>
+        </xsl:call-template>
         <xsl:call-template name="add-header-info">
           <xsl:with-param name="source-element" select="db:title"/>
           <xsl:with-param name="element-name" select="'h1'"/>
@@ -88,7 +96,10 @@
           <xsl:with-param name="element-name" select="'p'"/>
         </xsl:call-template>
         <xsl:for-each select="db:mediaobject[@role eq 'center-page'][1]/db:imageobject[1]/db:imagedata[1]">
-          <img src="{@fileref}" class="header-image">
+          <img src="{@fileref}">
+            <xsl:call-template name="add-class-info">
+              <xsl:with-param name="base-classes" select="'header-image'"/>
+            </xsl:call-template>
             <xsl:copy-of select="@width, @height"/>
           </img>
         </xsl:for-each>
@@ -105,10 +116,12 @@
     <xsl:param name="source-element" as="element()?" required="yes"/>
     <xsl:param name="element-name" as="xs:string" required="yes"/>
 
-    <xsl:variable name="text" as="xs:string?" select="string-join($source-element//text()[normalize-space(.) ne ''], '; ')"/>
+    <xsl:variable name="text" as="xs:string?" select="string-join($source-element//text()[normalize-space(.) ne ''][.], '; ')"/>
     <xsl:if test="normalize-space($text) ne ''">
       <xsl:element name="{$element-name}">
-        <xsl:attribute name="class" select="local-name($source-element)"/>
+        <xsl:call-template name="add-class-info">
+          <xsl:with-param name="docbook-elm" select="$source-element"/>
+        </xsl:call-template>
         <xsl:sequence select="$text"/>
       </xsl:element>
     </xsl:if>
@@ -123,12 +136,14 @@
         <xsl:with-param name="msg-parts" select="('Non-books cannot contain: ', .)"/>
       </xsl:call-template>
     </xsl:if>
-    <div class="{local-name(.)}">
+    <div>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
         <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
-      <h1 class="{local-name(.)}">
+      <h1>
+        <xsl:call-template name="add-class-info"/>
         <xsl:if test="not(self::db:preface)">
           <span class="{local-name(.)}-number">
             <xsl:value-of select="@number"/>
@@ -147,17 +162,20 @@
 
   <xsl:template match="db:sect1 | db:sect2 | db:sect3">
     <xsl:variable name="level" as="xs:integer" select="xs:integer(substring-after(local-name(.), 'sect')) + (if ($is-book) then 1 else 0)"/>
-    <div class="{local-name(.)}">
+    <div>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
         <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <xsl:element name="h{$level}">
-        <xsl:attribute name="class" select="local-name(.)"/>
-        <span class="{local-name(.)}-number">
-          <xsl:value-of select="@number"/>
-        </span>
-        <xsl:text> </xsl:text>
+        <xsl:call-template name="add-class-info"/>
+        <xsl:if test="exists(@number)">
+          <span class="{local-name(.)}-number">
+            <xsl:value-of select="@number"/>
+          </span>
+          <xsl:text> </xsl:text>
+        </xsl:if>
         <xsl:call-template name="handle-inline-contents">
           <xsl:with-param name="contents" select="db:title/node()"/>
         </xsl:call-template>
@@ -178,7 +196,8 @@
     <xsl:if test="$roles = ('break-before')">
       <p class="break">&#160;</p>
     </xsl:if>
-    <p class="{local-name(.)}">
+    <p>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
@@ -211,15 +230,15 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:itemizedlist | db:orderedlist | db:simplelist">
-    
+
     <xsl:variable name="in-ordered-list" as="xs:boolean" select="exists(self::db:orderedlist)"/>
     <xsl:variable name="startingumber" as="xs:integer" select="xtlc:str2int(@startingnumber, 1)"/>
-    
+
     <xsl:element name="{if ($in-ordered-list) then 'ol' else 'ul'}">
       <xsl:if test="$in-ordered-list and ($startingumber ne 1)">
         <xsl:attribute name="start" select="$startingumber"/>
       </xsl:if>
-      <xsl:attribute name="class" select="local-name(.)"/>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
@@ -246,11 +265,13 @@
   <xsl:template match="db:figure | db:informalfigure">
     <xsl:variable name="imagedata" as="element(db:imagedata)" select="(.//db:imagedata)[1]"/>
 
-    <p class="{local-name(.)}">
+    <p>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
-      <img src="{$imagedata/@fileref}" class="{local-name(.)}">
+      <img src="{$imagedata/@fileref}">
+        <xsl:call-template name="add-class-info"/>
         <xsl:copy-of select="$imagedata/@width, $imagedata/@height"/>
       </img>
       <xsl:if test="exists(self::db:figure)">
@@ -269,11 +290,12 @@
 
     <!-- Remove trailing and leading whitespace and CR characters before output: -->
     <xsl:variable name="contents-prepared" as="xs:string" select="string(.) => replace('^\s+', '') => replace('\s+$', '') => replace('&#x0d;', '')"/>
-    <div class="{local-name(.)}">
+    <div>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
-      <pre class="{local-name(.)}"><xsl:value-of select="$contents-prepared"/></pre>
+      <pre><xsl:call-template name="add-class-info"/><xsl:value-of select="$contents-prepared"/></pre>
     </div>
   </xsl:template>
 
@@ -281,7 +303,8 @@
 
   <xsl:template match="db:variablelist">
 
-    <dl class="{local-name(.)}">
+    <dl>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
@@ -302,7 +325,8 @@
 
   <xsl:template match="db:note | db:warning | db:sidebar | db:tip | db:caution">
 
-    <div class="{local-name(.)}">
+    <div>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
@@ -327,7 +351,8 @@
 
   <xsl:template match="db:example">
 
-    <div class="{local-name(.)}">
+    <div>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
@@ -386,11 +411,13 @@
 
   <xsl:template match="db:table | db:informaltable">
 
-    <div class="{local-name(.)}">
+    <div>
+      <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
-      <table class="{local-name(.)}">
+      <table>
+        <xsl:call-template name="add-class-info"/>
         <xsl:apply-templates mode="mode-table" select="db:* except db:title"/>
       </table>
       <xsl:call-template name="add-object-title">
@@ -510,7 +537,8 @@
 
     <xsl:choose>
       <xsl:when test="exists($referenced-element)">
-        <a href="#{$id}" class="{local-name(.)}">
+        <a href="#{$id}">
+          <xsl:call-template name="add-class-info"/>
           <xsl:if test="'newpage' = $roles">
             <xsl:attribute name="target" select="'_blank'"/>
           </xsl:if>
@@ -531,8 +559,7 @@
               <xsl:text>&#160;</xsl:text>
               <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
             </xsl:when>
-            <xsl:when
-              test="$referenced-element/self::db:figure[exists(@number)] or $referenced-element/self::db:table[exists(@number)] or
+            <xsl:when test="$referenced-element/self::db:figure[exists(@number)] or $referenced-element/self::db:table[exists(@number)] or
                 $referenced-element/self::db:example[exists(@number)]">
               <xsl:value-of select="local:xref-capitalize(local-name($referenced-element), $do-capitalize)"/>
               <xsl:text>&#160;</xsl:text>
@@ -666,7 +693,8 @@
 
   <xsl:template match="db:inlinemediaobject" mode="mode-inline">
     <xsl:variable name="imagedata" as="element(db:imagedata)" select="(.//db:imagedata)[1]"/>
-    <img src="{$imagedata/@fileref}" class="{local-name(.)}">
+    <img src="{$imagedata/@fileref}">
+      <xsl:call-template name="add-class-info"/>
       <xsl:copy-of select="$imagedata/@width, $imagedata/@height"/>
       <xsl:call-template name="copy-id"/>
     </img>
@@ -853,7 +881,9 @@
     </xsl:variable>
 
     <xsl:element name="{if ($fixed-width) then 'code' else 'span'}">
-      <xsl:attribute name="class" select="string-join($class-components, ' ')"/>
+      <xsl:call-template name="add-class-info">
+        <xsl:with-param name="base-classes" select="$class-components"/>
+      </xsl:call-template>
       <xsl:sequence select="$inline-contents"/>
     </xsl:element>
 
@@ -912,5 +942,21 @@
   <xsl:template match="comment() | processing-instruction()">
     <!-- Ignore -->
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:template name="add-class-info">
+    <xsl:param name="docbook-elm" as="element()" required="false" select="."/>
+    <xsl:param name="base-classes" as="xs:string+" required="false" select="local-name($docbook-elm)"/>
+
+    <xsl:variable name="class-parts" as="xs:string+">
+      <xsl:sequence select="$base-classes"/>
+      <xsl:if test="$do-add-roles-as-classes and exists($docbook-elm/@role)">
+        <xsl:sequence select="xtlc:str2seq($docbook-elm/@role)"/>
+      </xsl:if>
+    </xsl:variable>
+    <xsl:attribute name="class" select="string-join(distinct-values($class-parts), ' ')"/>
+  </xsl:template>
+
 
 </xsl:stylesheet>
