@@ -26,14 +26,14 @@
     <xsl:param name="href-parameters" as="xs:string">
       <!--~ Reference to the parameter file. -->
     </xsl:param>
-    <xsl:param name="filtermap" as="map(xs:string, xs:string)">
+    <xsl:param name="filtermap" as="map(xs:string, xs:string*)">
       <!--~ Map with filter parameters -->
     </xsl:param>
-    
+
     <!-- Create some special parameters: -->
     <xsl:variable name="special-values-map" as="map(xs:string, xs:string*)">
       <xsl:map>
-        <xsl:map-entry key="'DATETIME'" select="format-dateTime(current-dateTime(), '[Y]-[M01]-[D01] [H01]:[m01]:[s01]')"/>
+        <xsl:map-entry key="'DATETIME'" select="format-dateTime(current-dateTime(), '[H01]:[m01]:[s01]')"/>
         <xsl:map-entry key="'DATE'" select="format-dateTime(current-dateTime(), '[Y]-[M01]-[D01]')"/>
         <xsl:map-entry key="'TIME'" select="format-dateTime(current-dateTime(), '[H01]:[m01]:[s01]')"/>
         <xsl:map-entry key="'HREF-SOURCE'" select="xtlc:href-protocol-remove(xtlc:href-canonical(base-uri($local:root-element)))"/>

@@ -3,6 +3,8 @@
 <book xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xi="http://www.w3.org/2001/XInclude"
   xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="5.0">
 
+  <!-- Test input, XProc 3 version -->
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <info>
@@ -57,7 +59,7 @@
     <sect1>
       <title>{$test}</title>
       <para>Comes from an XProc transformation:</para>
-      <xdoc:transform href="transforms/test.xpl"/>
+      <xdoc:transform href="transforms/test3.xpl"/>
       <para role="break-before">Comes from an XSLT transformation:</para>
       <xdoc:transform href="transforms/test.xsl"/>
     </sect1>

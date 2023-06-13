@@ -4,7 +4,7 @@
   xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" exclude-result-prefixes="#all" expand-text="true">
   <!-- ================================================================== -->
   <!-- 
-       Handles a <xdoc:dum-parameters> element and outputs any parameters into the DocBook source.
+       Handles a <xdoc:dump-parameters> element and outputs any parameters into the DocBook source.
   -->
   <!-- ================================================================== -->
   <!-- SETUP: -->
@@ -19,7 +19,7 @@
   <!-- PARAMETERS: -->
 
   <xsl:param name="href-parameters" as="xs:string" required="yes"/>
-  <xsl:param name="parameter-filters" as="xs:string" required="yes"/>
+  <xsl:param name="parameter-filters-map" as="map(xs:string, xs:string)" required="yes"/>
 
   <!-- This "parameter" comes in as an attribute on the root: <xdoc:dump-parameters type="comment|table">.
     Unless its set to table we're going to dump the stuff as a comment...
@@ -32,7 +32,7 @@
   <xsl:template match="/">
 
     <xsl:variable name="parameters" as="map(xs:string, xs:string*)"
-      select="xdoc:parameters-get-with-filterstring($href-parameters, $parameter-filters)"/>
+      select="xdoc:parameters-get-with-filtermap($href-parameters, $parameter-filters-map)"/>
 
     <xsl:choose>
 

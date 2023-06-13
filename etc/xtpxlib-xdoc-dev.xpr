@@ -3056,9 +3056,11 @@
         </options>
     </meta>
     <projectTree name="xtpxlib-xdoc-dev.xpr">
+        <folder path="../../xtools/"/>
         <folder path="../../xtpxlib-common/"/>
         <folder path="../../xtpxlib-container/"/>
         <folder path="../../xtpxlib-webdoc/"/>
         <folder path="../"/>
+        <folder path="../../../../../../xdata/"/>
     </projectTree>
 </project>

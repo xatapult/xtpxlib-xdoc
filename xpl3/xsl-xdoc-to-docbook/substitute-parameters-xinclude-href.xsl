@@ -25,7 +25,8 @@
   <!-- ================================================================== -->
   <!-- GLOBAL VARIABLES: -->
 
-  <xsl:variable name="parameters" as="map(xs:string, xs:string*)" select="xdoc:parameters-get-with-filtermap($href-parameters, $parameter-filters-map)"/>
+  <xsl:variable name="parameters" as="map(xs:string, xs:string*)"
+    select="xdoc:parameters-get-with-filtermap($href-parameters, $parameter-filters-map)"/>
 
   <!-- ================================================================== -->
   <!-- MAIN TEMPLATES: -->
