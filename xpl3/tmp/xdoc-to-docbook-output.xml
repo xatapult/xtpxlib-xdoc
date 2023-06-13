@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?xml-model href="../xsd/docbook/docbook.nvdl" type="application/xml" schematypens="http://purl.oclc.org/dsdl/nvdl/ns/structure/1.0"?>
+<book version="5.0"
+      xmlns="http://docbook.org/ns/docbook"
+      xmlns:xi="http://www.w3.org/2001/XInclude"
+      xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+      xmlns:xlink="http://www.w3.org/1999/xlink">
+   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+   <info>
+      <title>xtpxlib/xdoc module</title>
+      <subtitle>Test document</subtitle>
+      <pubdate>2019</pubdate>
+      <author>
+         <personname>Erik Siegel</personname>
+      </author>
+      <orgname>Xatapult</orgname>
+      <mediaobject role="top-logo">
+         <imageobject>
+            <imagedata fileref="figures/logo-xatapult.jpg"
+                       width="20%"/>
+         </imageobject>
+      </mediaobject>
+      <mediaobject role="center-page">
+         <imageobject>
+            <imagedata fileref="figures/Xatapult%20X.jpg"
+                       width="200%"/>
+         </imageobject>
+      </mediaobject>
+   </info>
+   <!-- ================================================================== -->
+   <chapter>
+      <title>Introduction</title>
+      <warning>
+         <para>This document is for testing the features of the 
+<code>xtpxlib-xdoc</code> component.</para>
+      </warning>
+      <para>The 
+<code>xtpxlib-xdoc</code> module uses DocBook 5.1 as its target vocabulary. However, it does not implement the full standard (which
+      is huge!) but only those elements/attributes that were deemed necessary. The 
+<code>xtpxlib-xdoc</code> component adds several extensions which
+      are tested by running this document through the conversion pipelines. This means it also serves as partial documentation and example.</para>
+   </chapter>
+   <!-- ================================================================== -->
+   <chapter>
+      <title>Stuff</title>
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <sect1>
+         <title>Parameters</title>
+         <xdoc:dump-parameters type="table"/>
+      </sect1>
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <sect1>
+         <title>{$test}</title>
+         <para>Comes from an XProc transformation:</para>
+         <xdoc:transform href="transforms/test.xpl"/>
+         <para role="break-before">Comes from an XSLT transformation:</para>
+         <xdoc:transform href="transforms/test.xsl"/>
+      </sect1>
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <sect1>
+         <title>XML Descriptions</title>
+         <xdoc:transform href="$xdoc/xml-description/xml-description.xpl">
+            <xi:include href="data/test.xml"/>
+         </xdoc:transform>
+      </sect1>
+      <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+      <sect1>
+         <title>Documentation generation</title>
+         <sect2>
+            <title>XSLT Module</title>
+            <xdoc:transform href="$xdoc/docgen/docgen.xpl"
+                            filecomponents="1">
+               <xi:include href="data/test.mod.xsl"/>
+            </xdoc:transform>
+         </sect2>
+         <sect2>
+            <title>XPROC Module</title>
+            <xdoc:transform href="$xdoc/docgen/docgen.xpl"
+                            filecomponents="2">
+               <xi:include href="data/test.mod.xpl"/>
+            </xdoc:transform>
+         </sect2>
+         <sect2>
+            <title>XPROC Step</title>
+            <xdoc:transform href="$xdoc/docgen/docgen.xpl">
+               <xi:include href="data/test.xpl"/>
+            </xdoc:transform>
+         </sect2>
+         <sect2>
+            <title>XSD</title>
+            <xdoc:transform href="$xdoc/docgen/docgen.xpl"
+                            filecomponents="0">
+               <xi:include href="data/test.xsd"/>
+            </xdoc:transform>
+         </sect2>
+         <sect2>
+            <title>XML</title>
+            <xdoc:transform href="$xdoc/docgen/docgen.xpl"
+                            filecomponents="-1">
+               <xi:include href="data/test.xml"/>
+            </xdoc:transform>
+         </sect2>
+      </sect1>
+   </chapter>
+   <!-- ================================================================== -->
+   <xi:include href="{$include-file}"/>
+</book>
