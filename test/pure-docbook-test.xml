@@ -13,16 +13,16 @@
       <personname>Erik&#160;Siegel</personname>
     </author>
     <orgname>Xatapult</orgname>
-    <mediaobject role="top-logo">
+    <!--<mediaobject role="top-logo">
       <imageobject>
         <imagedata fileref="figures/logo-xatapult.jpg" width="20%"/>
       </imageobject>
-    </mediaobject>
-    <mediaobject role="center-page">
+    </mediaobject>-->
+    <!--<mediaobject role="center-page">
       <imageobject>
         <imagedata fileref="figures/Xatapult%20X.jpg" width="200%"/>
       </imageobject>
-    </mediaobject>
+    </mediaobject>-->
   </info>
 
   <!-- ================================================================== -->

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
-  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" version="3.0" exclude-inline-prefixes="#all">
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="3.0" exclude-inline-prefixes="#all"
+  type="xdoc:code-docgen-dir">
 
   <p:documentation>
       Runs the `[$xdoc/code-docgen.xpl](%code-docgen.xpl)` transform over multiple files in a directory. 
@@ -31,6 +32,7 @@
   <!-- ================================================================== -->
   <!-- SETUP: -->
 
+  <p:import href="../../xtpxlib-common/xpl3mod/recursive-directory-list/recursive-directory-list.xpl"/>
   <p:import href="../xpl3mod/xtpxlib-xdoc.mod/xtpxlib-xdoc.mod.xpl"/>
   <p:import href="code-docgen.xpl"/>
 
@@ -44,82 +46,49 @@
 
   <!-- ================================================================== -->
 
-  <p:variable name="original-base-uri" select="base-uri(/)"/>
-  <p:variable name="full-dir" select="resolve-uri(/*/@dir, $original-base-uri)"/>
-  <p:variable name="filter" select="string(/*/@filter)"/>
-  <p:variable name="toc-only" select="(/*/@toc-only, false())[1]"/>
-  <p:variable name="depth" select="(xs:integer(/*/@depth), -1)[1]"/>
-  <p:variable name="id-suffix" select="string(/*/@id-suffix)"/>
+  <p:variable name="original-base-uri" as="xs:string" select="base-uri(/)"/>
+  <p:variable name="full-dir" as="xs:string" select="resolve-uri(/*/@dir, $original-base-uri)"/>
+  <p:variable name="filter" as="xs:string" select="string(/*/@filter)"/>
+  <p:variable name="toc-only" as="xs:boolean" select="xs:boolean((/*/@toc-only, false())[1])"/>
+  <p:variable name="depth" as="xs:integer" select="xs:integer((/*/@depth, -1)[1])"/>
+  <p:variable name="id-suffix" as="xs:string" select="string(/*/@id-suffix)"/>
 
   <p:identity name="original-source"/>
 
-  <!-- Create a list of all files to process (filtering by this step is *weird*. We do our own filtering... -->
+  <!-- Create a list of all files to process (filtering by this step is *weird*. We do our own filtering...) -->
   <xtlc:recursive-directory-list flatten="true">
     <p:with-option name="path" select="$full-dir"/>
-    <p:with-option name="depth" select="$depth"/>
+    <p:with-option name="depth" select="if ($depth eq 0) then -1 else $depth"/>
   </xtlc:recursive-directory-list>
   <p:identity name="directory-overview"/>
 
   <!-- Create a TOC: -->
   <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-code-docgen-dir/create-dir-overview.xsl">
-      <p:document/>
-    </p:with-input>
+    <p:with-input port="stylesheet" href="xsl-code-docgen-dir/create-dir-overview.xsl"/>
     <p:with-option name="parameters" select="map{'full-dir': $full-dir, 'filter': $filter, 'id-suffix': $id-suffix}"/>
   </p:xslt>
-
   <xdoc:markdown-to-docbook/>
-
   <p:identity name="toc"/>
   <p:sink/>
 
-  <!-- Now create the documentation for all separate modules: -->
+  <!-- Now create the documentation for all separate modules. We do this by creating a "fake" xdoc:transform XML fragment to $xdoc/code-docgen and run this. -->
   <p:identity>
-    <p:with-input port="source">
-      <p:pipe port="result" step="directory-overview"/>
-    </p:with-input>
+    <p:with-input port="source" pipe="@directory-overview"/>
   </p:identity>
   <p:for-each>
     <p:with-input select="/*/c:file[($filter eq '') or matches(@name, $filter)][not(xs:boolean($toc-only))]"/>
-    <p:variable name="href-file" select="/*/@href-abs"/>
-    <p:load>
-      <p:with-option name="href" select="$href-file"/>
-    </p:load>
-    <p:identity name="document-to-process"/>
-    <p:sink/>
-
-    <!-- Create a correct <xdoc:transform> element and process this: -->
-    <p:identity>
-      <p:with-input port="source">
-        <p:inline>
-          <xdoc:transform href="$xdoc/code-docgen.xpl"/>
-        </p:inline>
-      </p:with-input>
-    </p:identity>
-    <p:insert match="/*" position="first-child">
-      <p:with-input port="insertion">
-        <p:pipe port="result" step="document-to-process"/>
-      </p:with-input>
-    </p:insert>
-    <p:set-attributes match="/*">
-      <p:with-input port="attributes">
-        <p:pipe port="result" step="original-source"/>
-      </p:with-input>
-    </p:set-attributes>
-    <p:add-attribute attribute-name="xml:base" match="/*">
-      <p:with-option name="attribute-value" select="$href-file"/>
-    </p:add-attribute>
-    
+    <p:variable name="href-file" as="xs:string" select="string(/*/@href-abs)"/>
+    <p:xslt>
+      <p:with-input port="stylesheet" href="xsl-code-docgen-dir/create-docgen-request.xsl"/>
+      <p:with-option name="parameters" select="map{'href-file': $href-file}"/>
+    </p:xslt>
     <xdoc:code-docgen/>
-
   </p:for-each>
   <p:wrap-sequence wrapper="xdoc:GROUP"/>
 
   <!-- Insert the TOC into the result: -->
   <p:insert match="/*" position="first-child">
-    <p:with-input port="insertion">
-      <p:pipe port="result" step="toc"/>
-    </p:with-input>
+    <p:with-input port="insertion" pipe="@toc"/>
   </p:insert>
 
 </p:declare-step>
