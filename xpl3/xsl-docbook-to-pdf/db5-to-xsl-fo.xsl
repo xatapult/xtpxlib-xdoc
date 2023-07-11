@@ -145,6 +145,8 @@
   <xsl:variable name="single-quote-close" as="xs:string" select="'&#x2019;'"/>
   <xsl:variable name="apostrophe" as="xs:string" select="'&#x2019;'"/>
 
+  <!-- We need to detect errors in db:entry elements. So we need something to recognize them by... (hacky quick solution): -->
+  <xsl:variable name="error-message-prefix" as="xs:string" select="'[**** '"/>
 
   <!-- ================================================================== -->
   <!-- MAIN TEMPLATES: -->
@@ -1104,27 +1106,35 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:for-each select="node()">
-            <xsl:choose>
-              <xsl:when test="(. instance of text()) and (normalize-space(.) ne '')">
-                <xsl:call-template name="handle-block-contents">
-                  <xsl:with-param name="contents" as="element()*">
-                    <db:para>
-                      <xsl:sequence select="."/>
-                    </db:para>
-                  </xsl:with-param>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:when test=". instance of element()">
-                <xsl:call-template name="handle-block-contents">
-                  <xsl:with-param name="contents" select="."/>
-                </xsl:call-template>
-              </xsl:when>
-              <xsl:otherwise>
-                <!-- Ignore... -->
-              </xsl:otherwise>
-            </xsl:choose>
-          </xsl:for-each>
+          <!-- This can be block or inline contents, that's hard to distinguish, so we're going to do something *very* hacky. -->
+          <!-- First try as proper block contents: -->
+          <xsl:variable name="result-as-block" as="node()*">
+            <xsl:try>
+              <xsl:call-template name="handle-block-contents">
+                <!-- Remark: Don't pass in whitespace-only nodes... -->
+                <xsl:with-param name="contents" select="node()[not((. instance of text()) and (normalize-space(.) eq ''))]"/>
+              </xsl:call-template>
+              <xsl:catch>
+                <xsl:value-of select="$error-message-prefix"/>
+              </xsl:catch>
+            </xsl:try>
+          </xsl:variable>
+          <!-- If this contains an error, try again as inline: -->
+          <xsl:choose>
+            <xsl:when test="local:contains-error($result-as-block)">
+              <!-- Try as inline contents, wrapped in a para: -->
+              <xsl:call-template name="handle-block-contents">
+                <xsl:with-param name="contents" as="element()*">
+                  <db:para>
+                    <xsl:copy-of select="node()"/>
+                  </db:para>
+                </xsl:with-param>
+              </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+              <xsl:sequence select="$result-as-block"/>
+            </xsl:otherwise>
+          </xsl:choose>
         </xsl:otherwise>
       </xsl:choose>
     </table-cell>
@@ -1726,7 +1736,7 @@
 
     <xsl:variable name="phase-phrase" as="xs:string" select="if (empty($phase-description)) then '' else concat(' (phase: ', $phase-description, ')')"/>
     <xsl:variable name="base-message-fo" as="element(fo:inline)">
-      <inline font-weight="bold" color="red">[*** {xtlc:items2str(($msg-parts, $phase-phrase))}]</inline>
+      <inline font-weight="bold" color="red">{$error-message-prefix}{xtlc:items2str(($msg-parts, $phase-phrase))}]</inline>
     </xsl:variable>
     <xsl:choose>
       <xsl:when test="$block">
@@ -1739,6 +1749,13 @@
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
+
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+  <xsl:function name="local:contains-error" as="xs:boolean">
+    <xsl:param name="nodes" as="node()*"/>
+    <xsl:sequence select="some $n in $nodes satisfies contains(string($n), $error-message-prefix)"/>
+  </xsl:function>
 
   <!-- ================================================================== -->
   <!-- SUPPORT: -->

@@ -24,11 +24,13 @@
   <xsl:param name="href-file" as="xs:string" required="yes">
     <!-- Href of the document to process -->
   </xsl:param>
+  
+  <xsl:param name="header-level" as="xs:integer" required="false" select="1"/>
 
   <!-- ================================================================== -->
 
   <xsl:template match="/">
-    <xdoc:transform href="$xdoc/code-docgen.xpl"> 
+    <xdoc:transform href="$xdoc/code-docgen.xpl" header-level="{$header-level}"> 
       <xsl:copy-of select="/*/@*"/>
       <xsl:attribute name="xml:base" select="$href-file"/>
       <xsl:copy-of select="doc($href-file)/*"/>

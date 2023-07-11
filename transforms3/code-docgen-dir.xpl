@@ -24,9 +24,7 @@
         - When gt 1, the sub-directories up to this depth are processed.
       - `@filter`: optional regexp filter (e.g. get only XProc files with `filter="\.xpl$"`)
       - `@toc-only`: (boolean, default `false`) Whether to produce a ToC table only.
-      - `@id-suffix`: Optional suffix for creating an id based on the filename.      
-        
-      All (other) attributes are passed to `code-docgen.xpl`.        
+      - `@id-suffix`: Optional suffix for creating an id based on the filename.   
   </p:documentation>
 
   <!-- ================================================================== -->
