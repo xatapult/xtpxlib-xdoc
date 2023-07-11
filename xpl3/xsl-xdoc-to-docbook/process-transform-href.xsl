@@ -39,8 +39,12 @@
       </xsl:choose>
     </xsl:variable>
     
+    <!-- Remark: The following takes care of the transition from XProc 1.0 to 3.0. The source documents usually take there 
+      transformations from a transforms/ subdirectory. Change this into transforms3/ automatically, so we can keep the paths in the
+      source documents unchanged (bit of a hack, but whatever).
+    -->
     <xsl:variable name="absolute-path-to-transform" as="xs:string"
-      select="xtlc:href-concat(($root-path, $path-normalized-name)) => xtlc:href-canonical()"/>
+      select="xtlc:href-concat(($root-path, $path-normalized-name)) => xtlc:href-canonical() => replace('/transforms/', '/transforms3/')"/>
 
     <!-- Find out whether it exists and what it is: -->
     <!-- Remark: Now this is simple. we just look at the file extension. Might become more complex in the future. -->
