@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
   xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="3.0" exclude-inline-prefixes="#all"
-  type="xdoc:code-docgen-dir">
+  type="xdoc:code-docgen-dir" name="code-docgen-dir">
 
   <p:documentation>
       Runs the `[$xdoc/code-docgen.xpl](%code-docgen.xpl)` transform over multiple files in a directory. 
@@ -77,6 +77,7 @@
     <p:with-input select="/*/c:file[($filter eq '') or matches(@name, $filter)][not(xs:boolean($toc-only))]"/>
     <p:variable name="href-file" as="xs:string" select="string(/*/@href-abs)"/>
     <p:xslt>
+      <p:with-input port="source" pipe="@original-source"/>
       <p:with-input port="stylesheet" href="xsl-code-docgen-dir/create-docgen-request.xsl"/>
       <p:with-option name="parameters" select="map{'href-file': $href-file}"/>
     </p:xslt>

@@ -14,10 +14,10 @@
       <link xlink:href="https://docbook.org/" role="newpage">DocBook&#160;5.1</link>. On top of this it adds a number of extensions. This source
     format, DocBook&#160;+&#160;extensions, is called <emphasis role="bold italic"><code>xdoc</code></emphasis>.</para>
 
-  <para>The <emphasis role="bold"><code>{$component-name}</code></emphasis> XProc (1.0) pipelines turns the <code>xdoc</code> format into "pure"
+  <para>The <emphasis role="bold"><code>{$component-name}</code></emphasis> XProc pipelines turn the <code>xdoc</code> format into "pure"
     DocBook. From there it can be converted into PDF or HTML using standard DocBook technology. The <emphasis role="bold"
         ><code>{$component-name}</code></emphasis> component itself also contains conversions into PDF (through XSL-FO) and HTML. These work out of
-    the box but, especially the PDF one, uses a layout that might not be what you want or need. But since the source is available you can tweak it to
+    the box but, especially the PDF one, use a layout that might not be what you want or need. But since the source is available you can tweak it to
     your heart's desire.</para>
 
   <para><emphasis role="bold"><code>{$component-name}</code></emphasis> currently allows two types of extensions on top of DocBook:</para>
@@ -143,8 +143,6 @@
       </listitem>
 
     </orderedlist>
-
-    <para>Information about the pipelines that implement this toolchain can be found <link linkend="chapter-xproc-pipelines">here</link>.</para>
 
   </sect1>
 
