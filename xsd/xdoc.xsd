@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.xtpxlib.nl/ns/xdoc"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  targetNamespace="http://www.xtpxlib.nl/ns/xdoc" xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc">
 
   <xs:include schemaLocation="../../xtpxlib-common/xsd/parameters.xsd"/>
   <xs:element name="dump-parameters">
@@ -39,4 +39,43 @@
     </xs:complexType>
   </xs:element>
   <xs:complexType name="ct-empty"/>
+  <xs:element name="altcolspecs">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" minOccurs="0" name="colspec">
+          <xs:annotation>
+            <xs:documentation>An alternate colspec element</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:anyAttribute namespace="##any" processContents="skip"/>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+      <xs:attribute name="idref" type="xs:NCName" use="required">
+        <xs:annotation>
+          <xs:documentation>Identifier of the table (or informaltable) for which the colspec elements must be altered.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="target" type="xs:NCName" use="required">
+        <xs:annotation>
+          <xs:documentation>Name of the target type for which these settings must be used</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="altimagedata">
+    <xs:complexType>
+      <xs:attribute name="idref" type="xs:NCName" use="required">
+        <xs:annotation>
+          <xs:documentation>Identifier of the image for which the imagedata must be altered.</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="target" type="xs:NCName" use="required">
+        <xs:annotation>
+          <xs:documentation>Name of the target type for which these settings must be used</xs:documentation>
+        </xs:annotation>
+      </xs:attribute>
+      <xs:anyAttribute namespace="##any" processContents="skip"/>
+    </xs:complexType>
+  </xs:element>
 </xs:schema>

@@ -24,6 +24,10 @@
     <p:documentation>Optional filter settings for processing the parameters. Format: `name=value|name=value|…`.</p:documentation>
   </p:option>
   
+  <p:option name="alttarget" required="false" select="()">
+    <p:documentation>The target for applying alternate settings.</p:documentation>
+  </p:option>
+  
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting XHTML</p:documentation>
   </p:output>
@@ -37,6 +41,7 @@
   <xdoc:xdoc-to-docbook> 
     <p:with-option name="href-parameters" select="$href-parameters"/> 
     <p:with-option name="parameter-filters" select="$parameter-filters"/> 
+    <p:with-option name="alttarget" select="$alttarget"/> 
   </xdoc:xdoc-to-docbook>
 
   <xdoc:docbook-to-xhtml/>

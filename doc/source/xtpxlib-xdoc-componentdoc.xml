@@ -41,29 +41,34 @@
   
   <!-- ================================================================== -->
   
-  <chapter xml:id="chapter-xproc-pipelines" xreflabel="XProc Pipelines">
-    <title>XProc Pipelines</title>
+  <chapter xml:id="chapter-xproc-1-pipelines" xreflabel="XProc Pipelines">
+    <title>XProc 1.0 support</title>
     
-    <para>The {$component-name} component contains the following XProc (1.0) pipelines:</para>
+    <para>The {$component-name} component contains the following XProc 1.0 pipelines:</para>
     
     <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xpl/" filter="\.xpl$" header-level="1" filecomponents="2"
       sublevels="true"/>
-    
-  </chapter>
-  
-  <!-- ================================================================== -->
-  
-  <chapter xml:id="chapter-xproc-libraries" xreflabel="XProc Libraries">
-    <title>XProc Libraries</title>
-    
-    <para>The {$component-name} component contains the following XProc (1.0) library module:</para>
     
     <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xplmod/" filter="\.mod\.xpl$" header-level="1" filecomponents="3"
       sublevels="true"/>
     
   </chapter>
   
-
+  <!-- ======================================================================= -->
+  
+  <chapter xml:id="chapter-xproc-3-pipelines" xreflabel="XProc Pipelines">
+    <title>XProc 3.0 support</title>
+    
+    <para>The {$component-name} component contains the following XProc 3.0 pipelines:</para>
+    
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xpl3/" filter="\.xpl$" header-level="1" filecomponents="2"
+      sublevels="true" id-suffix="xpl3-"/>
+    
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xpl3mod/" filter="\.mod\.xpl$" header-level="1" filecomponents="3"
+      sublevels="true" id-suffix="xpl3-"/>
+    
+  </chapter>
+  
   <!-- ================================================================== -->
 
   <xi:include href="xtpxlib-chapter-docbook-dialect.xml"/>

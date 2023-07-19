@@ -4,7 +4,7 @@
 
 ---------- 
 
-The `xtpxlib-xdoc` component contains an XProc (1.0) based DocBook publication toolchain. 
+The `xtpxlib-xdoc` component contains an XProc (1.0 and 3.0) based DocBook publication toolchain. 
 * Starting point is some narrative written in DocBook, with the following extensions:
   * Parameter references that are expanded (for dates, times, phrases, names, etc.)
   * Special elements that trigger conversions. These conversions can insert generated DocBook into the source. For instance complex tables, documentation, etc.
@@ -13,7 +13,7 @@ The `xtpxlib-xdoc` component contains an XProc (1.0) based DocBook publication t
 
 ## Technical information
 
-Component version: V1.1.2 - 2020-11-30
+Component version: V2.0 - 2023-07-19
 
 Documentation: [`https://xdoc.xtpxlib.org`](https://xdoc.xtpxlib.org)
 
@@ -27,7 +27,11 @@ This component depends on:
 
 ## Version history
 
-**V1.1.2 - 2020-11-30 (current)**
+**V2.0 - 2023-07-19 (current)**
+
+Added XProc 3.0 support.
+
+**V1.1.2 - 2020-11-30**
 
 Various small changes and fixes
 
@@ -53,4 +57,7 @@ Initial release
 
 Pre-release to test GitHub pages functionality.
 
+
+-----------
+*Generated: 2023-07-19 08:58:55*
 

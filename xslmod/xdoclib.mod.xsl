@@ -20,7 +20,41 @@
   <xsl:variable name="local:root-element" as="element()" select="/*"/>
 
   <!-- ================================================================== -->
+  
+  <xsl:function name="xdoc:parameters-get-with-filtermap" as="map(xs:string, xs:string*)">
+    <!-- Gets the parameters and applies a filterstring setting. Also sets some special values. -->
+    <xsl:param name="href-parameters" as="xs:string">
+      <!--~ Reference to the parameter file. -->
+    </xsl:param>
+    <xsl:param name="filtermap" as="map(xs:string, xs:string*)">
+      <!--~ Map with filter parameters -->
+    </xsl:param>
 
+    <!-- Create some special parameters: -->
+    <xsl:variable name="special-values-map" as="map(xs:string, xs:string*)">
+      <xsl:map>
+        <xsl:map-entry key="'DATETIME'" select="format-dateTime(current-dateTime(), '[H01]:[m01]:[s01]')"/>
+        <xsl:map-entry key="'DATE'" select="format-dateTime(current-dateTime(), '[Y]-[M01]-[D01]')"/>
+        <xsl:map-entry key="'TIME'" select="format-dateTime(current-dateTime(), '[H01]:[m01]:[s01]')"/>
+        <xsl:map-entry key="'HREF-SOURCE'" select="xtlc:href-protocol-remove(xtlc:href-canonical(base-uri($local:root-element)))"/>
+      </xsl:map>
+    </xsl:variable>
+    
+    <!-- Check for the existence of the parameter file: -->
+    <xsl:variable name="href-parameters-canonical" as="xs:string" select="xtlc:href-canonical($href-parameters)"/>
+    <xsl:if test="not(doc-available($href-parameters-canonical))">
+      <xsl:call-template name="xtlc:raise-error">
+        <xsl:with-param name="msg-parts" select="('Parameters file ', xtlc:q($href-parameters-canonical), ' not found or not well-formed')"/>
+      </xsl:call-template>
+    </xsl:if>
+    
+    <!-- Process the parameters with these filters and merge the special values in: -->
+    <xsl:sequence select="map:merge(($special-values-map, xtlc:parameters-get($href-parameters-canonical, $filtermap)))"/>
+    
+  </xsl:function>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
   <xsl:function name="xdoc:parameters-get-with-filterstring" as="map(xs:string, xs:string*)">
     <!-- Gets the parameters and applies a filterstring setting. Also sets some special values. -->
     <xsl:param name="href-parameters" as="xs:string">
@@ -32,7 +66,7 @@
 
     <!-- Process the filterstring into an appropriate map: -->
     <xsl:variable name="filterstring-parts" as="xs:string*" select="tokenize($filterstring, '\|')"/>
-    <xsl:variable name="filtermap" as="map(xs:string, xs:string*)">
+    <xsl:variable name="filtermap" as="map(xs:string, xs:string)">
       <xsl:map>
         <xsl:for-each select="$filterstring-parts">
           <xsl:variable name="filter-name" as="xs:string" select="normalize-space(substring-before(., '='))"/>
@@ -44,26 +78,8 @@
       </xsl:map>
     </xsl:variable>
 
-    <!-- Create some special parameters: -->
-    <xsl:variable name="special-values-map" as="map(xs:string, xs:string*)">
-      <xsl:map>
-        <xsl:map-entry key="'DATETIME'" select="format-dateTime(current-dateTime(), '[Y]-[M01]-[D01] [H01]:[m01]:[s01]')"/>
-        <xsl:map-entry key="'DATE'" select="format-dateTime(current-dateTime(), '[Y]-[M01]-[D01]')"/>
-        <xsl:map-entry key="'TIME'" select="format-dateTime(current-dateTime(), '[H01]:[m01]:[s01]')"/>
-        <xsl:map-entry key="'HREF-SOURCE'" select="xtlc:href-protocol-remove(xtlc:href-canonical(base-uri($local:root-element)))"/>
-      </xsl:map>
-    </xsl:variable>
-
-    <!-- Check for the existence of the parameter file: -->
-    <xsl:variable name="href-parameters-canonical" as="xs:string" select="xtlc:href-canonical($href-parameters)"/>
-    <xsl:if test="not(doc-available($href-parameters-canonical))">
-      <xsl:call-template name="xtlc:raise-error">
-        <xsl:with-param name="msg-parts" select="('Parameters file ', xtlc:q($href-parameters-canonical), ' not found or not well-formed')"/>
-      </xsl:call-template>
-    </xsl:if>
-
-    <!-- Process the parameters with these filters and merge the special values in: -->
-    <xsl:sequence select="map:merge(($special-values-map, xtlc:parameters-get($href-parameters-canonical, $filtermap)))"/>
+    <!-- Create the result: -->
+    <xsl:sequence select="xdoc:parameters-get-with-filtermap($href-parameters, $filtermap)"/>
 
   </xsl:function>
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="22.0">
+<project>
     <meta>
         <filters directoryPatterns="" filePatterns="" positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="22.0" xml:space="preserve">
+            <serialized xml:space="preserve">
                 <serializableOrderedMap>
                     <entry>
                         <String>enable.project.master.files.support</String>
@@ -12,6 +12,26 @@
                     <entry>
                         <String>scenario.associations</String>
                         <scenarioAssociation-array>
+                            <scenarioAssociation>
+                                <field name="url">
+                                    <String>../../xtpxlib-webdoc/doc/xpl/generate-componentdoc.xpl</String>
+                                </field>
+                                <field name="scenarioIds">
+                                    <list>
+                                        <String>generate-componentdoc</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioTypes">
+                                    <list>
+                                        <String>XPROC</String>
+                                    </list>
+                                </field>
+                                <field name="scenarioStorageLocations">
+                                    <list>
+                                        <Byte>2</Byte>
+                                    </list>
+                                </field>
+                            </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
                                     <String>../doc/xpl/generate-componentdoc.xpl</String>
@@ -1167,14 +1187,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/generate-moduledoc-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -1280,13 +1300,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>${currentFileURL}</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -1294,14 +1314,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/run-getting-started-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>true</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -1507,13 +1527,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>${currentFileURL}</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -1521,14 +1541,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/test-code-docgen-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -1634,13 +1654,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>${ROOT}/transforms/code-docgen/test/test-all-article.xml</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -1648,14 +1668,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/test-docgen-to-docbook-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -1850,13 +1870,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>${ROOT}/transforms/code-docgen/test/test-all-article.xml</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -1864,14 +1884,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/test-docgen-to-pdf-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -2066,13 +2086,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>file:/C:/Data/Erik/work/xatapult/xtpxlib-xdoc/test/xdoc-moduledoc-test.xml</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -2080,14 +2100,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/xdoc-to-moduledoc-website-result.html</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -2304,11 +2324,11 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array/>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -2316,14 +2336,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/test-markdown-to-docbook-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -2429,13 +2449,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>${currentFileURL}</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -2443,14 +2463,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/${cfn}-test-xdoc-to-pdf-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -2645,13 +2665,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>${currentFileURL}</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -2659,14 +2679,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/test-xdoc-to-xhtml-result.html</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -2817,13 +2837,13 @@
                                 <field name="inputPorts">
                                     <xprocInputPort-array>
                                         <xprocInputPort>
-                                            <field name="portName">
-                                                <String>source</String>
-                                            </field>
                                             <field name="urls">
                                                 <String-array>
                                                     <String>${currentFileURL}</String>
                                                 </String-array>
+                                            </field>
+                                            <field name="portName">
+                                                <String>source</String>
                                             </field>
                                         </xprocInputPort>
                                     </xprocInputPort-array>
@@ -2831,14 +2851,14 @@
                                 <field name="outputPorts">
                                     <xprocOutputPort-array>
                                         <xprocOutputPort>
-                                            <field name="portName">
-                                                <String>result</String>
-                                            </field>
                                             <field name="url">
                                                 <String>${TMP}/${cfn}-convert-result.xml</String>
                                             </field>
                                             <field name="showInSequenceView">
                                                 <Boolean>false</Boolean>
+                                            </field>
+                                            <field name="portName">
+                                                <String>result</String>
                                             </field>
                                         </xprocOutputPort>
                                     </xprocOutputPort-array>
@@ -3036,9 +3056,11 @@
         </options>
     </meta>
     <projectTree name="xtpxlib-xdoc-dev.xpr">
+        <folder path="../../xtools/"/>
         <folder path="../../xtpxlib-common/"/>
         <folder path="../../xtpxlib-container/"/>
         <folder path="../../xtpxlib-webdoc/"/>
         <folder path="../"/>
+        <folder path="../../../../../../xdata/"/>
     </projectTree>
 </project>

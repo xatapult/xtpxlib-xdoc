@@ -67,7 +67,7 @@
     <sect1>
       <title>XML Descriptions</title>
 
-      <xdoc:transform href="$xdoc/xml-description/xml-description.xpl">
+      <xdoc:transform href="$xdoc/xml-description.xpl">
         <xi:include href="data/test.xml"/>
       </xdoc:transform>
 
@@ -80,35 +80,35 @@
 
       <sect2>
         <title>XSLT Module</title>
-        <xdoc:transform href="$xdoc/docgen/docgen.xpl" filecomponents="1">
+        <xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="1">
           <xi:include href="data/test.mod.xsl"/>
         </xdoc:transform>
       </sect2>
 
       <sect2>
         <title>XPROC Module</title>
-        <xdoc:transform href="$xdoc/docgen/docgen.xpl" filecomponents="2">
+        <xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="2">
           <xi:include href="data/test.mod.xpl"/>
         </xdoc:transform>
       </sect2>
 
       <sect2>
         <title>XPROC Step</title>
-        <xdoc:transform href="$xdoc/docgen/docgen.xpl">
+        <xdoc:transform href="$xdoc/code-docgen.xpl">
           <xi:include href="data/test.xpl"/>
         </xdoc:transform>
       </sect2>
 
       <sect2>
         <title>XSD</title>
-        <xdoc:transform href="$xdoc/docgen/docgen.xpl" filecomponents="0">
+        <xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="0">
           <xi:include href="data/test.xsd"/>
         </xdoc:transform>
       </sect2>
 
       <sect2>
         <title>XML</title>
-        <xdoc:transform href="$xdoc/docgen/docgen.xpl" filecomponents="-1">
+        <xdoc:transform href="$xdoc/code-docgen.xpl" filecomponents="-1">
           <xi:include href="data/test.xml"/>
         </xdoc:transform>
       </sect2>

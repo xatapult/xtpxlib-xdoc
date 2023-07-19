@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
-  xmlns:c="http://www.w3.org/ns/xproc-step" version="1.0" xpath-version="2.0" exclude-inline-prefixes="#all" type="xdoc:docbook-to-pdf">
+<p:declare-step xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc"
+  xmlns:xtlc="http://www.xtpxlib.nl/ns/common" xmlns:p="http://www.w3.org/ns/xproc"
+  xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:pxf="http://exproc.org/proposed/steps/file" version="1.0" xpath-version="2.0"
+  xmlns:cx="http://xmlcalabash.com/ns/extensions" exclude-inline-prefixes="#all"
+  type="xdoc:docbook-to-pdf">
 
   <p:documentation>
       This turns Docbook (5.1) into a PDF using FOP.
@@ -43,7 +46,8 @@
     <p:documentation>Specific chapter identifier to output.</p:documentation>
   </p:option>
 
-  <p:option name="fop-config" required="false" select="resolve-uri('../../xtpxlib-common/data/fop-default-config.xml', static-base-uri())">
+  <p:option name="fop-config" required="false"
+    select="resolve-uri('../../xtpxlib-common/data/fop-default-config.xml', static-base-uri())">
     <p:documentation>Reference to the FOP configuration file</p:documentation>
   </p:option>
 
@@ -62,13 +66,18 @@
   <p:option name="href-xsl-fo" required="false" select="()">
     <p:documentation>If set, writes the intermediate XSL-FO to this href (so you can inspect it when things go wrong in FOP)</p:documentation>
   </p:option>
-
+  
+  <p:option name="create-pdf" required="false" select="true()">
+    <p:documentation>Whether to actually create the PDF. If false, it will only output the XSL-FO</p:documentation>
+  </p:option>
+  
   <p:output port="result" primary="true" sequence="false">
     <p:documentation>The resulting XSL-FO (that was transformed into the PDF).</p:documentation>
     <p:pipe port="result" step="final-output"/>
   </p:output>
 
   <p:import href="../../xtpxlib-common/xplmod/common.mod/common.mod.xpl"/>
+  <p:import href="http://xmlcalabash.com/extension/steps/library-1.0.xpl"/>
 
   <!-- ================================================================== -->
 
@@ -114,16 +123,52 @@
   </p:xslt>
   <xtlc:tee>
     <p:with-option name="href" select="$href-xsl-fo"/>
+    <p:with-option name="indent" select="false()"/>
     <p:with-option name="enable" select="normalize-space($href-xsl-fo) ne ''"/>
   </xtlc:tee>
 
   <p:identity name="final-output"/>
 
   <!-- Make it into a PDF: -->
-  <p:xsl-formatter name="step-create-pdf" content-type="application/pdf">
+  <!-- 202201: There seems to be a problem with Calabash running FOP: Images no longer appear 
+    and a bugfix is not forthcoming. 
+    Therefore we try to do the trick by calling FOP directly...
+  -->
+  <!--<p:xsl-formatter name="step-create-pdf" content-type="application/pdf">
     <p:with-option name="href" select="$href-pdf"/>
-<!--    <p:with-param name="UserConfig" select="replace($fop-config, '^file:/', '')"/>-->
+    <!-\-<p:with-param name="UserConfig" select="replace($fop-config, '^file:/', '')"/>-\->
     <p:with-param name="null" select="()"/>
-  </p:xsl-formatter>
+  </p:xsl-formatter>-->
+  <p:group>
+    <p:variable name="arg-separator" select="'|'"/>
+    <p:variable name="fop"
+      select="replace(resolve-uri('../../xtools/fop/fop.bat', static-base-uri()), '^file:/+?', '')"/>
+    <p:variable name="args" select="string-join(
+        ( '/C', $fop, 
+          replace($href-xsl-fo, '^file:/+?', ''),     
+          replace($href-pdf, '^file:/+?', '')
+        ), 
+        $arg-separator
+    )"/>
 
+    <!-- 202306: For some reason, Java (or FOP?) suddenly requires the PDF directory to exist. -->
+    <p:variable name="href-pdf-dir" select="replace($href-pdf, '(.*)[/\\][^/\\]+$', '$1')"/>
+    <pxf:mkdir>
+      <p:with-option name="href" select="$href-pdf-dir"/>
+    </pxf:mkdir>
+
+    <p:exec>
+      <p:input port="source">
+        <p:empty/>
+      </p:input>
+      <p:with-option name="command" select="'cmd'"/>
+      <p:with-option name="args" select="$args"/>
+      <p:with-option name="arg-separator" select="$arg-separator"/>
+      <p:with-option name="result-is-xml" select="false()"/>
+      <p:with-option name="wrap-result-lines" select="true()"/>
+      <p:with-option name="wrap-error-lines" select="true()"/>
+    </p:exec>
+    <p:sink/>
+  </p:group>
+  
 </p:declare-step>
