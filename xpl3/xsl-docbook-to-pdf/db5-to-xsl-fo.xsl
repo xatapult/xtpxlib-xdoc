@@ -909,10 +909,12 @@
 
   <xsl:template match="db:example | db:informalexample" mode="mode-block">
 
-    <xsl:call-template name="empty-line">
-      <xsl:with-param name="size-pt" select="$standard-extra-paragraph-distance-pt"/>
-      <xsl:with-param name="keep-with-next" select="true()"/>
-    </xsl:call-template>
+    <xsl:if test="empty(../self::db:listitem)">
+      <xsl:call-template name="empty-line">
+        <xsl:with-param name="size-pt" select="$standard-extra-paragraph-distance-pt"/>
+        <xsl:with-param name="keep-with-next" select="true()"/>
+      </xsl:call-template>
+    </xsl:if>
     <block margin-left="{local:dimcm($standard-small-indent)}" margin-right="{local:dimcm($standard-small-indent)}">
       <xsl:apply-templates select="db:* except db:title" mode="#current">
         <xsl:with-param name="in-example" as="xs:boolean" select="true()" tunnel="true"/>
@@ -1864,13 +1866,18 @@
   <xsl:template name="empty-line">
     <xsl:param name="size-pt" as="xs:double" required="no" select="$standard-font-size"/>
     <xsl:param name="keep-with-next" as="xs:boolean" required="no" select="false()"/>
+    <xsl:param name="current-elm" as="element()" required="no" select="."/>
 
-    <block font-size="{local:dimpt($size-pt)}">
-      <xsl:if test="$keep-with-next">
-        <xsl:attribute name="keep-with-next" select="'always'"/>
-      </xsl:if>
-      <xsl:text>&#160;</xsl:text>
-    </block>
+    <!-- We generate an empty line, but only whgen the parent is *not* a listitem! -->
+    <xsl:if test="empty($current-elm/../self::db:listitem)">
+      <block font-size="{local:dimpt($size-pt)}">
+        <xsl:if test="$keep-with-next">
+          <xsl:attribute name="keep-with-next" select="'always'"/>
+        </xsl:if>
+        <xsl:text>&#160;</xsl:text>
+      </block>
+    </xsl:if>
+
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
