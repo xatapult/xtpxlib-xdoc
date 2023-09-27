@@ -31,20 +31,43 @@
     <p:documentation>The resulting XHTML</p:documentation>
   </p:output>
 
+  <!-- ======================================================================= -->
+
+  <p:option name="add-roles-as-classes" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Add any roles as classes to the end result.</p:documentation>
+  </p:option>
+
+  <p:option name="create-header" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Create some header construct</p:documentation>
+  </p:option>
+
+  <p:option name="add-identifiers" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Add identifiers to elements when no @xml:id is present.</p:documentation>
+  </p:option>
+
+  <p:option name="add-numbering" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Add numbering to sections, tables, examples, etc.</p:documentation>
+  </p:option>
+
   <!-- ================================================================== -->
   <!-- MAIN: -->
 
   <!-- Add identifiers and numbering: -->
-  <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-shared/add-identifiers.xsl"/>
-  </p:xslt>
-  <p:xslt>
-    <p:with-input port="stylesheet" href="xsl-shared/add-numbering.xsl"/>
-  </p:xslt>
+  <p:if test="$add-identifiers">
+    <p:xslt>
+      <p:with-input port="stylesheet" href="xsl-shared/add-identifiers.xsl"/>
+    </p:xslt>
+  </p:if>
+  <p:if test="$add-numbering">
+    <p:xslt>
+      <p:with-input port="stylesheet" href="xsl-shared/add-numbering.xsl"/>
+    </p:xslt>
+  </p:if>
 
   <!-- Turn it into XHTML: -->
   <p:xslt>
     <p:with-input port="stylesheet" href="xsl-docbook-to-xhtml/db5-to-xhtml.xsl"/>
+    <p:with-option name="parameters" select="map{'add-roles-as-classes': $add-roles-as-classes, 'create-header': $create-header }"/>
   </p:xslt>
 
 </p:declare-step>

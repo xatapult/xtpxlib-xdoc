@@ -24,11 +24,8 @@
   <!-- ================================================================== -->
   <!-- PARAMETERS: -->
 
-  <xsl:param name="create-header" as="xs:string" required="false" select="string(true())"/>
-  <xsl:param name="add-roles-as-classes" as="xs:string" required="false" select="string(false())"/>
-
-  <xsl:variable name="do-create-header" as="xs:boolean" select="xs:boolean($create-header)"/>
-  <xsl:variable name="do-add-roles-as-classes" as="xs:boolean" select="xs:boolean($add-roles-as-classes)"/>
+  <xsl:param name="create-header" as="xs:boolean" required="true"/>
+  <xsl:param name="add-roles-as-classes" as="xs:boolean" required="true"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL VARIABLES: -->
@@ -70,7 +67,7 @@
   <!-- HEADER CREATION: -->
 
   <xsl:template match="db:info">
-    <xsl:if test="$do-create-header">
+    <xsl:if test="$create-header">
       <div>
         <xsl:call-template name="add-class-info">
           <xsl:with-param name="base-classes" select="'header'"/>
@@ -951,7 +948,7 @@
 
     <xsl:variable name="class-parts" as="xs:string+">
       <xsl:sequence select="$base-classes"/>
-      <xsl:if test="$do-add-roles-as-classes and exists($docbook-elm/@role)">
+      <xsl:if test="$add-roles-as-classes and exists($docbook-elm/@role)">
         <xsl:sequence select="xtlc:str2seq($docbook-elm/@role)"/>
       </xsl:if>
     </xsl:variable>
