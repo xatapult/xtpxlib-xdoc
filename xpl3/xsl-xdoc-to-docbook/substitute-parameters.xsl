@@ -19,7 +19,7 @@
   <!-- ================================================================== -->
   <!-- PARAMETERS: -->
 
-  <xsl:param name="href-parameters" as="xs:string" required="yes"/>
+  <xsl:param name="href-parameters" as="xs:string?" required="yes"/>
   <xsl:param name="parameter-filters-map" as="map(xs:string, xs:string)" required="yes"/>
 
   <!-- ================================================================== -->
@@ -57,7 +57,7 @@
          Bug somewhere in Saxon or Morgana? Hard to reproduce on a smaller scale.
     -->
     <xsl:copy>
-      <xsl:apply-templates select="@* | node()"></xsl:apply-templates>
+      <xsl:apply-templates select="@* | node()"/>
     </xsl:copy>
   </xsl:template>
   
