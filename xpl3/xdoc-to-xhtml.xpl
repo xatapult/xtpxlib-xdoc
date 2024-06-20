@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <p:declare-step xmlns:p="http://www.w3.org/ns/xproc" xmlns:c="http://www.w3.org/ns/xproc-step" xmlns:map="http://www.w3.org/2005/xpath-functions/map"
   xmlns:array="http://www.w3.org/2005/xpath-functions/array" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:local="#local.z4q_vrr_5xb"
-  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="3.0" exclude-inline-prefixes="#all" name="xdoc-to-pdf" type="xdoc:xdoc-to-pdf">
+  xmlns:xdoc="http://www.xtpxlib.nl/ns/xdoc" version="3.0" exclude-inline-prefixes="#all" name="xdoc-to-xhtml" type="xdoc:xdoc-to-xhtml">
 
   <p:documentation>
      Convenience pipeline: Combines the [xdoc-to-docbook](%xdoc-to-docbook.xpl) and the [docbook-to-xhtml](%docbook-to-xhtml.xpl) steps in one.
@@ -52,7 +52,26 @@
   </p:option>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-
+  <!-- Options for docbook-to-xhtml: -->
+  
+  <p:option name="add-roles-as-classes" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Add any roles as classes to the end result.</p:documentation>
+  </p:option>
+  
+  <p:option name="create-header" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Create some header construct</p:documentation>
+  </p:option>
+  
+  <p:option name="add-identifiers" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Add identifiers to elements when no @xml:id is present.</p:documentation>
+  </p:option>
+  
+  <p:option name="add-numbering" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Add numbering to sections, tables, examples, etc.</p:documentation>
+  </p:option>
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
   <p:option name="href-docbook" as="xs:string?" required="false" select="()">
     <p:documentation>If set, writes the intermediate full DocBook to this href (so you can inspect it when things go wrong)</p:documentation>
   </p:option>
@@ -70,6 +89,11 @@
     <p:store href="{$href-docbook}" serialization="map{'method': 'xml', 'indent': true()}"/>
   </p:if>
 
-  <xdoc:docbook-to-xhtml/>
+  <xdoc:docbook-to-xhtml>
+    <p:with-option name="add-roles-as-classes" select="$add-roles-as-classes"/>
+    <p:with-option name="create-header" select="$create-header"/>
+    <p:with-option name="add-identifiers" select="$add-identifiers"/>
+    <p:with-option name="add-numbering" select="$add-numbering"/>
+  </xdoc:docbook-to-xhtml>
 
 </p:declare-step>
