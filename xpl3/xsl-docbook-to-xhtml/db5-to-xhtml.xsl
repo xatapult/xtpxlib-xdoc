@@ -544,16 +544,32 @@
               <xsl:value-of select="$referenced-element/@xreflabel"/>
             </xsl:when>
             <xsl:when test="$referenced-element/self::db:chapter">
-              <xsl:value-of select="local:xref-capitalize('chapter&#160;', $do-capitalize)"/>
-              <xsl:value-of select="$referenced-element/@number"/>
+              <xsl:choose>
+                <xsl:when test="exists($referenced-element/@number)">
+                  <xsl:value-of select="local:xref-capitalize('chapter&#160;', $do-capitalize)"/>
+                  <xsl:value-of select="$referenced-element/@number"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:when>
             <xsl:when test="$referenced-element/self::db:appendix">
-              <xsl:value-of select="local:xref-capitalize('appendix&#160;', $do-capitalize)"/>
-              <xsl:value-of select="$referenced-element/@number"/>
+              <xsl:choose>
+                <xsl:when test="exists($referenced-element/@number)">
+                  <xsl:value-of select="local:xref-capitalize('appendix&#160;', $do-capitalize)"/>
+                  <xsl:value-of select="$referenced-element/@number"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:when>
             <xsl:when test="matches(local-name($referenced-element), '^sect[0-9]$')">
-              <xsl:value-of select="$referenced-element/@number"/>
-              <xsl:text>&#160;</xsl:text>
+              <xsl:if test="exists($referenced-element/@number)">
+                <xsl:value-of select="$referenced-element/@number"/>
+                <xsl:text>&#160;</xsl:text>
+              </xsl:if>
               <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
             </xsl:when>
             <xsl:when test="$referenced-element/self::db:figure[exists(@number)] or $referenced-element/self::db:table[exists(@number)] or
