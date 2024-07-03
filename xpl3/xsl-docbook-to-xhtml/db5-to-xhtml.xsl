@@ -57,7 +57,6 @@
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
-        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <xsl:apply-templates select="db:*"/>
     </div>
@@ -137,7 +136,6 @@
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
-        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <h1>
         <xsl:call-template name="add-class-info"/>
@@ -163,7 +161,6 @@
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
-        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <xsl:element name="h{$level}">
         <xsl:call-template name="add-class-info"/>
@@ -936,10 +933,9 @@
   <xsl:template name="copy-id">
     <xsl:param name="elm" as="element()" required="no" select="."/>
     <xsl:param name="create-anchor" as="xs:boolean" required="false" select="false()"/>
-    <xsl:param name="force" as="xs:boolean" required="false" select="false()"/>
 
     <xsl:variable name="id" as="xs:string?" select="$elm/@xml:id"/>
-    <xsl:if test="exists($id) and ($force or ($id = $all-linkend-references))">
+    <xsl:if test="exists($id)">
       <xsl:attribute name="id" select="$id"/>
       <xsl:if test="$create-anchor">
         <a name="{$id}">
