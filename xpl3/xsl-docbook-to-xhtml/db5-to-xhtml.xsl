@@ -476,8 +476,8 @@
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
       <xsl:choose>
-        <xsl:when test="empty(db:para)">
-          <!-- No surrounding <para> or so it seems, create one: -->
+        <xsl:when test="exists(text()[normalize-space(.) ne ''])">
+          <!-- This allows straight text in an <entry>: -->
           <xsl:variable name="contents-in-para" as="element(db:para)">
             <db:para>
               <xsl:sequence select="node()"/>
