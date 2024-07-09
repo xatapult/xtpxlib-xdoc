@@ -1108,33 +1108,21 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <!-- This can be block or inline contents, that's hard to distinguish, so we're going to do something *very* hacky. -->
-          <!-- First try as proper block contents: -->
-          <xsl:variable name="result-as-block" as="node()*">
-            <xsl:try>
-              <xsl:call-template name="handle-block-contents">
-                <!-- Remark: Don't pass in whitespace-only nodes... -->
-                <xsl:with-param name="contents" select="node()[not((. instance of text()) and (normalize-space(.) eq ''))]"/>
-              </xsl:call-template>
-              <xsl:catch>
-                <xsl:value-of select="$error-message-prefix"/>
-              </xsl:catch>
-            </xsl:try>
-          </xsl:variable>
-          <!-- If this contains an error, try again as inline: -->
           <xsl:choose>
-            <xsl:when test="local:contains-error($result-as-block)">
-              <!-- Try as inline contents, wrapped in a para: -->
-              <xsl:call-template name="handle-block-contents">
-                <xsl:with-param name="contents" as="element()*">
-                  <db:para>
-                    <xsl:copy-of select="node()"/>
-                  </db:para>
-                </xsl:with-param>
-              </xsl:call-template>
+            <xsl:when test="exists(text()[normalize-space(.) ne ''])">
+              <!-- This allows straight text in an <entry>: -->
+                <xsl:call-template name="handle-block-contents">
+                  <xsl:with-param name="contents" as="element()*">
+                    <db:para>
+                      <xsl:sequence select="node()"/>
+                    </db:para>
+                  </xsl:with-param>
+                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:sequence select="$result-as-block"/>
+              <xsl:call-template name="handle-block-contents">
+                <xsl:with-param name="contents" as="element()*" select="db:*"/>
+              </xsl:call-template>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:otherwise>
