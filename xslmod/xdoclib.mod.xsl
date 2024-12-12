@@ -17,11 +17,11 @@
 
   <!-- ================================================================== -->
 
-  <xsl:variable name="local:root-element" as="element()" select="/*"/>
+  <xsl:variable name="local:root-element" as="element()" select="/*" visibility="private"/>
 
   <!-- ================================================================== -->
 
-  <xsl:function name="xdoc:parameters-get-with-filtermap" as="map(xs:string, xs:string*)">
+  <xsl:function name="xdoc:parameters-get-with-filtermap" as="map(xs:string, xs:string*)" visibility="public">
     <!-- Gets the parameters and applies a filterstring setting. Also sets some special values. -->
     <xsl:param name="href-parameters" as="xs:string?">
       <!--~ Reference to the parameter file. -->
@@ -61,7 +61,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:function name="xdoc:parameters-get-with-filterstring" as="map(xs:string, xs:string*)">
+  <xsl:function name="xdoc:parameters-get-with-filterstring" as="map(xs:string, xs:string*)" visibility="public">
     <!-- Gets the parameters and applies a filterstring setting. Also sets some special values. -->
     <xsl:param name="href-parameters" as="xs:string">
       <!--~ Reference to the parameter file. -->
@@ -91,7 +91,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:function name="xdoc:fixed-width-characters-per-cm-dbl" as="xs:double">
+  <xsl:function name="xdoc:fixed-width-characters-per-cm-dbl" as="xs:double" visibility="public">
     <!-- Computes the number of fixed-width characters based on the main font size (based on using FOP) -->
     <xsl:param name="main-font-size-dbl" as="xs:double"/>
     <xsl:sequence select="5.55 + ((10 - $main-font-size-dbl) * 0.45) "/>

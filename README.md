@@ -1,4 +1,5 @@
-# `xtpxlib-xdoc`: Xatapult XML Library - DocBook publication toolchain
+<?xml version="1.0" encoding="UTF-8"?>
+<README xml:space="preserve"># `xtpxlib-xdoc`: Xatapult XML Library - DocBook publication toolchain
 
 **Xatapult Content Engineering - [`http://www.xatapult.com`](http://www.xatapult.com)**
 
@@ -59,5 +60,6 @@ Pre-release to test GitHub pages functionality.
 
 
 -----------
-*Generated: 2023-07-19 08:58:55*
+*Generated: 2024-12-12 15:17:59*
 
+</README>
