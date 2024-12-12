@@ -191,13 +191,14 @@
       <p class="break">&#160;</p>
     </xsl:if>
     <p>
+      <xsl:if test="$is-halfbreak">
+        <xsl:attribute name="style" select="'font-size: 50%;'"/>
+      </xsl:if>
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
-      <xsl:if test="$is-halfbreak">
-        <xsl:attribute name="style" select="'font-size: 50%;'"/>
-      </xsl:if>
+     
       <xsl:choose>
         <xsl:when test="$is-break or $is-halfbreak">
           <!-- Ignore any contents, just emit a hard-space: -->
