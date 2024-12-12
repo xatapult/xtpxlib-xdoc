@@ -25,20 +25,6 @@
 
   <!-- ================================================================== -->
 
-  <sect1 xml:id="sect-builtin-xdoc-transformations">
-    <title>Built-in <code>xdoc</code> transformations (XProc 1.0)</title>
-
-    <para>The <code>{$component-name}</code> has several transforms built in that use XProc&#160;1.0. You can easily reference these by prefixing
-      their name with <code>$xdoc</code>, for instance <code>$xdoc/code-docgen.xpl</code>.  If you use the XProc&#160;1.0 `xdoc` pipelines, these transforms are
-      automatically used.</para>
-
-    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../transforms/" filter=".xpl$" depth="1" header-level="2" filecomponents="2"
-      sublevels="true"/>
-
-  </sect1>
-
-  <!-- ================================================================== -->
-
   <sect1 xml:id="sect-builtin-xdoc-transformations-3">
     <title>Built-in <code>xdoc</code> transformations (XProc 3.0)</title>
 
@@ -49,6 +35,23 @@
     <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../transforms3/" filter=".xpl$" depth="1" header-level="2" filecomponents="2"
       sublevels="true" id-suffix="xpl3-"/>
 
+  </sect1>
+  
+  <!-- ================================================================== -->
+  
+  <sect1 xml:id="sect-builtin-xdoc-transformations">
+    <title>Built-in <code>xdoc</code> transformations (XProc 1.0)</title>
+    
+    <para><emphasis role="bold">WARNING</emphasis>: XProc&#160;1.0 support is considered deprecated and will be removed in the near
+      future!</para>
+    
+    <para>The <code>{$component-name}</code> has several transforms built in that use XProc&#160;1.0. You can easily reference these by prefixing
+      their name with <code>$xdoc</code>, for instance <code>$xdoc/code-docgen.xpl</code>.  If you use the XProc&#160;1.0 `xdoc` pipelines, these transforms are
+      automatically used.</para>
+    
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../transforms/" filter=".xpl$" depth="1" header-level="2" filecomponents="2"
+      sublevels="true"/>
+    
   </sect1>
 
   <!-- ================================================================== -->
@@ -98,7 +101,7 @@
 </programlisting>
 
     <para role="keep-with-next">And the result for this example is:</para>
-    <xdoc:transform href="transforms/transform-weather-data.xsl">
+    <xdoc:transform href="../../../xtpxlib-xdoc/doc/source/transforms/transform-weather-data.xsl">
       <xi:include href="includes/example-data.xml"/>
     </xdoc:transform>
 

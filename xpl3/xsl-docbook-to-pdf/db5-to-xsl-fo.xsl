@@ -909,10 +909,12 @@
 
   <xsl:template match="db:example | db:informalexample" mode="mode-block">
 
-    <xsl:call-template name="empty-line">
-      <xsl:with-param name="size-pt" select="$standard-extra-paragraph-distance-pt"/>
-      <xsl:with-param name="keep-with-next" select="true()"/>
-    </xsl:call-template>
+    <xsl:if test="empty(../self::db:listitem)">
+      <xsl:call-template name="empty-line">
+        <xsl:with-param name="size-pt" select="$standard-extra-paragraph-distance-pt"/>
+        <xsl:with-param name="keep-with-next" select="true()"/>
+      </xsl:call-template>
+    </xsl:if>
     <block margin-left="{local:dimcm($standard-small-indent)}" margin-right="{local:dimcm($standard-small-indent)}">
       <xsl:apply-templates select="db:* except db:title" mode="#current">
         <xsl:with-param name="in-example" as="xs:boolean" select="true()" tunnel="true"/>
@@ -1106,33 +1108,21 @@
           </xsl:call-template>
         </xsl:when>
         <xsl:otherwise>
-          <!-- This can be block or inline contents, that's hard to distinguish, so we're going to do something *very* hacky. -->
-          <!-- First try as proper block contents: -->
-          <xsl:variable name="result-as-block" as="node()*">
-            <xsl:try>
-              <xsl:call-template name="handle-block-contents">
-                <!-- Remark: Don't pass in whitespace-only nodes... -->
-                <xsl:with-param name="contents" select="node()[not((. instance of text()) and (normalize-space(.) eq ''))]"/>
-              </xsl:call-template>
-              <xsl:catch>
-                <xsl:value-of select="$error-message-prefix"/>
-              </xsl:catch>
-            </xsl:try>
-          </xsl:variable>
-          <!-- If this contains an error, try again as inline: -->
           <xsl:choose>
-            <xsl:when test="local:contains-error($result-as-block)">
-              <!-- Try as inline contents, wrapped in a para: -->
-              <xsl:call-template name="handle-block-contents">
-                <xsl:with-param name="contents" as="element()*">
-                  <db:para>
-                    <xsl:copy-of select="node()"/>
-                  </db:para>
-                </xsl:with-param>
-              </xsl:call-template>
+            <xsl:when test="exists(text()[normalize-space(.) ne ''])">
+              <!-- This allows straight text in an <entry>: -->
+                <xsl:call-template name="handle-block-contents">
+                  <xsl:with-param name="contents" as="element()*">
+                    <db:para>
+                      <xsl:sequence select="node()"/>
+                    </db:para>
+                  </xsl:with-param>
+                </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
-              <xsl:sequence select="$result-as-block"/>
+              <xsl:call-template name="handle-block-contents">
+                <xsl:with-param name="contents" as="element()*" select="db:*"/>
+              </xsl:call-template>
             </xsl:otherwise>
           </xsl:choose>
         </xsl:otherwise>
@@ -1864,13 +1854,18 @@
   <xsl:template name="empty-line">
     <xsl:param name="size-pt" as="xs:double" required="no" select="$standard-font-size"/>
     <xsl:param name="keep-with-next" as="xs:boolean" required="no" select="false()"/>
+    <xsl:param name="current-elm" as="element()" required="no" select="."/>
 
-    <block font-size="{local:dimpt($size-pt)}">
-      <xsl:if test="$keep-with-next">
-        <xsl:attribute name="keep-with-next" select="'always'"/>
-      </xsl:if>
-      <xsl:text>&#160;</xsl:text>
-    </block>
+    <!-- We generate an empty line, but only whgen the parent is *not* a listitem! -->
+    <xsl:if test="empty($current-elm/../self::db:listitem)">
+      <block font-size="{local:dimpt($size-pt)}">
+        <xsl:if test="$keep-with-next">
+          <xsl:attribute name="keep-with-next" select="'always'"/>
+        </xsl:if>
+        <xsl:text>&#160;</xsl:text>
+      </block>
+    </xsl:if>
+
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

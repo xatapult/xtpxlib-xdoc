@@ -24,11 +24,8 @@
   <!-- ================================================================== -->
   <!-- PARAMETERS: -->
 
-  <xsl:param name="create-header" as="xs:string" required="false" select="string(true())"/>
-  <xsl:param name="add-roles-as-classes" as="xs:string" required="false" select="string(false())"/>
-
-  <xsl:variable name="do-create-header" as="xs:boolean" select="xs:boolean($create-header)"/>
-  <xsl:variable name="do-add-roles-as-classes" as="xs:boolean" select="xs:boolean($add-roles-as-classes)"/>
+  <xsl:param name="create-header" as="xs:boolean" required="true"/>
+  <xsl:param name="add-roles-as-classes" as="xs:boolean" required="true"/>
 
   <!-- ================================================================== -->
   <!-- GLOBAL VARIABLES: -->
@@ -60,7 +57,6 @@
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
-        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <xsl:apply-templates select="db:*"/>
     </div>
@@ -70,7 +66,7 @@
   <!-- HEADER CREATION: -->
 
   <xsl:template match="db:info">
-    <xsl:if test="$do-create-header">
+    <xsl:if test="$create-header">
       <div>
         <xsl:call-template name="add-class-info">
           <xsl:with-param name="base-classes" select="'header'"/>
@@ -140,7 +136,6 @@
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
-        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <h1>
         <xsl:call-template name="add-class-info"/>
@@ -166,7 +161,6 @@
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
-        <xsl:with-param name="force" select="true()"/>
       </xsl:call-template>
       <xsl:element name="h{$level}">
         <xsl:call-template name="add-class-info"/>
@@ -197,13 +191,14 @@
       <p class="break">&#160;</p>
     </xsl:if>
     <p>
+      <xsl:if test="$is-halfbreak">
+        <xsl:attribute name="style" select="'font-size: 50%;'"/>
+      </xsl:if>
       <xsl:call-template name="add-class-info"/>
       <xsl:call-template name="copy-id">
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
-      <xsl:if test="$is-halfbreak">
-        <xsl:attribute name="style" select="'font-size: 50%;'"/>
-      </xsl:if>
+     
       <xsl:choose>
         <xsl:when test="$is-break or $is-halfbreak">
           <!-- Ignore any contents, just emit a hard-space: -->
@@ -482,8 +477,8 @@
         <xsl:with-param name="create-anchor" select="true()"/>
       </xsl:call-template>
       <xsl:choose>
-        <xsl:when test="empty(db:para)">
-          <!-- No surrounding <para> or so it seems, create one: -->
+        <xsl:when test="exists(text()[normalize-space(.) ne ''])">
+          <!-- This allows straight text in an <entry>: -->
           <xsl:variable name="contents-in-para" as="element(db:para)">
             <db:para>
               <xsl:sequence select="node()"/>
@@ -547,16 +542,32 @@
               <xsl:value-of select="$referenced-element/@xreflabel"/>
             </xsl:when>
             <xsl:when test="$referenced-element/self::db:chapter">
-              <xsl:value-of select="local:xref-capitalize('chapter&#160;', $do-capitalize)"/>
-              <xsl:value-of select="$referenced-element/@number"/>
+              <xsl:choose>
+                <xsl:when test="exists($referenced-element/@number)">
+                  <xsl:value-of select="local:xref-capitalize('chapter&#160;', $do-capitalize)"/>
+                  <xsl:value-of select="$referenced-element/@number"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:when>
             <xsl:when test="$referenced-element/self::db:appendix">
-              <xsl:value-of select="local:xref-capitalize('appendix&#160;', $do-capitalize)"/>
-              <xsl:value-of select="$referenced-element/@number"/>
+              <xsl:choose>
+                <xsl:when test="exists($referenced-element/@number)">
+                  <xsl:value-of select="local:xref-capitalize('appendix&#160;', $do-capitalize)"/>
+                  <xsl:value-of select="$referenced-element/@number"/>
+                </xsl:when>
+                <xsl:otherwise>
+                  <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
+                </xsl:otherwise>
+              </xsl:choose>
             </xsl:when>
             <xsl:when test="matches(local-name($referenced-element), '^sect[0-9]$')">
-              <xsl:value-of select="$referenced-element/@number"/>
-              <xsl:text>&#160;</xsl:text>
+              <xsl:if test="exists($referenced-element/@number)">
+                <xsl:value-of select="$referenced-element/@number"/>
+                <xsl:text>&#160;</xsl:text>
+              </xsl:if>
               <xsl:value-of select="normalize-space($referenced-element/db:title)"/>
             </xsl:when>
             <xsl:when test="$referenced-element/self::db:figure[exists(@number)] or $referenced-element/self::db:table[exists(@number)] or
@@ -923,10 +934,9 @@
   <xsl:template name="copy-id">
     <xsl:param name="elm" as="element()" required="no" select="."/>
     <xsl:param name="create-anchor" as="xs:boolean" required="false" select="false()"/>
-    <xsl:param name="force" as="xs:boolean" required="false" select="false()"/>
 
     <xsl:variable name="id" as="xs:string?" select="$elm/@xml:id"/>
-    <xsl:if test="exists($id) and ($force or ($id = $all-linkend-references))">
+    <xsl:if test="exists($id)">
       <xsl:attribute name="id" select="$id"/>
       <xsl:if test="$create-anchor">
         <a name="{$id}">
@@ -951,7 +961,7 @@
 
     <xsl:variable name="class-parts" as="xs:string+">
       <xsl:sequence select="$base-classes"/>
-      <xsl:if test="$do-add-roles-as-classes and exists($docbook-elm/@role)">
+      <xsl:if test="$add-roles-as-classes and exists($docbook-elm/@role)">
         <xsl:sequence select="xtlc:str2seq($docbook-elm/@role)"/>
       </xsl:if>
     </xsl:variable>

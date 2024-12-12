@@ -17,13 +17,13 @@
 
   <!-- ================================================================== -->
 
-  <xsl:variable name="local:root-element" as="element()" select="/*"/>
+  <xsl:variable name="local:root-element" as="element()" select="/*" visibility="private"/>
 
   <!-- ================================================================== -->
-  
-  <xsl:function name="xdoc:parameters-get-with-filtermap" as="map(xs:string, xs:string*)">
+
+  <xsl:function name="xdoc:parameters-get-with-filtermap" as="map(xs:string, xs:string*)" visibility="public">
     <!-- Gets the parameters and applies a filterstring setting. Also sets some special values. -->
-    <xsl:param name="href-parameters" as="xs:string">
+    <xsl:param name="href-parameters" as="xs:string?">
       <!--~ Reference to the parameter file. -->
     </xsl:param>
     <xsl:param name="filtermap" as="map(xs:string, xs:string*)">
@@ -39,23 +39,29 @@
         <xsl:map-entry key="'HREF-SOURCE'" select="xtlc:href-protocol-remove(xtlc:href-canonical(base-uri($local:root-element)))"/>
       </xsl:map>
     </xsl:variable>
-    
+
     <!-- Check for the existence of the parameter file: -->
-    <xsl:variable name="href-parameters-canonical" as="xs:string" select="xtlc:href-canonical($href-parameters)"/>
-    <xsl:if test="not(doc-available($href-parameters-canonical))">
-      <xsl:call-template name="xtlc:raise-error">
-        <xsl:with-param name="msg-parts" select="('Parameters file ', xtlc:q($href-parameters-canonical), ' not found or not well-formed')"/>
-      </xsl:call-template>
-    </xsl:if>
-    
-    <!-- Process the parameters with these filters and merge the special values in: -->
-    <xsl:sequence select="map:merge(($special-values-map, xtlc:parameters-get($href-parameters-canonical, $filtermap)))"/>
-    
+    <xsl:choose>
+      <xsl:when test="exists($href-parameters)">
+        <xsl:variable name="href-parameters-canonical" as="xs:string" select="xtlc:href-canonical($href-parameters)"/>
+        <xsl:if test="not(doc-available($href-parameters-canonical))">
+          <xsl:call-template name="xtlc:raise-error">
+            <xsl:with-param name="msg-parts" select="('Parameters file ', xtlc:q($href-parameters-canonical), ' not found or not well-formed')"/>
+          </xsl:call-template>
+        </xsl:if>
+        <!-- Process the parameters with these filters and merge the special values in: -->
+        <xsl:sequence select="map:merge(($special-values-map, xtlc:parameters-get($href-parameters-canonical, $filtermap)))"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:sequence select="$special-values-map"/>
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:function>
-  
+
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
-  
-  <xsl:function name="xdoc:parameters-get-with-filterstring" as="map(xs:string, xs:string*)">
+
+  <xsl:function name="xdoc:parameters-get-with-filterstring" as="map(xs:string, xs:string*)" visibility="public">
     <!-- Gets the parameters and applies a filterstring setting. Also sets some special values. -->
     <xsl:param name="href-parameters" as="xs:string">
       <!--~ Reference to the parameter file. -->
@@ -85,7 +91,7 @@
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
-  <xsl:function name="xdoc:fixed-width-characters-per-cm-dbl" as="xs:double">
+  <xsl:function name="xdoc:fixed-width-characters-per-cm-dbl" as="xs:double" visibility="public">
     <!-- Computes the number of fixed-width characters based on the main font size (based on using FOP) -->
     <xsl:param name="main-font-size-dbl" as="xs:double"/>
     <xsl:sequence select="5.55 + ((10 - $main-font-size-dbl) * 0.45) "/>

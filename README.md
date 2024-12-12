@@ -1,4 +1,5 @@
-# `xtpxlib-xdoc`: Xatapult XML Library - DocBook publication toolchain
+<?xml version="1.0" encoding="UTF-8"?>
+<README xml:space="preserve"># `xtpxlib-xdoc`: Xatapult XML Library - DocBook publication toolchain
 
 **Xatapult Content Engineering - [`http://www.xatapult.com`](http://www.xatapult.com)**
 
@@ -13,7 +14,7 @@ The `xtpxlib-xdoc` component contains an XProc (1.0 and 3.0) based DocBook publi
 
 ## Technical information
 
-Component version: V2.0 - 2023-07-19
+Component version: V3.0 - 2024-12-12
 
 Documentation: [`https://xdoc.xtpxlib.org`](https://xdoc.xtpxlib.org)
 
@@ -27,7 +28,11 @@ This component depends on:
 
 ## Version history
 
-**V2.0 - 2023-07-19 (current)**
+**V3.0 - 2024-12-12 (current)**
+
+Deprecation of XProc 1.0. Several fixes.
+
+**V2.0 - 2023-07-19**
 
 Added XProc 3.0 support.
 
@@ -59,5 +64,6 @@ Pre-release to test GitHub pages functionality.
 
 
 -----------
-*Generated: 2023-07-19 08:58:55*
+*Generated: 2024-12-12 15:22:54*
 
+</README>
