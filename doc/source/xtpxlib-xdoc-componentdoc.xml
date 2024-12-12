@@ -30,7 +30,6 @@
 
   <xi:include href="xtpxlib-xdoc-chapter-description.xml"/>
 
-
   <!-- ================================================================== -->
   
   <xi:include href="xtpxlib-xdoc-chapter-instructions.xml"/>
@@ -38,21 +37,6 @@
   <!-- ================================================================== -->
 
   <xi:include href="xtpxlib-xdoc-chapter-transforms.xml"/>
-  
-  <!-- ================================================================== -->
-  
-  <chapter xml:id="chapter-xproc-1-pipelines" xreflabel="XProc Pipelines">
-    <title>XProc 1.0 support</title>
-    
-    <para>The {$component-name} component contains the following XProc 1.0 pipelines:</para>
-    
-    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xpl/" filter="\.xpl$" header-level="1" filecomponents="2"
-      sublevels="true"/>
-    
-    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xplmod/" filter="\.mod\.xpl$" header-level="1" filecomponents="3"
-      sublevels="true"/>
-    
-  </chapter>
   
   <!-- ======================================================================= -->
   
@@ -66,6 +50,24 @@
     
     <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xpl3mod/" filter="\.mod\.xpl$" header-level="1" filecomponents="3"
       sublevels="true" id-suffix="xpl3-"/>
+    
+  </chapter>
+  
+  <!-- ================================================================== -->
+  
+  <chapter xml:id="chapter-xproc-1-pipelines" xreflabel="XProc Pipelines">
+    <title>XProc 1.0 support</title>
+    
+    <para><emphasis role="bold">WARNING</emphasis>: XProc&#160;1.0 support is considered deprecated and will be removed in the near
+      future!</para>
+    
+    <para>The {$component-name} component contains the following XProc 1.0 pipelines:</para>
+    
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xpl/" filter="\.xpl$" header-level="1" filecomponents="2"
+      sublevels="true"/>
+    
+    <xdoc:transform href="$xdoc/code-docgen-dir.xpl" dir="../../xplmod/" filter="\.mod\.xpl$" header-level="1" filecomponents="3"
+      sublevels="true"/>
     
   </chapter>
   
