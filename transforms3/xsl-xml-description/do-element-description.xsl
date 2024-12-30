@@ -565,8 +565,9 @@
 
     <xsl:choose>
       <xsl:when test="$sort-attributes">
+        <!-- We sort required attributes first and case-insensitive. -->
         <xsl:perform-sort select="$attributes">
-          <xsl:sort select="@name"/>
+          <xsl:sort select="(if (xtlc:str2bln(@required, false())) then '0' else '1') || fn:lower-case(@name)"/>
         </xsl:perform-sort>
       </xsl:when>
       <xsl:otherwise>
