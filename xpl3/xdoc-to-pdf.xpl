@@ -22,7 +22,7 @@
   <!-- PORTS: -->
 
   <p:input port="source" primary="true" sequence="false" content-types="xml">
-    <p:documentation>The Docbook source, with option al `xdoc` extensions.</p:documentation>
+    <p:documentation>The Docbook source, with optional `xdoc` extensions.</p:documentation>
     <p:document href="{resolve-uri('../test/xdoc-docbook-test-3.xml', static-base-uri())}" use-when="$develop"/>
   </p:input>
 

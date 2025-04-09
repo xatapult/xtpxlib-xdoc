@@ -579,7 +579,7 @@
           <xsl:variable name="position" as="xs:integer" select="count(preceding-sibling::db:listitem) + 1"/>
           <xsl:variable name="is-last" as="xs:boolean" select="empty(following-sibling::db:listitem)"/>
           <xsl:choose>
-            <xsl:when test="$position le 1">
+            <xsl:when test="($position le 1) and exists(following-sibling::db:listitem)">
               <xsl:attribute name="keep-with-next" select="'always'"/>
             </xsl:when>
             <xsl:when test="$is-last">
