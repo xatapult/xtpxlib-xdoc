@@ -94,6 +94,14 @@
   <p:option name="create-pdf" as="xs:boolean" required="false" select="true()">
     <p:documentation>Whether to actually create the PDF.</p:documentation>
   </p:option>
+  
+  <p:option name="max-toc-level" as="xs:integer" required="false" select="-1">
+    <p:documentation>If gt 0, this is the maximum ToC level produced for sections. So 1 means only sect1, 2 means up to sect2, etc.</p:documentation>
+  </p:option>
+  
+  <p:option name="link-color" as="xs:string" required="false" select="'blue'">
+    <p:documentation>The text color for links.</p:documentation>
+  </p:option>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -123,6 +131,8 @@
     <p:with-option name="main-font-size" select="$main-font-size"/>
     <p:with-option name="global-resources-directory" select="$global-resources-directory"/>
     <p:with-option name="href-xsl-fo" select="$href-xsl-fo"/>
+    <p:with-option name="max-toc-level" select="$max-toc-level"/>
+    <p:with-option name="link-color" select="$link-color"/>
   </xdoc:docbook-to-pdf>
 
 </p:declare-step>

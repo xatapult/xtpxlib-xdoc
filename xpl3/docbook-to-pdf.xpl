@@ -85,7 +85,15 @@
   <p:option name="create-pdf" as="xs:boolean" required="false" select="true()">
     <p:documentation>Whether to actually create the PDF.</p:documentation>
   </p:option>
-
+  
+  <p:option name="max-toc-level" as="xs:integer" required="false" select="-1">
+    <p:documentation>If gt 0, this is the maximum ToC level produced for sections. So 1 means only sect1, 2 means up to sect2, etc.</p:documentation>
+  </p:option>
+  
+  <p:option name="link-color" as="xs:string" required="false" select="'blue'">
+    <p:documentation>The text color for links.</p:documentation>
+  </p:option>
+  
   <!-- ================================================================== -->
   <!-- MAIN: -->
 
@@ -116,7 +124,9 @@
       'global-resources-directory': $global-resources-directory,
       'chapter-id': $chapter-id,
       'main-font-size': $main-font-size,
-      'output-type': $output-type
+      'output-type': $output-type,
+      'max-toc-level': $max-toc-level,
+      'link-color': $link-color
     }"/>
   </p:xslt>
   <p:if test="normalize-space($href-xsl-fo) ne ''">

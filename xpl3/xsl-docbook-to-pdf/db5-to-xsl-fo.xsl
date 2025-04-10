@@ -38,6 +38,14 @@
       Use for debugging. -->
   </xsl:param>
 
+  <xsl:param name="max-toc-level" as="xs:integer" required="false" select="-1">
+    <!-- If gt 0, this is the maximum ToC level produced. So 1 means only sect1, 2 means up to sect2, etc. -->
+  </xsl:param>
+  
+  <xsl:param name="link-color" as="xs:string" required="false" select="'blue'"/>
+  
+  <xsl:param name="table-column-header-color" as="xs:string" required="false" select="'#595959'"/>
+
   <xsl:variable name="default-main-font-size" as="xs:integer" select="8"/>
   <xsl:param name="main-font-size" as="xs:integer" required="no" select="$default-main-font-size"/>
 
@@ -105,7 +113,7 @@
     <xsl:attribute name="font-size" select="local:dimpt($standard-font-size)"/>
   </xsl:attribute-set>
 
-  <xsl:variable name="code-font-family" as="xs:string" select="'&apos;&apos;Courier New&apos;&apos;, monospace'"/>
+  <xsl:variable name="code-font-family" as="xs:string" select="'Consolas, monospace'"/>
   <xsl:attribute-set name="attributes-codeblock-font-settings">
     <xsl:attribute name="font-family" select="$code-font-family"/>
     <xsl:attribute name="font-size" select="local:dimpt($standard-font-size - 3)"/>
@@ -121,7 +129,6 @@
 
   <!-- Others: -->
   <xsl:variable name="bookmark-final-page-block" as="xs:string" select="'bookmark-final-page-block'"/>
-  <xsl:variable name="link-color" as="xs:string" select="'blue'"/>
   <xsl:variable name="table-cell-border-properties" as="xs:string" select="'solid 0.1mm black'"/>
 
   <!-- Any section above this level gets no separate number -->
@@ -1002,10 +1009,9 @@
 
   <xsl:template match="db:tgroup" mode="mode-table">
     <xsl:param name="table-elm" as="element()?" required="false" select="()" tunnel="true"/>
-    <xsl:comment> == *****TGROUP <xsl:value-of select="position()"/> == </xsl:comment>
 
     <table space-before="{local:dimpt(2 * $standard-paragraph-distance-pt)}" space-after="{local:dimpt(3 * $standard-paragraph-distance-pt)}"
-      font-size="{local:dimpt($standard-font-size - 1)}">
+      font-size="{local:dimpt($standard-font-size - 1)}" >
 
       <xsl:if test="exists($table-elm) and (position() eq 1)">
         <xsl:call-template name="copy-id">
@@ -1052,10 +1058,10 @@
   <xsl:template match="db:thead" mode="mode-table">
     <xsl:param name="in-informal-table" as="xs:boolean" required="true" tunnel="true"/>
 
-    <table-header>
+    <table-header start-indent="0">
       <xsl:if test="not($in-informal-table)">
         <xsl:attribute name="color" select="'white'"/>
-        <xsl:attribute name="background-color" select="'black'"/>
+        <xsl:attribute name="background-color" select="$table-column-header-color"/>
       </xsl:if>
       <xsl:apply-templates mode="#current"/>
     </table-header>
@@ -1064,7 +1070,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:tbody" mode="mode-table">
-    <table-body>
+    <table-body start-indent="0">
       <xsl:apply-templates mode="#current"/>
     </table-body>
   </xsl:template>
@@ -1111,13 +1117,13 @@
           <xsl:choose>
             <xsl:when test="exists(text()[normalize-space(.) ne ''])">
               <!-- This allows straight text in an <entry>: -->
-                <xsl:call-template name="handle-block-contents">
-                  <xsl:with-param name="contents" as="element()*">
-                    <db:para>
-                      <xsl:sequence select="node()"/>
-                    </db:para>
-                  </xsl:with-param>
-                </xsl:call-template>
+              <xsl:call-template name="handle-block-contents">
+                <xsl:with-param name="contents" as="element()*">
+                  <db:para>
+                    <xsl:sequence select="node()"/>
+                  </db:para>
+                </xsl:with-param>
+              </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
               <xsl:call-template name="handle-block-contents">
@@ -1639,10 +1645,12 @@
 
     <xsl:variable name="element-name" as="xs:string" select="local-name(.)"/>
     <xsl:variable name="section-level" as="xs:integer" select="xs:integer(substring-after($element-name, 'sect'))"/>
-    <xsl:call-template name="toc-entry-out">
-      <xsl:with-param name="level" select="$section-level"/>
-      <xsl:with-param name="number" select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
-    </xsl:call-template>
+    <xsl:if test="($max-toc-level le 0) or ($section-level le $max-toc-level)">
+      <xsl:call-template name="toc-entry-out">
+        <xsl:with-param name="level" select="$section-level"/>
+        <xsl:with-param name="number" select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
+      </xsl:call-template>
+    </xsl:if>
     <xsl:apply-templates mode="#current"/>
   </xsl:template>
 
