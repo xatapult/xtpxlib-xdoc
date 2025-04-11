@@ -102,6 +102,18 @@
   <p:option name="link-color" as="xs:string" required="false" select="'blue'">
     <p:documentation>The text color for links.</p:documentation>
   </p:option>
+  
+  <p:option name="left-indent-section-numbers" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Whether to left-indent section numbers (only for A4 sized publications).</p:documentation>
+  </p:option>
+  
+  <p:option name="suppress-section-numbering" as="xs:integer" required="false" select="-1">
+    <p:documentation>If gt 0, all sections (sect1 etc.) with that level or higher don't get a section number.</p:documentation>
+  </p:option>
+  
+  <p:option name="process-for-binding" as="xs:boolean" required="false" select="false()">
+    <p:documentation>If true, odd and even pages are handled differently, to create page margins for bindings.</p:documentation>
+  </p:option>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
@@ -133,6 +145,9 @@
     <p:with-option name="href-xsl-fo" select="$href-xsl-fo"/>
     <p:with-option name="max-toc-level" select="$max-toc-level"/>
     <p:with-option name="link-color" select="$link-color"/>
+    <p:with-option name="left-indent-section-numbers" select="$left-indent-section-numbers"/>
+    <p:with-option name="suppress-section-numbering" select="$suppress-section-numbering"/>
+    <p:with-option name="process-for-binding" select="$process-for-binding"/>
   </xdoc:docbook-to-pdf>
 
 </p:declare-step>

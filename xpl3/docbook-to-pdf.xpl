@@ -94,6 +94,18 @@
     <p:documentation>The text color for links.</p:documentation>
   </p:option>
   
+  <p:option name="left-indent-section-numbers" as="xs:boolean" required="false" select="true()">
+    <p:documentation>Whether to left-indent section numbers (only for A4 sized publications).</p:documentation>
+  </p:option>
+  
+  <p:option name="suppress-section-numbering" as="xs:integer" required="false" select="-1">
+    <p:documentation>If gt 0, all sections (sect1 etc.) with that level or higher don't get a section number.</p:documentation>
+  </p:option>
+  
+  <p:option name="process-for-binding" as="xs:boolean" required="false" select="false()">
+    <p:documentation>If true, odd and even pages are handled differently, to create page margins for bindings.</p:documentation>
+  </p:option>
+  
   <!-- ================================================================== -->
   <!-- MAIN: -->
 
@@ -126,7 +138,10 @@
       'main-font-size': $main-font-size,
       'output-type': $output-type,
       'max-toc-level': $max-toc-level,
-      'link-color': $link-color
+      'link-color': $link-color,
+      'left-indent-section-numbers': $left-indent-section-numbers,
+      'suppress-section-numbering': $suppress-section-numbering,
+      'process-for-binding': $process-for-binding
     }"/>
   </p:xslt>
   <p:if test="normalize-space($href-xsl-fo) ne ''">
