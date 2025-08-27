@@ -45,7 +45,7 @@
     -->
     <xsl:variable name="absolute-path-to-transform" as="xs:string"
       select="xtlc:href-concat(($root-path, $path-normalized-name)) => xtlc:href-canonical() => replace('/transforms/', '/transforms3/')"/>
-
+    
     <!-- Find out whether it exists and what it is: -->
     <!-- Remark: Now this is simple. we just look at the file extension. Might become more complex in the future. -->
     <xsl:if test="not(doc-available($absolute-path-to-transform))">
