@@ -1358,7 +1358,17 @@
     </xsl:call-template>
 
   </xsl:template>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="db:citetitle" mode="mode-inline">
+    <xsl:call-template name="handle-inline-text">
+      <xsl:with-param name="bold" select="false()"/>
+      <xsl:with-param name="underline" select="false()"/>
+      <xsl:with-param name="italic" select="true()"/>
+    </xsl:call-template>
+  </xsl:template>
+  
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:code | db:literal | db:uri | db:function | db:classname | db:type | db:parameter | db:varname | db:package"
