@@ -430,13 +430,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:colspec" mode="mode-table">
-    <!-- Not sure whether we should generate something... -->
-    <!--<col>
-      <xsl:if test="exists(@colwidth)">
-        <xsl:attribute name="width" select="@colwidth"/>
-      </xsl:if>
-      <xsl:call-template name="copy-id"/>
-    </col>-->
+    <!-- Ignore for HTML... -->
   </xsl:template>
 
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->

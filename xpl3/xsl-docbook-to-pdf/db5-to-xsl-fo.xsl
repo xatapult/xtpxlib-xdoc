@@ -38,6 +38,28 @@
       Use for debugging. -->
   </xsl:param>
 
+  <xsl:param name="max-toc-level" as="xs:integer" required="false" select="-1">
+    <!-- If gt 0, this is the maximum ToC level produced. So 1 means only sect1, 2 means up to sect2, etc. -->
+  </xsl:param>
+
+  <xsl:param name="link-color" as="xs:string" required="false" select="'blue'">
+    <!-- The color for links. -->
+  </xsl:param>
+
+  <xsl:param name="table-column-header-color" as="xs:string" required="false" select="'#595959'">
+    <!-- The background color for table headers (text is in white). -->
+  </xsl:param>
+
+  <xsl:param name="left-indent-section-numbers" as="xs:boolean" required="false" select="true()"/>
+
+  <xsl:param name="suppress-section-numbering" as="xs:integer" required="false" select="-1">
+    <!-- If gt 0, all sections (sect1 etc.) with that level or higher don't get a section number. -->
+  </xsl:param>
+
+  <xsl:param name="process-for-binding" as="xs:boolean" required="false" select="false()">
+    <!-- If true, odd and even pages are handled differently, to create page margins for bindings. -->
+  </xsl:param>
+
   <xsl:variable name="default-main-font-size" as="xs:integer" select="8"/>
   <xsl:param name="main-font-size" as="xs:integer" required="no" select="$default-main-font-size"/>
 
@@ -62,6 +84,9 @@
   <!-- Page master names: -->
   <xsl:variable name="spm-frontpage" as="xs:string" select="'spm-frontpage'"/>
   <xsl:variable name="spm-contents" as="xs:string" select="'spm-contents'"/>
+  <xsl:variable name="spm-contents-odd" as="xs:string" select="'spm-contents-odd'"/>
+  <xsl:variable name="spm-contents-even" as="xs:string" select="'spm-contents-even'"/>
+  <xsl:variable name="spm-contents-sequence" as="xs:string" select="'spm-contents-sequence'"/>
 
   <!-- Standard A4 page dimensions: -->
   <xsl:variable name="page-width" as="xs:double" select="if ($is-a4) then 21.0 else 17.2"/>
@@ -77,10 +102,18 @@
   <xsl:variable name="standard-page-margin-left" as="xs:double" select="if ($is-a4) then 4 else 2"/>
   <xsl:variable name="standard-page-margin-right" as="xs:double" select="2"/>
   <xsl:attribute-set name="attributes-standard-page-margins">
+    <!-- Use for no-bindings and odd pages -->
     <xsl:attribute name="margin-top" select="local:dimcm($standard-page-margin-top)"/>
     <xsl:attribute name="margin-bottom" select="local:dimcm($standard-page-margin-bottom)"/>
     <xsl:attribute name="margin-left" select="local:dimcm($standard-page-margin-left)"/>
     <xsl:attribute name="margin-right" select="local:dimcm($standard-page-margin-right)"/>
+  </xsl:attribute-set>
+  <xsl:attribute-set name="attributes-standard-page-margins-even">
+    <!-- For bindings even pages. left/right margin switched. -->
+    <xsl:attribute name="margin-top" select="local:dimcm($standard-page-margin-top)"/>
+    <xsl:attribute name="margin-bottom" select="local:dimcm($standard-page-margin-bottom)"/>
+    <xsl:attribute name="margin-left" select="local:dimcm($standard-page-margin-right)"/>
+    <xsl:attribute name="margin-right" select="local:dimcm($standard-page-margin-left)"/>
   </xsl:attribute-set>
 
   <!-- Standard attribute sets and other settings: -->
@@ -105,7 +138,7 @@
     <xsl:attribute name="font-size" select="local:dimpt($standard-font-size)"/>
   </xsl:attribute-set>
 
-  <xsl:variable name="code-font-family" as="xs:string" select="'&apos;&apos;Courier New&apos;&apos;, monospace'"/>
+  <xsl:variable name="code-font-family" as="xs:string" select="'Consolas, monospace'"/>
   <xsl:attribute-set name="attributes-codeblock-font-settings">
     <xsl:attribute name="font-family" select="$code-font-family"/>
     <xsl:attribute name="font-size" select="local:dimpt($standard-font-size - 3)"/>
@@ -121,7 +154,6 @@
 
   <!-- Others: -->
   <xsl:variable name="bookmark-final-page-block" as="xs:string" select="'bookmark-final-page-block'"/>
-  <xsl:variable name="link-color" as="xs:string" select="'blue'"/>
   <xsl:variable name="table-cell-border-properties" as="xs:string" select="'solid 0.1mm black'"/>
 
   <!-- Any section above this level gets no separate number -->
@@ -170,11 +202,40 @@
           <region-body margin-top="0cm"/>
         </simple-page-master>
         <!-- Content pages -->
-        <simple-page-master master-name="{$spm-contents}" xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
-          <!-- The normal content page defines a header. -->
-          <region-body margin-top="{if ($is-a4) then 2 else 1.5}cm"/>
-          <region-before extent="{if ($is-a4) then 1.5 else 1}cm"/>
-        </simple-page-master>
+        <xsl:choose>
+          
+          <!-- Distinguish between odd and even pages: -->
+          <xsl:when test="$process-for-binding">
+            <simple-page-master master-name="{$spm-contents-odd}" xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
+              <!-- The normal content page defines a header. -->
+              <region-body margin-top="{if ($is-a4) then 2 else 1.5}cm"/>
+              <region-before extent="{if ($is-a4) then 1.5 else 1}cm"/>
+              
+            </simple-page-master>
+            <simple-page-master master-name="{$spm-contents-even}"
+              xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins-even">
+              <!-- The normal content page defines a header. -->
+              <region-body margin-top="{if ($is-a4) then 2 else 1.5}cm"/>
+              <region-before extent="{if ($is-a4) then 1.5 else 1}cm" />
+            </simple-page-master>
+            <fo:page-sequence-master master-name="{$spm-contents-sequence}">
+              <fo:repeatable-page-master-alternatives>
+                <fo:conditional-page-master-reference master-reference="{$spm-contents-odd}" odd-or-even="odd"/>
+                <fo:conditional-page-master-reference master-reference="{$spm-contents-even}" odd-or-even="even"/>
+              </fo:repeatable-page-master-alternatives>
+            </fo:page-sequence-master>
+          </xsl:when>
+          
+          <!-- Only one page type: -->
+          <xsl:otherwise>
+            <simple-page-master master-name="{$spm-contents}" xsl:use-attribute-sets="attributes-dimensions-page attributes-standard-page-margins">
+              <!-- The normal content page defines a header. -->
+              <region-body margin-top="{if ($is-a4) then 2 else 1.5}cm"/>
+              <region-before extent="{if ($is-a4) then 1.5 else 1}cm"/>
+            </simple-page-master>
+          </xsl:otherwise>
+          
+        </xsl:choose>
       </layout-master-set>
 
       <!-- Front page: -->
@@ -336,7 +397,8 @@
     <xsl:param name="root" as="element()" required="no" select="."/>
     <xsl:param name="in-article" as="xs:boolean" required="yes" tunnel="true"/>
 
-    <page-sequence master-reference="{$spm-contents}" xsl:use-attribute-sets="attributes-standard-font-settings" initial-page-number="1">
+    <page-sequence master-reference="{if ($process-for-binding) then $spm-contents-sequence else $spm-contents}"
+      xsl:use-attribute-sets="attributes-standard-font-settings" initial-page-number="1">
 
       <!-- Footnote separator: -->
       <fo:static-content flow-name="xsl-footnote-separator">
@@ -351,19 +413,9 @@
           <block border-bottom="thin solid black">
             <xsl:value-of select="string-join((/*/db:info/db:title, /*/db:info/db:subtitle), ' - ')"/>
           </block>
-          <xsl:choose>
-            <xsl:when test="$is-a4 or $in-article">
-              <block text-align="right" space-before="{local:dimpt(-$standard-font-size)}">
-                <page-number/>&#160;/&#160;<page-number-citation ref-id="{$bookmark-final-page-block}"/>
-              </block>
-            </xsl:when>
-            <xsl:otherwise>
-              <block text-align="right" space-before="{local:dimpt(-$standard-font-size)}">
-                <page-number/>
-              </block>
-            </xsl:otherwise>
-          </xsl:choose>
-
+          <block text-align="right" space-before="{local:dimpt(-$standard-font-size)}">
+            <page-number/>
+          </block>
           <xsl:copy-of select="$debug-info-block"/>
         </static-content>
       </xsl:if>
@@ -448,6 +500,7 @@
     <xsl:call-template name="chapter-section-header-title-out">
       <xsl:with-param name="font-size" select="$font-size"/>
       <xsl:with-param name="number" select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
+      <xsl:with-param name="suppress-number" select="($suppress-section-numbering gt 0) and ($section-level ge $suppress-section-numbering)"/>
     </xsl:call-template>
     <xsl:call-template name="handle-block-contents">
       <xsl:with-param name="contents" select="* except db:title"/>
@@ -579,7 +632,7 @@
           <xsl:variable name="position" as="xs:integer" select="count(preceding-sibling::db:listitem) + 1"/>
           <xsl:variable name="is-last" as="xs:boolean" select="empty(following-sibling::db:listitem)"/>
           <xsl:choose>
-            <xsl:when test="$position le 1">
+            <xsl:when test="($position le 1) and exists(following-sibling::db:listitem)">
               <xsl:attribute name="keep-with-next" select="'always'"/>
             </xsl:when>
             <xsl:when test="$is-last">
@@ -615,7 +668,8 @@
   <xsl:template match="db:figure | db:informalfigure" mode="mode-block">
 
     <xsl:variable name="roles" as="xs:string*" select="xtlc:str2seq(normalize-space(@role))"/>
-    <block text-align="center" space-before="{local:dimpt(2 * $standard-paragraph-distance-pt)}"
+    <xsl:variable name="placement" as="xs:string" select="if (contains-token(@role, 'left')) then 'left' else 'center'"/>
+    <block text-align="{$placement}" space-before="{local:dimpt(2 * $standard-paragraph-distance-pt)}"
       space-after="{local:dimpt(3 * $standard-paragraph-distance-pt)}" keep-with-previous="always">
       <xsl:call-template name="copy-id"/>
       <xsl:call-template name="handle-imagedata">
@@ -1002,7 +1056,6 @@
 
   <xsl:template match="db:tgroup" mode="mode-table">
     <xsl:param name="table-elm" as="element()?" required="false" select="()" tunnel="true"/>
-    <xsl:comment> == *****TGROUP <xsl:value-of select="position()"/> == </xsl:comment>
 
     <table space-before="{local:dimpt(2 * $standard-paragraph-distance-pt)}" space-after="{local:dimpt(3 * $standard-paragraph-distance-pt)}"
       font-size="{local:dimpt($standard-font-size - 1)}">
@@ -1052,10 +1105,10 @@
   <xsl:template match="db:thead" mode="mode-table">
     <xsl:param name="in-informal-table" as="xs:boolean" required="true" tunnel="true"/>
 
-    <table-header>
+    <table-header start-indent="0">
       <xsl:if test="not($in-informal-table)">
         <xsl:attribute name="color" select="'white'"/>
-        <xsl:attribute name="background-color" select="'black'"/>
+        <xsl:attribute name="background-color" select="$table-column-header-color"/>
       </xsl:if>
       <xsl:apply-templates mode="#current"/>
     </table-header>
@@ -1064,7 +1117,7 @@
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:tbody" mode="mode-table">
-    <table-body>
+    <table-body start-indent="0">
       <xsl:apply-templates mode="#current"/>
     </table-body>
   </xsl:template>
@@ -1111,13 +1164,13 @@
           <xsl:choose>
             <xsl:when test="exists(text()[normalize-space(.) ne ''])">
               <!-- This allows straight text in an <entry>: -->
-                <xsl:call-template name="handle-block-contents">
-                  <xsl:with-param name="contents" as="element()*">
-                    <db:para>
-                      <xsl:sequence select="node()"/>
-                    </db:para>
-                  </xsl:with-param>
-                </xsl:call-template>
+              <xsl:call-template name="handle-block-contents">
+                <xsl:with-param name="contents" as="element()*">
+                  <db:para>
+                    <xsl:sequence select="node()"/>
+                  </db:para>
+                </xsl:with-param>
+              </xsl:call-template>
             </xsl:when>
             <xsl:otherwise>
               <xsl:call-template name="handle-block-contents">
@@ -1305,7 +1358,17 @@
     </xsl:call-template>
 
   </xsl:template>
-
+  
+  <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+  
+  <xsl:template match="db:citetitle" mode="mode-inline">
+    <xsl:call-template name="handle-inline-text">
+      <xsl:with-param name="bold" select="false()"/>
+      <xsl:with-param name="underline" select="false()"/>
+      <xsl:with-param name="italic" select="true()"/>
+    </xsl:call-template>
+  </xsl:template>
+  
   <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
   <xsl:template match="db:code | db:literal | db:uri | db:function | db:classname | db:type | db:parameter | db:varname | db:package"
@@ -1639,10 +1702,12 @@
 
     <xsl:variable name="element-name" as="xs:string" select="local-name(.)"/>
     <xsl:variable name="section-level" as="xs:integer" select="xs:integer(substring-after($element-name, 'sect'))"/>
-    <xsl:call-template name="toc-entry-out">
-      <xsl:with-param name="level" select="$section-level"/>
-      <xsl:with-param name="number" select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
-    </xsl:call-template>
+    <xsl:if test="($max-toc-level le 0) or ($section-level le $max-toc-level)">
+      <xsl:call-template name="toc-entry-out">
+        <xsl:with-param name="level" select="$section-level"/>
+        <xsl:with-param name="number" select="if ($section-level gt $max-numbered-section-level) then () else string(@number)"/>
+      </xsl:call-template>
+    </xsl:if>
     <xsl:apply-templates mode="#current"/>
   </xsl:template>
 
@@ -1821,10 +1886,11 @@
     <xsl:param name="title" as="element(db:title)?" required="no" select="db:title"/>
     <xsl:param name="font-size" as="xs:double" required="yes"/>
     <xsl:param name="page-break" as="xs:boolean" required="no" select="false()"/>
+    <xsl:param name="suppress-number" as="xs:boolean" required="false" select="false()"/>
 
     <xsl:variable name="number-left-indent-cm" as="xs:double" select="1.5"/>
 
-    <list-block start-indent="{if ($is-a4) then local:dimcm($number-left-indent-cm * -1.0) else 0}"
+    <list-block start-indent="{if ($left-indent-section-numbers and $is-a4) then local:dimcm($number-left-indent-cm * -1.0) else 0}"
       provisional-distance-between-starts="{local:dimcm($number-left-indent-cm)}" id="{$id}" font-size="{local:dimpt($font-size)}" font-weight="bold"
       space-after="{local:dimpt($standard-font-size * 0.8)}" keep-with-next="always" font-family="{$title-font-family}">
       <xsl:if test="$page-break">
@@ -1834,13 +1900,14 @@
         <xsl:attribute name="space-before" select="local:dimpt($font-size * 1.2)"/>
       </xsl:if>
 
+      <xsl:variable name="has-number" as="xs:boolean" select="not($suppress-number or $simplified-article)"/>
       <list-item>
         <list-item-label end-indent="label-end()">
           <block>
-            <xsl:value-of select="(if ($simplified-article) then () else $number, '&#160;')[1]"/>
+            <xsl:value-of select="(if ($has-number) then $number else (), '&#160;')[1]"/>
           </block>
         </list-item-label>
-        <list-item-body start-indent="body-start()">
+        <list-item-body start-indent="{if ($has-number) then 'body-start()' else 0}">
           <block>
             <xsl:value-of select="($title, '*** NO TITLE ***')[1]"/>
           </block>
